@@ -23,7 +23,7 @@ public class Room extends ScheduleEntry {
         int updatedAt = -1;
 
         parser.require(XmlPullParser.START_TAG, null, TAG_NAME);
-        updatedAt = Integer.parseInt(parser.getAttributeValue(null, "data-aktualizacji"));
+        updatedAt = Integer.parseInt(parser.getAttributeValue(null, "data-aktualizacji")) + 1000;
 
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
