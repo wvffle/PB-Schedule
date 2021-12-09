@@ -6,6 +6,7 @@ on:
 
 jobs:
   test:
+    name: Test android app
     runs-on: macos-latest
     strategy:
       matrix:
