@@ -9,17 +9,22 @@ public class Room extends ScheduleEntry {
     public static final String TAG_NAME = "tabela_sale";
     private final int id;
     private final String name;
+    private final int updatedAt;
 
-    public Room(int id, String name) {
+    public Room(int id, String name, int updatedAt) {
         this.id = id;
         this.name = name;
+        this.updatedAt = updatedAt;
     }
 
     public static Room fromParser (XmlPullParser parser) throws IOException, XmlPullParserException {
         int id = -1;
         String name = "";
+        int updatedAt = -1;
 
         parser.require(XmlPullParser.START_TAG, null, TAG_NAME);
+        updatedAt = Integer.parseInt(parser.getAttributeValue(null, "data-aktualizacji"));
+
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -43,7 +48,7 @@ public class Room extends ScheduleEntry {
         }
 
 
-        return new Room(id, name);
+        return new Room(id, name, updatedAt);
     }
 
     public int getId() {
@@ -52,5 +57,9 @@ public class Room extends ScheduleEntry {
 
     public String getName() {
         return name;
+    }
+
+    public int getUpdatedAt() {
+        return updatedAt;
     }
 }
