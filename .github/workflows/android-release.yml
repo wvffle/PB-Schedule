@@ -3,13 +3,10 @@ name: Android CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  release:
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -41,7 +38,6 @@ jobs:
       with:
         name: Release artifact
         path: app/build/outputs/apk/ourbuildtype/release/app-artifact-*.apk
-
 
     - name: Build Changelog
       id: github_release
