@@ -57,9 +57,6 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew build
-
     - name: Run tests
       if: matrix.api-level == 29 # run normal tests only once
       run: ./gradlew test
