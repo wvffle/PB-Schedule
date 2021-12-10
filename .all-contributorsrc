@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "wvffle",
+      "name": "Kasper Seweryn",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13330620?v=4",
+      "profile": "http://wvffle.net",
+      "contributions": [
+        "infra",
+        "maintenance",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "PB-Schedule",
+  "projectOwner": "wvffle",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
