@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "Sylwia0506",
+      "name": "Sylwia0506",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63118620?v=4",
+      "profile": "https://github.com/Sylwia0506",
+      "contributions": [
+        "maintenance",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "PB-Schedule",
+  "projectOwner": "wvffle",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
