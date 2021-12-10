@@ -14,6 +14,17 @@
         "maintenance",
         "code"
       ]
+    },
+    {
+      "login": "wvffle",
+      "name": "Kasper Seweryn",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13330620?v=4",
+      "profile": "http://wvffle.net",
+      "contributions": [
+        "infra",
+        "maintenance",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
