@@ -2,7 +2,7 @@ package net.wvffle.android.pb.schedule.api.db;
 
 
 public class Studies extends ScheduleEntry {
-    public static final String TAG_NAME = "tabela_tytuly";
+    public static final String TAG_NAME = "tabela_studia";
     private final int id;
     private final String name;
     private final int updatedAt;
