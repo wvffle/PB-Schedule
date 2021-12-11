@@ -1,45 +1,46 @@
 package net.wvffle.android.pb.schedule.api.db;
 
 
-public class Teacher extends ScheduleEntry {
-    public static final String TAG_NAME = "tabela_nauczyciele";
-    private final int id;
-    private final String surname;
-    private final String first_name;
-    private final String first_initial;
-    private final int id_title;
-    private final int updatedAt;
+import java.util.Date;
 
-    public Teacher(int id, String surname, String first_name, String first_initial, int updatedAt, int id_title) {
-        this.id = id;
+public class Teacher  {
+    private String hash;
+    private final String surname;
+    private final String firstName;
+    private final String initials;
+    private final String title;
+    private final Date updatedAt;
+
+    public Teacher(String hash, String surname, String firstName, String initials, String title, int updatedAt) {
+        this.hash = hash;
         this.surname = surname;
-        this.first_name = first_name;
-        this.first_initial = first_initial;
-        this.id_title = id_title;
-        this.updatedAt = updatedAt;
+        this.firstName = firstName;
+        this.initials = initials;
+        this.title = title;
+        this.updatedAt = new Date(updatedAt);
     }
 
-    public int getId() {
-        return id;
+    public String getHash() {
+        return hash;
     }
 
     public String getSurname() {
         return surname;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getFirst_initial() {
-        return first_name;
+    public String getInitials() {
+        return initials;
     }
 
-    public int getId_title() {
-        return id;
+    public String getTitle() {
+        return null;
     }
 
-    public int getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 }

@@ -1,33 +1,34 @@
 package net.wvffle.android.pb.schedule.api.db;
 
 
-public class Subject extends ScheduleEntry {
-    public static final String TAG_NAME = "tabela_przedmioty";
-    private final int id;
-    private final String name;
-    private final String short_name;
-    private final int updatedAt;
+import java.util.Date;
 
-    public Subject(int id, String name, String short_name, int updatedAt) {
-        this.id = id;
+public class Subject  {
+    private String hash;
+    private final String name;
+    private final String shortName;
+    private final Date updatedAt;
+
+    public Subject(String hash, String name, String shortName, int updatedAt) {
+        this.hash = hash;
         this.name = name;
-        this.short_name = short_name;
-        this.updatedAt = updatedAt;
+        this.shortName = shortName;
+        this.updatedAt = new Date(updatedAt);
     }
 
-    public int getId() {
-        return id;
+    public String getHash() {
+        return hash;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getShort_name() {
-        return name;
+    public String getShortName() {
+        return shortName;
     }
 
-    public int getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 }
