@@ -1,22 +1,29 @@
 package net.wvffle.android.pb.schedule.api.db;
 
-public class Degree {
-    private String hash;
-    private String name;
 
-    public String getHash() {
-        return null;
+import java.util.Date;
+
+public class Degree  {
+    private String hash;
+    private final String name;
+    private final Date updatedAt;
+
+    public Degree(String hash, String name, int updatedAt) {
+        this.hash = hash;
+        this.name = name;
+        this.updatedAt = new Date(updatedAt);
     }
 
-    public void setHash(String hash) {
-        this.hash = hash;
+    public String getHash() {
+        return hash;
     }
 
     public String getName() {
-        return null;
+        return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 }
+

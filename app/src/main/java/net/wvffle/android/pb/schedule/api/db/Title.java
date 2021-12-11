@@ -1,27 +1,28 @@
 package net.wvffle.android.pb.schedule.api.db;
 
 
-public class Title extends ScheduleEntry {
-    public static final String TAG_NAME = "tabela_tytuly";
-    private final int id;
-    private final String name;
-    private final int updatedAt;
+import java.util.Date;
 
-    public Title(int id, String name, int updatedAt) {
-        this.id = id;
+public class Title  {
+    private String hash;
+    private final String name;
+    private final Date updatedAt;
+
+    public Title(String hash, String name, int updatedAt) {
+        this.hash = hash;
         this.name = name;
-        this.updatedAt = updatedAt;
+        this.updatedAt = new Date(updatedAt);
     }
 
-    public int getId() {
-        return id;
+    public String getHash() {
+        return hash;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 }

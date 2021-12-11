@@ -1,43 +1,42 @@
 package net.wvffle.android.pb.schedule.api.db;
 
 
-public class Schedule extends ScheduleEntry {
-    public static final String TAG_NAME = "tabela_rozklad";
-    private final int id;
+public class Schedule  {
+    private String hash;
     private final int day;
     private final int hour;
-    private final int amount;
-    private final int week;
-    private final int id_teacher;
-    private final int id_room;
-    private final int id_subject;
+    private final int intervals;
+    private final int weekFlags;
+    private final String teacher;
+    private final String room;
+    private final String subject;
     private final String type;
     private final int group;
-    private final int id_studies;
-    private final int term;
-    private final int id_speciality;
+    private final String degree;
+    private final int semestr;
+    private final String speciality;
     private final int updatedAt;
 
-    public Schedule(int id, int day, int hour, int amount, int week, int id_teacher, int id_room, int id_subject,
-                    String type, int group, int id_studies, int term, int id_speciality, int updatedAt) {
-        this.id = id;
+    public Schedule(String hash, int day, int hour, int intervals, int weekFlags, String teacher, String room, String subject,
+                    String type, int group, String degree, int semestr, String speciality, int updatedAt) {
+        this.hash = hash;
         this.day = day;
         this.hour = hour;
-        this.amount = amount;
-        this.week = week;
-        this.id_teacher = id_teacher;
-        this.id_room = id_room;
-        this.id_subject = id_subject;
+        this.intervals = intervals;
+        this.weekFlags = weekFlags;
+        this.teacher = teacher;
+        this.room = room;
+        this.subject = subject;
         this.type = type;
         this.group = group;
-        this.id_studies = id_studies;
-        this.term = term;
-        this.id_speciality = id_speciality;
+        this.degree = degree;
+        this.semestr = semestr;
+        this.speciality = speciality;
         this.updatedAt = updatedAt;
     }
 
-    public int getId() {
-        return id;
+    public String getHash() {
+        return hash;
     }
 
     public int getDay() {
@@ -48,24 +47,24 @@ public class Schedule extends ScheduleEntry {
         return hour;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getIntervals() {
+        return intervals;
     }
 
-    public int getWeek() {
-        return week;
+    public int getWeekFlags() {
+        return weekFlags;
     }
 
-    public int getId_teacher() {
-        return id_teacher;
+    public String getTeacher() {
+        return teacher;
     }
 
-    public int getId_room() {
-        return id_room;
+    public String getRoom() {
+        return room;
     }
 
-    public int getId_subject() {
-        return id_subject;
+    public String getSubject() {
+        return subject;
     }
 
     public String getType() {
@@ -76,16 +75,16 @@ public class Schedule extends ScheduleEntry {
         return group;
     }
 
-    public int getId_studies() {
-        return id_studies;
+    public String getDegree() {
+        return degree;
     }
 
-    public int getTerm() {
-        return term;
+    public int getSemestr() {
+        return semestr;
     }
 
-    public int getId_speciality() {
-        return id_speciality;
+    public String getSpeciality() {
+        return speciality;
     }
 
     public int getUpdatedAt() {
