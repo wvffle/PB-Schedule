@@ -1,5 +1,6 @@
 package net.wvffle.android.pb.schedule.api.db;
 
+import com.google.gson.JsonObject;
 
 import java.util.Date;
 
@@ -12,6 +13,14 @@ public class Subject {
         this.hash = hash;
         this.name = name;
         this.shortName = shortName;
+    }
+
+    public static Subject fromJson(JsonObject subject) {
+        return new Subject(
+                subject.get("hash").getAsString(),
+                subject.get("name").getAsString(),
+                subject.get("shortName").getAsString()
+        );
     }
 
     public String getHash() {

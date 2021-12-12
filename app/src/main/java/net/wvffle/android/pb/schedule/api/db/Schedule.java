@@ -1,5 +1,6 @@
 package net.wvffle.android.pb.schedule.api.db;
 
+import com.google.gson.JsonObject;
 
 import net.wvffle.android.pb.schedule.api.db.enums.ClassType;
 import net.wvffle.android.pb.schedule.api.db.enums.WeekFlags;
@@ -38,6 +39,25 @@ public class Schedule  {
         this.degree = degree;
         this.semester = semester;
         this.speciality = speciality;
+    }
+
+    public static Schedule fromJson(JsonObject schedule) {
+        return new Schedule(
+                schedule.get("hash").getAsString(),
+                schedule.get("day").getAsInt(),
+                schedule.get("hour").getAsInt(),
+                schedule.get("intervals").getAsInt(),
+                schedule.get("weekFlags").getAsInt(),
+                schedule.get("teacher").getAsString(),
+                schedule.get("room").getAsString(),
+                schedule.get("subject").getAsString(),
+                schedule.get("type").getAsType(),
+                schedule.get("group").getAsInt(),
+                schedule.get("degree").getAsString(),
+                schedule.get("semestr").getAsInt(),
+                schedule.get("speciality").getAsString()
+
+        );
     }
 
     public String getHash() {
