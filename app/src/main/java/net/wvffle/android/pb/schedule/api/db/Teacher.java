@@ -36,8 +36,12 @@ public class Teacher  {
         return initials;
     }
 
-    public String getTitle() {
-        return  null;
+    public Title getTitle() {
+        return null;
+    }
+
+    public String getTitleHash() {
+        return title;
     }
 
     public Date getUpdatedAt() {
