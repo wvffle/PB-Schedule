@@ -1,6 +1,11 @@
 package net.wvffle.android.pb.schedule.api.db;
 
 
+import net.wvffle.android.pb.schedule.api.db.enums.ClassType;
+import net.wvffle.android.pb.schedule.api.db.enums.WeekFlags;
+
+import java.util.Date;
+
 public class Schedule  {
     private String hash;
     private final int day;
@@ -10,15 +15,17 @@ public class Schedule  {
     private final String teacher;
     private final String room;
     private final String subject;
-    private final String type;
+    private final ClassType type;
     private final int group;
     private final String degree;
-    private final int semestr;
+    private final int semester;
     private final String speciality;
-    private final int updatedAt;
+    private final Date updatedAt;
 
-    public Schedule(String hash, int day, int hour, int intervals, int weekFlags, String teacher, String room, String subject,
-                    String type, int group, String degree, int semestr, String speciality, int updatedAt) {
+    public Schedule(String hash, int day, int hour, int intervals, int weekFlags, String teacher,
+                    String room, String subject, String type, int group, String degree, int semester,
+                    String speciality, int updatedAt) {
+
         this.hash = hash;
         this.day = day;
         this.hour = hour;
@@ -27,12 +34,12 @@ public class Schedule  {
         this.teacher = teacher;
         this.room = room;
         this.subject = subject;
-        this.type = type;
+        this.type = ClassType.valueOfName(type);
         this.group = group;
         this.degree = degree;
-        this.semestr = semestr;
+        this.semester = semester;
         this.speciality = speciality;
-        this.updatedAt = updatedAt;
+        this.updatedAt = new Date(updatedAt);
     }
 
     public String getHash() {
@@ -55,19 +62,31 @@ public class Schedule  {
         return weekFlags;
     }
 
-    public String getTeacher() {
+    public Teacher getTeacher() {
         return null;
     }
 
-    public String getRoom() {
+    public String getTeacherHash () {
+        return teacher;
+    }
+
+    public Room getRoom() {
         return null;
     }
 
-    public String getSubject() {
+    public String getRoomHash () {
+        return room;
+    }
+
+    public Subject getSubject() {
         return null;
     }
 
-    public String getType() {
+    public String getSubjectHash () {
+        return subject;
+    }
+
+    public ClassType getType() {
         return type;
     }
 
@@ -79,15 +98,35 @@ public class Schedule  {
         return degree;
     }
 
-    public int getSemestr() {
-        return semestr;
+    public int getSemester() {
+        return semester;
     }
 
-    public String getSpeciality() {
+    public Speciality getSpeciality() {
         return null;
     }
 
-    public int getUpdatedAt() {
+    public String getSpecialityHash () {
+        return speciality;
+    }
+
+    public Date getUpdatedAt() {
         return updatedAt;
+    }
+
+    public boolean isEven () {
+        return (weekFlags & WeekFlags.EVEN) > 0;
+    }
+
+    public boolean isOdd () {
+        return (weekFlags & WeekFlags.ODD) > 0;
+    }
+
+    public boolean isFull () {
+        return isEven() && isOdd();
+    }
+
+    public boolean isHalf () {
+        return !isFull();
     }
 }
