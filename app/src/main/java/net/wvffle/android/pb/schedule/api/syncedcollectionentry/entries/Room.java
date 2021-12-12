@@ -1,11 +1,11 @@
-package net.wvffle.android.pb.schedule.api.db;
+package net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries;
 
 
 import com.google.gson.JsonObject;
 
-import java.util.Date;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
 
-public class Room  {
+public class Room implements SyncedCollectionEntry {
     private final String hash ;
     private final String name;
 

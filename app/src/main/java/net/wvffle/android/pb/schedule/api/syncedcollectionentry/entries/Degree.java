@@ -1,10 +1,10 @@
-package net.wvffle.android.pb.schedule.api.db;
+package net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries;
 
 import com.google.gson.JsonObject;
 
-import java.util.Date;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
 
-public class Degree  {
+public class Degree implements SyncedCollectionEntry {
     private String hash;
     private final String name;
 
@@ -14,7 +14,7 @@ public class Degree  {
     }
 
     public static Degree fromJson(JsonObject degree) {
-        return new Room(
+        return new Degree(
                 degree.get("hash").getAsString(),
                 degree.get("name").getAsString()
         );
