@@ -9,15 +9,13 @@ public class Teacher  {
     private final String firstName;
     private final String initials;
     private final String title;
-    private final Date updatedAt;
 
-    public Teacher(String hash, String surname, String firstName, String initials, String title, int updatedAt) {
+    public Teacher(String hash, String surname, String firstName, String initials, String title) {
         this.hash = hash;
         this.surname = surname;
         this.firstName = firstName;
         this.initials = initials;
         this.title = title;
-        this.updatedAt = new Date(updatedAt);
     }
 
     public String getHash() {
@@ -42,9 +40,5 @@ public class Teacher  {
 
     public String getTitleHash() {
         return title;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
     }
 }

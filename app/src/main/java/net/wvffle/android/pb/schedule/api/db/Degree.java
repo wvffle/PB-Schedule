@@ -6,12 +6,10 @@ import java.util.Date;
 public class Degree  {
     private String hash;
     private final String name;
-    private final Date updatedAt;
 
-    public Degree(String hash, String name, int updatedAt) {
+    public Degree(String hash, String name) {
         this.hash = hash;
         this.name = name;
-        this.updatedAt = new Date(updatedAt);
     }
 
     public String getHash() {
@@ -20,10 +18,6 @@ public class Degree  {
 
     public String getName() {
         return name;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
     }
 }
 

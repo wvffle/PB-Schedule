@@ -20,11 +20,10 @@ public class Schedule  {
     private final String degree;
     private final int semester;
     private final String speciality;
-    private final Date updatedAt;
 
     public Schedule(String hash, int day, int hour, int intervals, int weekFlags, String teacher,
                     String room, String subject, String type, int group, String degree, int semester,
-                    String speciality, int updatedAt) {
+                    String speciality) {
 
         this.hash = hash;
         this.day = day;
@@ -39,7 +38,6 @@ public class Schedule  {
         this.degree = degree;
         this.semester = semester;
         this.speciality = speciality;
-        this.updatedAt = new Date(updatedAt);
     }
 
     public String getHash() {
@@ -108,10 +106,6 @@ public class Schedule  {
 
     public String getSpecialityHash () {
         return speciality;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
     }
 
     public boolean isEven () {
