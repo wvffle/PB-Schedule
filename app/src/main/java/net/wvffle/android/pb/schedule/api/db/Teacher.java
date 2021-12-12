@@ -1,5 +1,6 @@
 package net.wvffle.android.pb.schedule.api.db;
 
+import com.google.gson.JsonObject;
 
 import java.util.Date;
 
@@ -16,6 +17,16 @@ public class Teacher  {
         this.firstName = firstName;
         this.initials = initials;
         this.title = title;
+    }
+
+    public static Teacher fromJson(JsonObject teacher) {
+        return new Teacher(
+                teacher.get("hash").getAsString(),
+                teacher.get("surname").getAsString(),
+                teacher.get("firstName").getAsString(),
+                teacher.get("initials").getAsString(),
+                teacher.get("title").getAsString()
+        );
     }
 
     public String getHash() {
