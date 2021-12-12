@@ -1,13 +1,12 @@
-package net.wvffle.android.pb.schedule.api.db;
+package net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries;
 
 import com.google.gson.JsonObject;
 
 import net.wvffle.android.pb.schedule.api.db.enums.ClassType;
 import net.wvffle.android.pb.schedule.api.db.enums.WeekFlags;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
 
-import java.util.Date;
-
-public class Schedule  {
+public class Schedule implements SyncedCollectionEntry {
     private String hash;
     private final int day;
     private final int hour;
@@ -51,7 +50,7 @@ public class Schedule  {
                 schedule.get("teacher").getAsString(),
                 schedule.get("room").getAsString(),
                 schedule.get("subject").getAsString(),
-                schedule.get("type").getAsType(),
+                schedule.get("type").getAsString(),
                 schedule.get("group").getAsInt(),
                 schedule.get("degree").getAsString(),
                 schedule.get("semestr").getAsInt(),

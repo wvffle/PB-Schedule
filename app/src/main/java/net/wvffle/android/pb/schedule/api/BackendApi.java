@@ -5,8 +5,33 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntryFactory;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntryType;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Degree;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Room;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Schedule;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Speciality;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Subject;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Teacher;
+import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Title;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class BackendApi {
     private static final String HOST = "https://but-schedule-server.herokuapp.com";
+    private static final Map<SyncedCollectionEntryType, String> routeMap = new HashMap<>();
+
+    static {
+        routeMap.put(SyncedCollectionEntryType.ROOM, "/rooms");
+        routeMap.put(SyncedCollectionEntryType.TITLE, "/titles");
+        routeMap.put(SyncedCollectionEntryType.DEGREE, "/degrees");
+        routeMap.put(SyncedCollectionEntryType.SUBJECT, "/subjects");
+        routeMap.put(SyncedCollectionEntryType.TEACHER, "/teachers");
+        routeMap.put(SyncedCollectionEntryType.SCHEDULE, "/schedules");
+        routeMap.put(SyncedCollectionEntryType.SPECIALITY, "/specialities");
+    }
 
     public static void getUpdates () {
         String res = HTTPClient.get(HOST + "/updates");
@@ -21,10 +46,41 @@ public class BackendApi {
         }
     }
 
-    public static JsonObject getRoom (String hash) {
-        String res = HTTPClient.get(HOST + "/rooms/" + hash);
+    private static SyncedCollectionEntry getCollectionEntry (SyncedCollectionEntryType type, String hash) {
+        String res = HTTPClient.get(HOST + routeMap.get(type) + "/" + hash);
         assert res != null;
 
-        return JsonParser.parseString(res).getAsJsonObject();
+        return SyncedCollectionEntryFactory.createCollectionEntry(
+                JsonParser.parseString(res).getAsJsonObject(),
+                type
+        );
+    }
+
+    public static Room getRoom (String hash) {
+        return (Room) getCollectionEntry(SyncedCollectionEntryType.ROOM, hash);
+    }
+
+    public static Title getTitle (String hash) {
+        return (Title) getCollectionEntry(SyncedCollectionEntryType.TITLE, hash);
+    }
+
+    public static Degree getDegree (String hash) {
+        return (Degree) getCollectionEntry(SyncedCollectionEntryType.DEGREE, hash);
+    }
+
+    public static Subject getSubject (String hash) {
+        return (Subject) getCollectionEntry(SyncedCollectionEntryType.SUBJECT, hash);
+    }
+
+    public static Teacher getTeacher (String hash) {
+        return (Teacher) getCollectionEntry(SyncedCollectionEntryType.TEACHER, hash);
+    }
+
+    public static Schedule getSchedule (String hash) {
+        return (Schedule) getCollectionEntry(SyncedCollectionEntryType.SCHEDULE, hash);
+    }
+
+    public static Speciality getSpeciality (String hash) {
+        return (Speciality) getCollectionEntry(SyncedCollectionEntryType.SPECIALITY, hash);
     }
 }
