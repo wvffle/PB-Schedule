@@ -25,7 +25,6 @@ public class Room implements SyncedCollectionEntry {
         return hash;
     }
 
-
     public String getName() {
         return name;
     }
