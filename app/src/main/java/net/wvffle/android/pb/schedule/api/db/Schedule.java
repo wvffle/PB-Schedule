@@ -56,15 +56,15 @@ public class Schedule  {
     }
 
     public String getTeacher() {
-        return teacher;
+        return null;
     }
 
     public String getRoom() {
-        return room;
+        return null;
     }
 
     public String getSubject() {
-        return subject;
+        return null;
     }
 
     public String getType() {
@@ -84,7 +84,7 @@ public class Schedule  {
     }
 
     public String getSpeciality() {
-        return speciality;
+        return null;
     }
 
     public int getUpdatedAt() {
