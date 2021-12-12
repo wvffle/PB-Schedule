@@ -2,6 +2,7 @@ package net.wvffle.android.pb.schedule.api;
 
 import android.util.Xml;
 
+
 import net.wvffle.android.pb.schedule.api.db.Room;
 import net.wvffle.android.pb.schedule.api.db.ScheduleEntry;
 
@@ -45,10 +46,6 @@ public class ScheduleParser {
 
                 String name = parser.getName();
                 switch (name) {
-                    case Room.TAG_NAME:
-                        entries.add(Room.fromParser(parser));
-                        break;
-
                     default: skip(parser);
                 }
             }
@@ -60,10 +57,6 @@ public class ScheduleParser {
     }
 
     public static void skip (XmlPullParser parser) throws XmlPullParserException, IOException {
-        if (parser.getEventType() != XmlPullParser.START_TAG) {
-            throw new IllegalStateException();
-        }
-
         int depth = 1;
         while (depth != 0) {
             switch (parser.next()) {
