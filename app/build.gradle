@@ -38,4 +38,12 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'commons-io:commons-io:2.6'
     implementation 'com.google.code.gson:gson:2.8.9'
+
+    debugImplementation 'io.objectbox:objectbox-android-objectbrowser:3.0.1'
+    releaseImplementation 'io.objectbox:objectbox-android:3.0.1'
+
+    implementation 'androidx.work:work-runtime:2.7.1'
+
 }
+
+apply plugin: 'io.objectbox'
