@@ -16,8 +16,8 @@ public class HTTPClient {
         }
 
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                .connectTimeout(5000, TimeUnit.MILLISECONDS)
-                .readTimeout(5000, TimeUnit.MILLISECONDS);
+                .connectTimeout(30000, TimeUnit.MILLISECONDS)
+                .readTimeout(30000, TimeUnit.MILLISECONDS);
 
         return (client = clientBuilder.build());
     }
