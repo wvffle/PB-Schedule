@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import net.wvffle.android.pb.schedule.BuildConfig;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.MyObjectBox;
+import net.wvffle.android.pb.schedule.api.db.models.MyObjectBox;
 
 import io.objectbox.BoxStore;
 import io.objectbox.android.AndroidObjectBrowser;

@@ -1,26 +1,42 @@
-package net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries;
+package net.wvffle.android.pb.schedule.api.db.models;
 
 import com.google.gson.JsonObject;
 
 import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
 
+import io.objectbox.annotation.ConflictStrategy;
+import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Index;
+import io.objectbox.annotation.Unique;
+import io.objectbox.relation.ToOne;
+
 public class Teacher implements SyncedCollectionEntry {
-    private String hash;
+    @Id
+    public long id;
+
+    @Index
+    @Unique(onConflict = ConflictStrategy.REPLACE)
+    private final String hash;
     private final String surname;
     private final String firstName;
     private final String initials;
-    private final String title;
 
-    public Teacher(String hash, String surname, String firstName, String initials, String title) {
+    private final String titleHash;
+    private ToOne<Title> title;
+
+    public Teacher(long id, String hash, String surname, String firstName, String initials, String titleHash) {
+        this.id = id;
         this.hash = hash;
         this.surname = surname;
         this.firstName = firstName;
         this.initials = initials;
-        this.title = title;
+        this.titleHash = titleHash;
+        this.title.setTarget(null);
     }
 
     public static Teacher fromJson(JsonObject teacher) {
         return new Teacher(
+                0,
                 teacher.get("hash").getAsString(),
                 teacher.get("surname").getAsString(),
                 teacher.get("firstName").getAsString(),
@@ -46,10 +62,10 @@ public class Teacher implements SyncedCollectionEntry {
     }
 
     public Title getTitle() {
-        return null;
+        return title.getTarget();
     }
 
     public String getTitleHash() {
-        return title;
+        return titleHash;
     }
 }

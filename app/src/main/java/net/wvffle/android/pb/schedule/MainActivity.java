@@ -10,7 +10,7 @@ import android.util.Log;
 import net.wvffle.android.pb.schedule.api.ApiWorker;
 import net.wvffle.android.pb.schedule.api.BackendApi;
 import net.wvffle.android.pb.schedule.api.db.ObjectBox;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Room;
+import net.wvffle.android.pb.schedule.api.db.models.Room;
 
 import io.objectbox.Box;
 
