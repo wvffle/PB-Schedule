@@ -1,15 +1,28 @@
-package net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries;
+package net.wvffle.android.pb.schedule.api.db.models;
 
 import com.google.gson.JsonObject;
 
 import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
 
+import io.objectbox.annotation.ConflictStrategy;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Index;
+import io.objectbox.annotation.Unique;
+
+@Entity
 public class Subject  implements SyncedCollectionEntry {
-    private String hash;
+    @Id
+    public long id;
+
+    @Index
+    @Unique(onConflict = ConflictStrategy.REPLACE)
+    private final String hash;
     private final String name;
     private final String shortName;
 
-    public Subject(String hash, String name, String shortName) {
+    public Subject(long id, String hash, String name, String shortName) {
+        this.id = id;
         this.hash = hash;
         this.name = name;
         this.shortName = shortName;
@@ -17,6 +30,7 @@ public class Subject  implements SyncedCollectionEntry {
 
     public static Subject fromJson(JsonObject subject) {
         return new Subject(
+                0,
                 subject.get("hash").getAsString(),
                 subject.get("name").getAsString(),
                 subject.get("shortName").getAsString()

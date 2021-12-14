@@ -1,5 +1,4 @@
-package net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries;
-
+package net.wvffle.android.pb.schedule.api.db.models;
 
 import com.google.gson.JsonObject;
 
@@ -12,7 +11,7 @@ import io.objectbox.annotation.Index;
 import io.objectbox.annotation.Unique;
 
 @Entity
-public class Room implements SyncedCollectionEntry {
+public class Speciality implements SyncedCollectionEntry {
     @Id
     public long id;
 
@@ -21,17 +20,17 @@ public class Room implements SyncedCollectionEntry {
     private final String hash;
     private final String name;
 
-    public Room(long id, String hash, String name) {
+    public Speciality(long id, String hash, String name) {
         this.id = id;
         this.hash = hash;
         this.name = name;
     }
 
-    public static Room fromJson(JsonObject room) {
-        return new Room(
+    public static Speciality fromJson(JsonObject speciality) {
+        return new Speciality(
                 0,
-                room.get("hash").getAsString(),
-                room.get("name").getAsString()
+                speciality.get("hash").getAsString(),
+                speciality.get("name").getAsString()
         );
     }
 

@@ -1,4 +1,4 @@
-package net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries;
+package net.wvffle.android.pb.schedule.api.db.models;
 
 import com.google.gson.JsonObject;
 

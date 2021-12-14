@@ -1,12 +1,12 @@
 package net.wvffle.android.pb.schedule.api.syncedcollectionentry;
 
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Degree;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Room;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Schedule;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Speciality;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Subject;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Teacher;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.entries.Title;
+import net.wvffle.android.pb.schedule.api.db.models.Degree;
+import net.wvffle.android.pb.schedule.api.db.models.Room;
+import net.wvffle.android.pb.schedule.api.db.models.Schedule;
+import net.wvffle.android.pb.schedule.api.db.models.Speciality;
+import net.wvffle.android.pb.schedule.api.db.models.Subject;
+import net.wvffle.android.pb.schedule.api.db.models.Teacher;
+import net.wvffle.android.pb.schedule.api.db.models.Title;
 
 public enum SyncedCollectionEntryType {
     ROOM(Room.class),
