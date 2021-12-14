@@ -43,3 +43,6 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# ObjectBox
+app/objectbox-models/default.json.bak
