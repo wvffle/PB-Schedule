@@ -1,17 +1,19 @@
-package net.wvffle.android.pb.schedule.api.db.models;
+package net.wvffle.android.pb.schedule.models;
 
 import com.google.gson.JsonObject;
 
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
+import net.wvffle.android.pb.schedule.api.model.Model;
 
 import io.objectbox.annotation.ConflictStrategy;
+import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 import io.objectbox.annotation.Index;
 import io.objectbox.annotation.Unique;
 import io.objectbox.relation.ToOne;
 
-public class Teacher implements SyncedCollectionEntry {
-    @Id
+@Entity
+public class Teacher implements Model {
+    @Id(assignable = true)
     public long id;
 
     @Index
@@ -21,17 +23,15 @@ public class Teacher implements SyncedCollectionEntry {
     private final String firstName;
     private final String initials;
 
-    private final String titleHash;
-    private ToOne<Title> title;
+    public ToOne<Title> title;
 
-    public Teacher(long id, String hash, String surname, String firstName, String initials, String titleHash) {
+    public Teacher(long id, String hash, String surname, String firstName, String initials, long titleId) {
         this.id = id;
         this.hash = hash;
         this.surname = surname;
         this.firstName = firstName;
         this.initials = initials;
-        this.titleHash = titleHash;
-        this.title.setTarget(null);
+        this.title.setTargetId(titleId);
     }
 
     public static Teacher fromJson(JsonObject teacher) {
@@ -41,7 +41,7 @@ public class Teacher implements SyncedCollectionEntry {
                 teacher.get("surname").getAsString(),
                 teacher.get("firstName").getAsString(),
                 teacher.get("initials").getAsString(),
-                teacher.get("title").getAsString()
+                teacher.get("title").getAsLong()
         );
     }
 
@@ -63,9 +63,5 @@ public class Teacher implements SyncedCollectionEntry {
 
     public Title getTitle() {
         return title.getTarget();
-    }
-
-    public String getTitleHash() {
-        return titleHash;
     }
 }

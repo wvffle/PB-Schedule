@@ -1,8 +1,8 @@
-package net.wvffle.android.pb.schedule.api.db.models;
+package net.wvffle.android.pb.schedule.models;
 
 import com.google.gson.JsonObject;
 
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
+import net.wvffle.android.pb.schedule.api.model.Model;
 
 import io.objectbox.annotation.ConflictStrategy;
 import io.objectbox.annotation.Entity;
@@ -11,8 +11,8 @@ import io.objectbox.annotation.Index;
 import io.objectbox.annotation.Unique;
 
 @Entity
-public class Subject  implements SyncedCollectionEntry {
-    @Id
+public class Subject  implements Model {
+    @Id(assignable = true)
     public long id;
 
     @Index
@@ -30,7 +30,7 @@ public class Subject  implements SyncedCollectionEntry {
 
     public static Subject fromJson(JsonObject subject) {
         return new Subject(
-                0,
+                subject.get("id").getAsLong(),
                 subject.get("hash").getAsString(),
                 subject.get("name").getAsString(),
                 subject.get("shortName").getAsString()
