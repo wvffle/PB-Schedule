@@ -5,32 +5,32 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntryFactory;
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntryType;
-import net.wvffle.android.pb.schedule.api.db.models.Degree;
-import net.wvffle.android.pb.schedule.api.db.models.Room;
-import net.wvffle.android.pb.schedule.api.db.models.Schedule;
-import net.wvffle.android.pb.schedule.api.db.models.Speciality;
-import net.wvffle.android.pb.schedule.api.db.models.Subject;
-import net.wvffle.android.pb.schedule.api.db.models.Teacher;
-import net.wvffle.android.pb.schedule.api.db.models.Title;
+import net.wvffle.android.pb.schedule.api.model.Model;
+import net.wvffle.android.pb.schedule.api.model.ModelFactory;
+import net.wvffle.android.pb.schedule.api.model.ModelType;
+import net.wvffle.android.pb.schedule.models.Degree;
+import net.wvffle.android.pb.schedule.models.Room;
+import net.wvffle.android.pb.schedule.models.Schedule;
+import net.wvffle.android.pb.schedule.models.Speciality;
+import net.wvffle.android.pb.schedule.models.Subject;
+import net.wvffle.android.pb.schedule.models.Teacher;
+import net.wvffle.android.pb.schedule.models.Title;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class BackendApi {
     private static final String HOST = "https://but-schedule-server.herokuapp.com";
-    private static final Map<SyncedCollectionEntryType, String> routeMap = new HashMap<>();
+    private static final Map<ModelType, String> routeMap = new HashMap<>();
 
     static {
-        routeMap.put(SyncedCollectionEntryType.ROOM, "/rooms");
-        routeMap.put(SyncedCollectionEntryType.TITLE, "/titles");
-        routeMap.put(SyncedCollectionEntryType.DEGREE, "/degrees");
-        routeMap.put(SyncedCollectionEntryType.SUBJECT, "/subjects");
-        routeMap.put(SyncedCollectionEntryType.TEACHER, "/teachers");
-        routeMap.put(SyncedCollectionEntryType.SCHEDULE, "/schedules");
-        routeMap.put(SyncedCollectionEntryType.SPECIALITY, "/specialities");
+        routeMap.put(ModelType.ROOM, "/rooms");
+        routeMap.put(ModelType.TITLE, "/titles");
+        routeMap.put(ModelType.DEGREE, "/degrees");
+        routeMap.put(ModelType.SUBJECT, "/subjects");
+        routeMap.put(ModelType.TEACHER, "/teachers");
+        routeMap.put(ModelType.SCHEDULE, "/schedules");
+        routeMap.put(ModelType.SPECIALITY, "/specialities");
     }
 
     public static void getUpdates () {
@@ -46,41 +46,41 @@ public class BackendApi {
         }
     }
 
-    private static SyncedCollectionEntry getCollectionEntry (SyncedCollectionEntryType type, String hash) {
+    private static Model getCollectionEntry (ModelType type, String hash) {
         String res = HTTPClient.get(HOST + routeMap.get(type) + "/" + hash);
         assert res != null;
 
-        return SyncedCollectionEntryFactory.createCollectionEntry(
+        return ModelFactory.createCollectionEntry(
                 JsonParser.parseString(res).getAsJsonObject(),
                 type
         );
     }
 
     public static Room getRoom (String hash) {
-        return (Room) getCollectionEntry(SyncedCollectionEntryType.ROOM, hash);
+        return (Room) getCollectionEntry(ModelType.ROOM, hash);
     }
 
     public static Title getTitle (String hash) {
-        return (Title) getCollectionEntry(SyncedCollectionEntryType.TITLE, hash);
+        return (Title) getCollectionEntry(ModelType.TITLE, hash);
     }
 
     public static Degree getDegree (String hash) {
-        return (Degree) getCollectionEntry(SyncedCollectionEntryType.DEGREE, hash);
+        return (Degree) getCollectionEntry(ModelType.DEGREE, hash);
     }
 
     public static Subject getSubject (String hash) {
-        return (Subject) getCollectionEntry(SyncedCollectionEntryType.SUBJECT, hash);
+        return (Subject) getCollectionEntry(ModelType.SUBJECT, hash);
     }
 
     public static Teacher getTeacher (String hash) {
-        return (Teacher) getCollectionEntry(SyncedCollectionEntryType.TEACHER, hash);
+        return (Teacher) getCollectionEntry(ModelType.TEACHER, hash);
     }
 
     public static Schedule getSchedule (String hash) {
-        return (Schedule) getCollectionEntry(SyncedCollectionEntryType.SCHEDULE, hash);
+        return (Schedule) getCollectionEntry(ModelType.SCHEDULE, hash);
     }
 
     public static Speciality getSpeciality (String hash) {
-        return (Speciality) getCollectionEntry(SyncedCollectionEntryType.SPECIALITY, hash);
+        return (Speciality) getCollectionEntry(ModelType.SPECIALITY, hash);
     }
 }

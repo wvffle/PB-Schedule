@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import net.wvffle.android.pb.schedule.api.BackendApi;
-import net.wvffle.android.pb.schedule.api.db.models.Room;
+import net.wvffle.android.pb.schedule.models.Room;
 
 public class BackendApiTest {
     @Test

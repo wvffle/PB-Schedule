@@ -1,8 +1,8 @@
-package net.wvffle.android.pb.schedule.api.db.models;
+package net.wvffle.android.pb.schedule.models;
 
 import com.google.gson.JsonObject;
 
-import net.wvffle.android.pb.schedule.api.syncedcollectionentry.SyncedCollectionEntry;
+import net.wvffle.android.pb.schedule.api.model.Model;
 
 import io.objectbox.annotation.ConflictStrategy;
 import io.objectbox.annotation.Entity;
@@ -11,8 +11,8 @@ import io.objectbox.annotation.Index;
 import io.objectbox.annotation.Unique;
 
 @Entity
-public class Title implements SyncedCollectionEntry {
-    @Id
+public class Degree implements Model {
+    @Id(assignable = true)
     public long id;
 
     @Index
@@ -20,17 +20,17 @@ public class Title implements SyncedCollectionEntry {
     private final String hash;
     private final String name;
 
-    public Title(long id, String hash, String name) {
+    public Degree(long id, String hash, String name) {
         this.id = id;
         this.hash = hash;
         this.name = name;
     }
 
-    public static Title fromJson(JsonObject title) {
-        return new Title(
-                0,
-                title.get("hash").getAsString(),
-                title.get("name").getAsString()
+    public static Degree fromJson(JsonObject degree) {
+        return new Degree(
+                degree.get("id").getAsLong(),
+                degree.get("hash").getAsString(),
+                degree.get("name").getAsString()
         );
     }
 
@@ -42,3 +42,4 @@ public class Title implements SyncedCollectionEntry {
         return name;
     }
 }
+

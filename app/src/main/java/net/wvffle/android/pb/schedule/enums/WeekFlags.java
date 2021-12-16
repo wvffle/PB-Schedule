@@ -1,4 +1,4 @@
-package net.wvffle.android.pb.schedule.api.db.enums;
+package net.wvffle.android.pb.schedule.enums;
 
 public class WeekFlags {
     public static final int EVEN = 0b01;

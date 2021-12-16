@@ -1,4 +1,4 @@
-package net.wvffle.android.pb.schedule.api.db.enums;
+package net.wvffle.android.pb.schedule.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +30,6 @@ public enum ClassType {
     public static ClassType valueOfName (String name) {
         // NOTE: support for exercises
         name = name.replace('Ć', 'c');
-        return BY_NAME.get(name);
+        return BY_NAME.getOrDefault(name, valueOf(name.toUpperCase()));
     }
 }
