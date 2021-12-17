@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import io.sentry.Sentry;
+
 public class UpdateData implements Serializable {
     protected final Map<ModelType, List<Model>> data = new HashMap<>();
     private final JsonObject object;
@@ -39,7 +41,7 @@ public class UpdateData implements Serializable {
                 try {
                     list.add(ModelFactory.createCollectionEntry(element.getAsJsonObject(), type));
                 } catch (Exception e) {
-                    // TODO: Add Sentry
+                    Sentry.captureException(e);
                 }
             }
         }

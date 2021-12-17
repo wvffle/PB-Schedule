@@ -13,6 +13,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PBPlanZajec">
+
+        <meta-data android:name="io.sentry.dsn" android:value="https://f63ac2ec8aa944fb87e569c7a7c09fb9@o291959.ingest.sentry.io/6111870" />
+        <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">

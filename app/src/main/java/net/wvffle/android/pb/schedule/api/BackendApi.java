@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.sentry.Sentry;
+
 public class BackendApi {
     private static final String HOST = "https://but-schedule-server.herokuapp.com";
     private static final Map<ModelType, String> routeMap = new HashMap<>();
@@ -56,7 +58,7 @@ public class BackendApi {
             return Update.fromJson(JsonParser.parseString(res).getAsJsonObject());
         } catch (ParseException e) {
             e.printStackTrace();
-            // TODO: Add Sentry
+            Sentry.captureException(e);
         }
 
         return null;
