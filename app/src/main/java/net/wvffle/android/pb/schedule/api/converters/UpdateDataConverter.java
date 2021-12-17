@@ -1,6 +1,6 @@
-package net.wvffle.android.pb.schedule.api.model.converters;
+package net.wvffle.android.pb.schedule.api.converters;
 
-import net.wvffle.android.pb.schedule.api.model.UpdateData;
+import net.wvffle.android.pb.schedule.api.update.UpdateData;
 import net.wvffle.android.pb.schedule.util.Serializer;
 
 import java.io.IOException;

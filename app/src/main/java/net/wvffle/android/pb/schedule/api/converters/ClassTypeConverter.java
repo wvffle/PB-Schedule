@@ -1,4 +1,4 @@
-package net.wvffle.android.pb.schedule.api.model.converters;
+package net.wvffle.android.pb.schedule.api.converters;
 
 import net.wvffle.android.pb.schedule.enums.ClassType;
 

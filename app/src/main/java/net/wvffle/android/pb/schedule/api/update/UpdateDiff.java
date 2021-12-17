@@ -1,7 +1,10 @@
-package net.wvffle.android.pb.schedule.api.model;
+package net.wvffle.android.pb.schedule.api.update;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import net.wvffle.android.pb.schedule.api.model.Model;
+import net.wvffle.android.pb.schedule.api.model.ModelType;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,7 +65,6 @@ public class UpdateDiff implements Serializable {
                             .map(this.data::get)
                             .filter(Objects::nonNull)
                             .collect(Collectors.toList())
-
             );
         }
 
@@ -81,7 +83,6 @@ public class UpdateDiff implements Serializable {
                             .map(this.data::get)
                             .filter(Objects::nonNull)
                             .collect(Collectors.toList())
-
             );
         }
 

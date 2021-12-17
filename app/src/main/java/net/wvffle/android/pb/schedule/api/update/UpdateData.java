@@ -1,8 +1,11 @@
-package net.wvffle.android.pb.schedule.api.model;
+package net.wvffle.android.pb.schedule.api.update;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import net.wvffle.android.pb.schedule.api.model.Model;
+import net.wvffle.android.pb.schedule.api.model.ModelFactory;
+import net.wvffle.android.pb.schedule.api.model.ModelType;
 import net.wvffle.android.pb.schedule.models.Degree;
 import net.wvffle.android.pb.schedule.models.Room;
 import net.wvffle.android.pb.schedule.models.Schedule;
@@ -31,7 +34,11 @@ public class UpdateData implements Serializable {
             data.put(type, list);
 
             for (JsonElement element : object.getAsJsonArray(key)) {
-                list.add(ModelFactory.createCollectionEntry(element.getAsJsonObject(), type));
+                try {
+                    list.add(ModelFactory.createCollectionEntry(element.getAsJsonObject(), type));
+                } catch (Exception e) {
+                    // TODO: Add sentry
+                }
             }
         }
     }

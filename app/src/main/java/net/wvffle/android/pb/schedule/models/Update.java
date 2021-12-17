@@ -3,10 +3,12 @@ package net.wvffle.android.pb.schedule.models;
 import com.google.gson.JsonObject;
 
 import net.wvffle.android.pb.schedule.api.model.Model;
-import net.wvffle.android.pb.schedule.api.model.UpdateData;
-import net.wvffle.android.pb.schedule.api.model.UpdateDiff;
-import net.wvffle.android.pb.schedule.api.model.converters.UpdateDataConverter;
-import net.wvffle.android.pb.schedule.api.model.converters.UpdateDiffConverter;
+import net.wvffle.android.pb.schedule.api.update.UpdateData;
+import net.wvffle.android.pb.schedule.api.update.UpdateDiff;
+import net.wvffle.android.pb.schedule.api.converters.UpdateDataConverter;
+import net.wvffle.android.pb.schedule.api.converters.UpdateDiffConverter;
+
+import org.joda.time.format.ISODateTimeFormat;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -49,7 +51,9 @@ public class Update implements Model {
         return new Update(
                 update.get("id").getAsLong(),
                 update.get("hash").getAsString(),
-                DateFormat.getInstance().parse(update.get("date").getAsString()),
+                ISODateTimeFormat.dateTime()
+                        .parseDateTime(update.get("date").getAsString())
+                        .toDate(),
                 data,
                 diff
         );

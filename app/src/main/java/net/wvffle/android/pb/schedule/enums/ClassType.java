@@ -12,6 +12,7 @@ public enum ClassType {
     CW("exercises"),
     PS("special"),
     W("lecture");
+    // TODO: Add UNKNOWN class type
 
     private final String fullName;
     private static final Map<String, ClassType> BY_NAME = new HashMap<>();

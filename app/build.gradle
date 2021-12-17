@@ -40,6 +40,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'commons-io:commons-io:2.6'
     implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'joda-time:joda-time:2.9.4'
 
 
     debugImplementation 'io.objectbox:objectbox-android-objectbrowser:3.0.1'
