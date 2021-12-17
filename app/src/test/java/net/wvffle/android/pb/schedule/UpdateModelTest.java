@@ -26,7 +26,7 @@ public class UpdateModelTest {
 
         assertNotNull(update);
         assertEquals(updates.get(0).getHash(), update.getHash());
-        assertEquals(updates.get(0).getId(), update.id);
+        assertEquals(updates.get(0).id, update.id);
 
         UpdateData data = update.getData();
         assertNotNull(data);
