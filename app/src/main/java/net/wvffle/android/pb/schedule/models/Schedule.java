@@ -63,6 +63,11 @@ public class Schedule implements Model {
         this.speciality.setTargetId(specialityId);
     }
 
+    /**
+     * Create a new Schedule from JSON
+     * @param schedule JsonObject containing schedule data
+     * @return new schedule model
+     */
     public static Schedule fromJson(JsonObject schedule) {
         JsonElement room = schedule.get("room");
         JsonElement degree = schedule.get("degree");
@@ -88,71 +93,131 @@ public class Schedule implements Model {
         );
     }
 
+    /**
+     * Return hash of the schedule
+     * @return String hash of the schedule
+     */
     public String getHash() {
         return hash;
     }
 
+    /**
+     * Return day number of the schedule
+     * @return Day number of the schedule
+     */
     public int getDay() {
         return day;
     }
 
+    /**
+     * Return hour index of the schedule
+     * @return Hour index of the schedule
+     */
     public int getHour() {
         return hour;
     }
 
+    /**
+     * Return number of intervals of the schedule
+     * @return Number of intervals of the schedule
+     */
     public int getIntervals() {
         return intervals;
     }
 
+    /**
+     * Return week flags of the schedule
+     * @return Week flags of the schedule
+     */
     public int getWeekFlags() {
         return weekFlags;
     }
 
+    /**
+     * Return teacher of the schedule
+     * @return Teacher of the schedule
+     */
     public Teacher getTeacher() {
         return teacher.getTarget();
     }
 
+    /**
+     * Return room of the schedule
+     * @return Room of the schedule
+     */
     public Room getRoom() {
         return room.getTarget();
     }
 
+    /**
+     * Return subject of the schedule
+     * @return Subject of the schedule
+     */
     public Subject getSubject() {
         return subject.getTarget();
     }
 
+    /**
+     * Return class type of the schedule
+     * @return ClassType of the schedule
+     */
     public ClassType getType() {
         return type;
     }
 
+    /**
+     * Return group number of the schedule
+     * @return Group number of the schedule
+     */
     public int getGroup() {
         return group;
     }
 
+    /**
+     * Return degree of the schedule
+     * @return Degree of the schedule
+     */
     public Degree getDegree() {
         return degree.getTarget();
     }
 
+    /**
+     * Return semester number of the schedule
+     * @return semester number of the schedule
+     */
     public int getSemester() {
         return semester;
     }
 
+    /**
+     * Return speciality of the schedule
+     * @return Speciality of the schedule
+     */
     public Speciality getSpeciality() {
         return speciality.getTarget();
     }
 
-    public boolean isEven () {
+    /**
+     * Check if schedule is available in even weeks
+     * @return Whether or not the schedule is available
+     */
+    public boolean isEvenWeeks () {
         return (weekFlags & WeekFlags.EVEN) > 0;
     }
 
-    public boolean isOdd () {
+    /**
+     * Check if schedule is available in odd weeks
+     * @return Whether or not the schedule is available
+     */
+    public boolean isOddWeeks () {
         return (weekFlags & WeekFlags.ODD) > 0;
     }
 
-    public boolean isFull () {
-        return isEven() && isOdd();
-    }
-
-    public boolean isHalf () {
-        return !isFull();
+    /**
+     * Check if schedule is available every week
+     * @return Whether or not the schedule is available
+     */
+    public boolean isEveryWeek () {
+        return isEvenWeeks() && isOddWeeks();
     }
 }

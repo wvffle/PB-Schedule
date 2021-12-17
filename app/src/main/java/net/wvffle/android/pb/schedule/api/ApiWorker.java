@@ -19,6 +19,10 @@ public class ApiWorker extends Worker {
         super(context, params);
     }
 
+    /**
+     * Performs work in an asynchronous context
+     * @return Result
+     */
     @NonNull
     @Override
     public Result doWork() {
@@ -32,6 +36,11 @@ public class ApiWorker extends Worker {
         return executor.execute();
     }
 
+    /**
+     * Create a custom OneTimeWorkRequest with an executor
+     * @param executor Executor lambda
+     * @return OneTimeWorkRequest object
+     */
     public static OneTimeWorkRequest create (Executor executor) {
         executorMap.put(callId, executor);
 
@@ -44,6 +53,9 @@ public class ApiWorker extends Worker {
                 .build();
     }
 
+    /**
+     * Executor interface
+     */
     public interface Executor {
         Result execute();
     }

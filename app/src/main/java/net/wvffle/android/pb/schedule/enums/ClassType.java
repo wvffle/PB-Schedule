@@ -28,6 +28,11 @@ public enum ClassType {
         this.fullName = fullName;
     }
 
+    /**
+     * Return a ClassType for a given name
+     * @param name String name
+     * @return ClassType enum value
+     */
     public static ClassType valueOfName (String name) {
         // NOTE: support for exercises
         name = name.replace('Ć', 'c');

@@ -28,6 +28,10 @@ public class UpdateData implements Serializable {
     protected final Map<ModelType, List<Model>> data = new HashMap<>();
     private final JsonObject object;
 
+    /**
+     * Create new update data object from JSON
+     * @param json JsonObject with the update data
+     */
     public UpdateData(JsonObject json) {
         object = json.getAsJsonObject();
         for (String key : object.keySet()) {
@@ -39,7 +43,7 @@ public class UpdateData implements Serializable {
 
             for (JsonElement element : object.getAsJsonArray(key)) {
                 try {
-                    list.add(ModelFactory.createCollectionEntry(element.getAsJsonObject(), type));
+                    list.add(ModelFactory.createModel(element.getAsJsonObject(), type));
                 } catch (Exception e) {
                     Sentry.captureException(e);
                 }
@@ -47,6 +51,10 @@ public class UpdateData implements Serializable {
         }
     }
 
+    /**
+     * Get list of rooms that are currently in the API database
+     * @return List of rooms
+     */
     public List<Room> getRooms() {
         return data.get(ModelType.ROOM)
                 .stream()
@@ -54,6 +62,10 @@ public class UpdateData implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get list of titles that are currently in the API database
+     * @return List of titles
+     */
     public List<Title> getTitles() {
         return data.get(ModelType.TITLE)
                 .stream()
@@ -61,6 +73,10 @@ public class UpdateData implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get list of degrees that are currently in the API database
+     * @return List of degrees
+     */
     public List<Degree> getDegrees() {
         return data.get(ModelType.DEGREE)
                 .stream()
@@ -68,6 +84,10 @@ public class UpdateData implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get list of subjects that are currently in the API database
+     * @return List of subjects
+     */
     public List<Subject> getSubjects() {
         return data.get(ModelType.SUBJECT)
                 .stream()
@@ -75,6 +95,10 @@ public class UpdateData implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get list of teachers that are currently in the API database
+     * @return List of teachers
+     */
     public List<Teacher> getTeachers() {
         return data.get(ModelType.TEACHER)
                 .stream()
@@ -82,6 +106,10 @@ public class UpdateData implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get list of schedule entries that are currently in the API database
+     * @return List of schedule entries
+     */
     public List<Schedule> getSchedules() {
         return data.get(ModelType.SCHEDULE)
                 .stream()
@@ -89,6 +117,10 @@ public class UpdateData implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get list of specialities that are currently in the API database
+     * @return List of specialities
+     */
     public List<Speciality> getSpecialities() {
         return data.get(ModelType.SPECIALITY)
                 .stream()
@@ -96,11 +128,19 @@ public class UpdateData implements Serializable {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Serialize the update data into a string for database storage
+     * @return serialized update data
+     */
     public String serialize () {
         return object.toString();
     }
 
-    // TODO: Add tests for serializadion/deserialization of UpdateData
+    // TODO: Add tests for serialization/deserialization of UpdateData
+    /**
+     * Deserialize a string into the update data
+     * @return deserialized update data
+     */
     public static UpdateData deserialize (String serialized) {
         return new UpdateData(JsonParser.parseString(serialized).getAsJsonObject());
     }

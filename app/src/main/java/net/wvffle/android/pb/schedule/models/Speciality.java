@@ -26,6 +26,11 @@ public class Speciality implements Model {
         this.name = name;
     }
 
+    /**
+     * Create a new Speciality from JSON
+     * @param speciality JsonObject containing speciality data
+     * @return new speciality model
+     */
     public static Speciality fromJson(JsonObject speciality) {
         return new Speciality(
                 speciality.get("id").getAsLong(),
@@ -34,10 +39,18 @@ public class Speciality implements Model {
         );
     }
 
+    /**
+     * Return hash of the speciality
+     * @return String hash of the speciality
+     */
     public String getHash() {
         return hash;
     }
 
+    /**
+     * Return name of the speciality
+     * @return String name of the speciality
+     */
     public String getName() {
         return name;
     }

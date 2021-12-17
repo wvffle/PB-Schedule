@@ -10,7 +10,6 @@ import net.wvffle.android.pb.schedule.api.converters.UpdateDiffConverter;
 
 import org.joda.time.format.ISODateTimeFormat;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -45,6 +44,11 @@ public class Update implements Model {
         this.diff = diff;
     }
 
+    /**
+     * Create a new Update from JSON
+     * @param update JsonObject containing update data
+     * @return new update model
+     */
     public static Update fromJson(JsonObject update) throws ParseException {
         UpdateData data = new UpdateData(update.getAsJsonObject("data"));
         UpdateDiff diff = new UpdateDiff(update.getAsJsonObject("diff"), data);
@@ -59,18 +63,34 @@ public class Update implements Model {
         );
     }
 
+    /**
+     * Return hash of the update
+     * @return String hash
+     */
     public String getHash() {
         return hash;
     }
 
+    /**
+     * Return date of the update
+     * @return Date of the update
+     */
     public Date getDate () {
         return date;
     }
 
+    /**
+     * Return data of the update
+     * @return UpdateData of the update
+     */
     public UpdateData getData () {
         return data;
     }
 
+    /**
+     * Return diff of the update
+     * @return UpdateDiff of the update
+     */
     public UpdateDiff getDiff () {
         return diff;
     }

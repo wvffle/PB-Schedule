@@ -26,6 +26,11 @@ public enum ModelType {
         return clazz;
     }
 
+    /**
+     * Return a ModelType for given name
+     * @param name the name string
+     * @return ModelType
+     */
     public static ModelType valueOfName (String name) {
         switch (name) {
             case "room":
