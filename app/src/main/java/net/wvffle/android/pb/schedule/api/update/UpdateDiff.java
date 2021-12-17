@@ -2,6 +2,7 @@ package net.wvffle.android.pb.schedule.api.update;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import net.wvffle.android.pb.schedule.api.model.Model;
 import net.wvffle.android.pb.schedule.api.model.ModelType;
@@ -18,8 +19,13 @@ public class UpdateDiff implements Serializable {
     private final Map<ModelType, List<String>> added = new HashMap<>();
     private final Map<ModelType, List<String>> removed = new HashMap<>();
     private final Map<String, Model> data = new HashMap<>();
+    private final JsonObject json;
+    private final UpdateData updateData;
 
     public UpdateDiff(JsonObject json, UpdateData data) {
+        this.json = json;
+        updateData = data;
+
         for (List<Model> list : data.data.values()) {
             for (Model model : list) {
                 this.data.put(model.getHash(), model);
@@ -87,5 +93,23 @@ public class UpdateDiff implements Serializable {
         }
 
         return result;
+    }
+
+    // TODO: Make UpdateDiff serialized value not depend on UpdateData
+    //       Currently we're storing the UpdateData twice in the database.
+    public String serialize () {
+        JsonObject container = new JsonObject();
+        container.addProperty("data", updateData.serialize());
+        container.add("json", json);
+        return container.toString();
+    }
+
+    // TODO: Add tests for serializadion/deserialization of UpdateDiff
+    public static UpdateDiff deserialize (String serialized) {
+        JsonObject container = JsonParser.parseString(serialized).getAsJsonObject();
+        return new UpdateDiff(
+                container.getAsJsonObject("json"),
+                UpdateData.deserialize(container.get("data").getAsString())
+        );
     }
 }
