@@ -12,7 +12,7 @@ public enum ClassType {
     CW("exercises"),
     PS("special"),
     W("lecture");
-    // TODO: Add UNKNOWN class type
+    // TODO [$61bd0a25820545066013c455]: Add UNKNOWN class type
 
     private final String fullName;
     private static final Map<String, ClassType> BY_NAME = new HashMap<>();
