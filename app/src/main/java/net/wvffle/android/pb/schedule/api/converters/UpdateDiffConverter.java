@@ -16,6 +16,7 @@ public class UpdateDiffConverter implements PropertyConverter<UpdateDiff, String
             return (UpdateDiff) Serializer.getInstance().fromString(databaseValue);
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
+            // TODO: Add Sentry
         }
 
         return null;
@@ -27,6 +28,7 @@ public class UpdateDiffConverter implements PropertyConverter<UpdateDiff, String
             return Serializer.getInstance().toString(entityProperty);
         } catch (IOException e) {
             e.printStackTrace();
+            // TODO: Add Sentry
         }
 
         return null;

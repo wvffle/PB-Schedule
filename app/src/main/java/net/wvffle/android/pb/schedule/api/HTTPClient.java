@@ -31,6 +31,7 @@ public class HTTPClient {
             return Objects.requireNonNull(buildClient().newCall(request).execute().body()).string();
         } catch (IOException e) {
             e.printStackTrace();
+            // TODO: Add Sentry
         }
 
         return null;
