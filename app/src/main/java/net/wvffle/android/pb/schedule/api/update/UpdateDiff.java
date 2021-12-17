@@ -22,6 +22,10 @@ public class UpdateDiff implements Serializable {
     private final JsonObject json;
     private final UpdateData updateData;
 
+    /**
+     * Create new update diff object from JSON
+     * @param json JsonObject with the update diff
+     */
     public UpdateDiff(JsonObject json, UpdateData data) {
         this.json = json;
         updateData = data;
@@ -52,14 +56,26 @@ public class UpdateDiff implements Serializable {
         }
     }
 
+    /**
+     * Return added model hashes
+     * @return map of lists of added model hashes
+     */
     public Map<ModelType, List<String>> getAdded () {
         return added;
     }
 
+    /**
+     * Return removed model hashes
+     * @return map of lists of removed model hashes
+     */
     public Map<ModelType, List<String>> getRemoved () {
         return removed;
     }
 
+    /**
+     * Return added models
+     * @return map of lists of added models
+     */
     public Map<ModelType, List<Model>> getAddedModels () {
         Map<ModelType, List<Model>> result = new HashMap<>();
 
@@ -77,6 +93,10 @@ public class UpdateDiff implements Serializable {
         return result;
     }
 
+    /**
+     * Return removed models
+     * @return map of lists of removed models
+     */
     public Map<ModelType, List<Model>> getRemovedModels () {
         Map<ModelType, List<Model>> result = new HashMap<>();
 
@@ -97,6 +117,10 @@ public class UpdateDiff implements Serializable {
 
     // TODO: Make UpdateDiff serialized value not depend on UpdateData
     //       Currently we're storing the UpdateData twice in the database.
+    /**
+     * Serialize the update diff into a string for database storage
+     * @return serialized update diff
+     */
     public String serialize () {
         JsonObject container = new JsonObject();
         container.addProperty("data", updateData.serialize());
@@ -104,7 +128,11 @@ public class UpdateDiff implements Serializable {
         return container.toString();
     }
 
-    // TODO: Add tests for serializadion/deserialization of UpdateDiff
+    // TODO: Add tests for serialization/deserialization of UpdateDiff
+    /**
+     * Deserialize a string into the update diff
+     * @return deserialized update diff
+     */
     public static UpdateDiff deserialize (String serialized) {
         JsonObject container = JsonParser.parseString(serialized).getAsJsonObject();
         return new UpdateDiff(

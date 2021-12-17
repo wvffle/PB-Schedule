@@ -28,6 +28,11 @@ public class Subject  implements Model {
         this.shortName = shortName;
     }
 
+    /**
+     * Create a new Subject from JSON
+     * @param subject JsonObject containing subject data
+     * @return new subject model
+     */
     public static Subject fromJson(JsonObject subject) {
         return new Subject(
                 subject.get("id").getAsLong(),
@@ -37,14 +42,26 @@ public class Subject  implements Model {
         );
     }
 
+    /**
+     * Return hash of the subject
+     * @return String hash of the subject
+     */
     public String getHash() {
         return hash;
     }
 
+    /**
+     * Return name of the subject
+     * @return String name of the subject
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Return short name of the subject
+     * @return String short name of the subject
+     */
     public String getShortName() {
         return shortName;
     }

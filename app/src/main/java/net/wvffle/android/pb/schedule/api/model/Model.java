@@ -6,6 +6,5 @@ public interface Model {
     static Model fromJson (JsonObject object) {
         return null;
     }
-
     String getHash ();
 }

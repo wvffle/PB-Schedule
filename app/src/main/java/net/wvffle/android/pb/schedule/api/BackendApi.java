@@ -38,6 +38,10 @@ public class BackendApi {
         routeMap.put(ModelType.SPECIALITY, "/specialities");
     }
 
+    /**
+     * Return a list of updates
+     * @return List of UpdateEntry objects
+     */
     public static List<UpdateEntry> getUpdates () {
         String res = HTTPClient.get(HOST + "/updates");
         assert res != null;
@@ -50,6 +54,11 @@ public class BackendApi {
         return updates;
     }
 
+    /**
+     * Return an update
+     * @param hash String hash of an update
+     * @return Update model
+     */
     public static Update getUpdate (String hash) {
         String res = HTTPClient.get(HOST + "/updates/" + hash);
         assert res != null;
@@ -68,36 +77,71 @@ public class BackendApi {
         String res = HTTPClient.get(HOST + routeMap.get(type) + "/" + hash);
         assert res != null;
 
-        return ModelFactory.createCollectionEntry(
+        return ModelFactory.createModel(
                 JsonParser.parseString(res).getAsJsonObject(),
                 type
         );
     }
 
+    /**
+     * Return a room
+     * @param hash String hash of a room
+     * @return Room model
+     */
     public static Room getRoom (String hash) {
         return (Room) getModelByType(ModelType.ROOM, hash);
     }
 
+    /**
+     * Return a title
+     * @param hash String hash of a title
+     * @return Title model
+     */
     public static Title getTitle (String hash) {
         return (Title) getModelByType(ModelType.TITLE, hash);
     }
 
+    /**
+     * Return a degree
+     * @param hash String hash of a degree
+     * @return Degree model
+     */
     public static Degree getDegree (String hash) {
         return (Degree) getModelByType(ModelType.DEGREE, hash);
     }
 
+    /**
+     * Return a subject
+     * @param hash String hash of a subject
+     * @return Subject model
+     */
     public static Subject getSubject (String hash) {
         return (Subject) getModelByType(ModelType.SUBJECT, hash);
     }
 
+    /**
+     * Return a teacher
+     * @param hash String hash of a teacher
+     * @return Teacher model
+     */
     public static Teacher getTeacher (String hash) {
         return (Teacher) getModelByType(ModelType.TEACHER, hash);
     }
 
+    /**
+     * Return a schedule
+     * @param hash String hash of a schedule
+     * @return Schedule model
+     */
     public static Schedule getSchedule (String hash) {
         return (Schedule) getModelByType(ModelType.SCHEDULE, hash);
     }
 
+    /**
+     * Return a speciality
+     * @param hash String hash of a speciality
+     * @return Speciality model
+     */
     public static Speciality getSpeciality (String hash) {
         return (Speciality) getModelByType(ModelType.SPECIALITY, hash);
     }

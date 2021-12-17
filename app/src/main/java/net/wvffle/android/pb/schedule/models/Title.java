@@ -26,6 +26,11 @@ public class Title implements Model {
         this.name = name;
     }
 
+    /**
+     * Create a new Title from JSON
+     * @param title JsonObject containing title data
+     * @return new title model
+     */
     public static Title fromJson(JsonObject title) {
         return new Title(
                 title.get("id").getAsLong(),
@@ -34,10 +39,18 @@ public class Title implements Model {
         );
     }
 
+    /**
+     * Return hash of the title
+     * @return String hash of the title
+     */
     public String getHash() {
         return hash;
     }
 
+    /**
+     * Return name of the title
+     * @return String name of the title
+     */
     public String getName() {
         return name;
     }

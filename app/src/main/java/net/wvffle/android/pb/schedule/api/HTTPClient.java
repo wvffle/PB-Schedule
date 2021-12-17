@@ -23,6 +23,11 @@ public class HTTPClient {
         return (client = clientBuilder.build());
     }
 
+    /**
+     * Perform a GET request to given url
+     * @param url Url string
+     * @return String response
+     */
     public static String get (String url) {
         try {
             Request request = new Request.Builder()

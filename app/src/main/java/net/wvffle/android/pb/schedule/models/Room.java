@@ -27,6 +27,11 @@ public class Room implements Model {
         this.name = name;
     }
 
+    /**
+     * Create a new Room from JSON
+     * @param room JsonObject containing room data
+     * @return new room model
+     */
     public static Room fromJson(JsonObject room) {
         return new Room(
                 room.get("id").getAsLong(),
@@ -35,10 +40,18 @@ public class Room implements Model {
         );
     }
 
+    /**
+     * Return hash of the room
+     * @return String hash of the room
+     */
     public String getHash() {
         return hash;
     }
 
+    /**
+     * Return name of the room
+     * @return String name of the room
+     */
     public String getName() {
         return name;
     }
