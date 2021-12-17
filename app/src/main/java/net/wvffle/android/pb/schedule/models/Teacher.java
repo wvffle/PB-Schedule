@@ -39,7 +39,7 @@ public class Teacher implements Model {
                 0,
                 teacher.get("hash").getAsString(),
                 teacher.get("surname").getAsString(),
-                teacher.get("firstName").getAsString(),
+                teacher.get("name").getAsString(),
                 teacher.get("initials").getAsString(),
                 teacher.get("title").getAsLong()
         );

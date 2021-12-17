@@ -13,12 +13,13 @@ import java.util.Map;
 
 public class ApiWorker extends Worker {
     private static long callId = 0;
-    private static Map<Long, Executor> executorMap = new HashMap<>();
+    private static final Map<Long, Executor> executorMap = new HashMap<>();
 
     public ApiWorker (@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
     }
 
+    @NonNull
     @Override
     public Result doWork() {
         long id = getInputData().getLong("callId", -1);
@@ -27,6 +28,7 @@ public class ApiWorker extends Worker {
         }
 
         Executor executor = executorMap.get(id);
+        assert executor != null;
         return executor.execute();
     }
 

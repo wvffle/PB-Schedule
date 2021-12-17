@@ -1,8 +1,10 @@
 package net.wvffle.android.pb.schedule.models;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
-import net.wvffle.android.pb.schedule.api.model.converters.ClassTypeConverter;
+import net.wvffle.android.pb.schedule.api.converters.ClassTypeConverter;
 import net.wvffle.android.pb.schedule.enums.ClassType;
 import net.wvffle.android.pb.schedule.enums.WeekFlags;
 import net.wvffle.android.pb.schedule.api.model.Model;
@@ -62,6 +64,12 @@ public class Schedule implements Model {
     }
 
     public static Schedule fromJson(JsonObject schedule) {
+        JsonElement room = schedule.get("room");
+        JsonElement degree = schedule.get("degree");
+        JsonElement teacher = schedule.get("teacher");
+        JsonElement subject = schedule.get("subject");
+        JsonElement speciality = schedule.get("speciality");
+
         return new Schedule(
                 schedule.get("id").getAsLong(),
                 schedule.get("hash").getAsString(),
@@ -72,11 +80,11 @@ public class Schedule implements Model {
                 schedule.get("semester").getAsInt(),
                 schedule.get("intervals").getAsInt(),
                 schedule.get("weekFlags").getAsInt(),
-                schedule.get("room").getAsLong(),
-                schedule.get("degree").getAsLong(),
-                schedule.get("teacher").getAsLong(),
-                schedule.get("subject").getAsLong(),
-                schedule.get("speciality").getAsLong()
+                (room instanceof JsonNull) ? 0 : room.getAsLong(),
+                (degree instanceof JsonNull) ? 0 : degree.getAsLong(),
+                (teacher instanceof JsonNull) ? 0 : teacher.getAsLong(),
+                (subject instanceof JsonNull) ? 0 : subject.getAsLong(),
+                (speciality instanceof JsonNull) ? 0 : speciality.getAsLong()
         );
     }
 
