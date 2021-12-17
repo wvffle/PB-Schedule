@@ -11,25 +11,11 @@ public class UpdateDataConverter implements PropertyConverter<UpdateData, String
 
     @Override
     public UpdateData convertToEntityProperty(String databaseValue) {
-        try {
-            return (UpdateData) Serializer.getInstance().fromString(databaseValue);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            // TODO: Add Sentry
-        }
-
-        return null;
+        return UpdateData.deserialize(databaseValue);
     }
 
     @Override
     public String convertToDatabaseValue(UpdateData entityProperty) {
-        try {
-            return Serializer.getInstance().toString(entityProperty);
-        } catch (IOException e) {
-            e.printStackTrace();
-            // TODO: Add Sentry
-        }
-
-        return null;
+        return entityProperty.serialize();
     }
 }

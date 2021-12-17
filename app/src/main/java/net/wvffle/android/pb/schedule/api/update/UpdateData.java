@@ -2,6 +2,7 @@ package net.wvffle.android.pb.schedule.api.update;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import net.wvffle.android.pb.schedule.api.model.Model;
 import net.wvffle.android.pb.schedule.api.model.ModelFactory;
@@ -23,9 +24,10 @@ import java.util.stream.Collectors;
 
 public class UpdateData implements Serializable {
     protected final Map<ModelType, List<Model>> data = new HashMap<>();
+    private final JsonObject object;
 
     public UpdateData(JsonObject json) {
-        JsonObject object = json.getAsJsonObject();
+        object = json.getAsJsonObject();
         for (String key : object.keySet()) {
             ModelType type = ModelType.valueOfName(key);
             assert type != null;
@@ -43,7 +45,7 @@ public class UpdateData implements Serializable {
         }
     }
 
-    public List<? extends Room> getRooms() {
+    public List<Room> getRooms() {
         return data.get(ModelType.ROOM)
                 .stream()
                 .map(Room.class::cast)
@@ -90,5 +92,14 @@ public class UpdateData implements Serializable {
                 .stream()
                 .map(Speciality.class::cast)
                 .collect(Collectors.toList());
+    }
+
+    public String serialize () {
+        return object.toString();
+    }
+
+    // TODO: Add tests for serializadion/deserialization of UpdateData
+    public static UpdateData deserialize (String serialized) {
+        return new UpdateData(JsonParser.parseString(serialized).getAsJsonObject());
     }
 }
