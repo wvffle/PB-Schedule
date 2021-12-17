@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import io.sentry.Sentry;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
@@ -31,7 +32,7 @@ public class HTTPClient {
             return Objects.requireNonNull(buildClient().newCall(request).execute().body()).string();
         } catch (IOException e) {
             e.printStackTrace();
-            // TODO: Add Sentry
+            Sentry.captureException(e);
         }
 
         return null;
