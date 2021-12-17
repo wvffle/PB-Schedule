@@ -37,7 +37,7 @@ public class UpdateData implements Serializable {
                 try {
                     list.add(ModelFactory.createCollectionEntry(element.getAsJsonObject(), type));
                 } catch (Exception e) {
-                    // TODO: Add sentry
+                    // TODO: Add Sentry
                 }
             }
         }

@@ -11,6 +11,7 @@ public class ModelFactory {
             return clazz.cast(clazz.getDeclaredMethod("fromJson", JsonObject.class).invoke(null, json));
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
+            // TODO: Add Sentry
         }
 
         return null;

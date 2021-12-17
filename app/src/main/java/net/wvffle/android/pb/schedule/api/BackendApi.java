@@ -56,6 +56,7 @@ public class BackendApi {
             return Update.fromJson(JsonParser.parseString(res).getAsJsonObject());
         } catch (ParseException e) {
             e.printStackTrace();
+            // TODO: Add Sentry
         }
 
         return null;
