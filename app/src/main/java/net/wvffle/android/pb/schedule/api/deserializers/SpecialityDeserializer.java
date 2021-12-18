@@ -8,13 +8,13 @@ import com.google.gson.JsonParseException;
 
 import net.wvffle.android.pb.schedule.api.model.ModelFactory;
 import net.wvffle.android.pb.schedule.api.model.ModelType;
-import net.wvffle.android.pb.schedule.models.Teacher;
+import net.wvffle.android.pb.schedule.models.Speciality;
 
 import java.lang.reflect.Type;
 
-public class TeacherDeserializer implements JsonDeserializer<Teacher> {
+class SpecialityDeserializer implements JsonDeserializer<Speciality> {
     @Override
-    public Teacher deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return (Teacher) ModelFactory.createModel(json.getAsJsonObject(), ModelType.TEACHER);
+    public Speciality deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        return (Speciality) ModelFactory.createModel(json.getAsJsonObject(), ModelType.SPECIALITY);
     }
 }

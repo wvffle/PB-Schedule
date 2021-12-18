@@ -25,7 +25,8 @@ import java.util.Map;
 import io.sentry.Sentry;
 
 public class BackendApi {
-    private static final String HOST = "https://but-schedule-server.herokuapp.com";
+    public static final String HOST = "https://but-schedule-server.herokuapp.com";
+
     private static final Map<ModelType, String> routeMap = new HashMap<>();
 
     static {

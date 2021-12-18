@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import io.sentry.Sentry;
 
-public class ModelFactory {
+public class ModelFactory<T> {
     /**
      * Create a model from JSON
      * @param json JsonObject object
