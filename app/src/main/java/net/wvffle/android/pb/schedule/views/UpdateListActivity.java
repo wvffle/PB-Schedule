@@ -1,36 +1,20 @@
 package net.wvffle.android.pb.schedule.views;
 
-import androidx.annotation.NonNull;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-
-import net.wvffle.android.pb.schedule.BR;
 import net.wvffle.android.pb.schedule.R;
-import net.wvffle.android.pb.schedule.api.model.Model;
 import net.wvffle.android.pb.schedule.api.update.UpdateEntry;
 import net.wvffle.android.pb.schedule.databinding.ActivityUpdateListBinding;
 import net.wvffle.android.pb.schedule.util.GenericRecyclerViewAdapter;
 import net.wvffle.android.pb.schedule.viewmodels.UpdateListViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class UpdateListActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

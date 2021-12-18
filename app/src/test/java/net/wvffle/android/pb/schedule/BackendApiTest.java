@@ -1,11 +1,11 @@
 package net.wvffle.android.pb.schedule;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import net.wvffle.android.pb.schedule.api.BackendApi;
 import net.wvffle.android.pb.schedule.models.Room;
+
+import org.junit.Test;
 
 public class BackendApiTest {
     @Test

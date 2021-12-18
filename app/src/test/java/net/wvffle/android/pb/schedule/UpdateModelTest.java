@@ -1,5 +1,9 @@
 package net.wvffle.android.pb.schedule;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import net.wvffle.android.pb.schedule.api.BackendApi;
 import net.wvffle.android.pb.schedule.api.update.UpdateData;
 import net.wvffle.android.pb.schedule.api.update.UpdateDiff;
@@ -7,7 +11,6 @@ import net.wvffle.android.pb.schedule.api.update.UpdateEntry;
 import net.wvffle.android.pb.schedule.models.Update;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import java.util.List;
 

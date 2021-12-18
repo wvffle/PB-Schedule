@@ -1,24 +1,18 @@
 package net.wvffle.android.pb.schedule;
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.ListenableWorker;
 import androidx.work.WorkManager;
 
-import android.os.Bundle;
-import android.util.Log;
-
 import net.wvffle.android.pb.schedule.api.ApiWorker;
 import net.wvffle.android.pb.schedule.api.BackendApi;
 import net.wvffle.android.pb.schedule.api.update.UpdateData;
-import net.wvffle.android.pb.schedule.api.update.UpdateEntry;
-import net.wvffle.android.pb.schedule.models.Room;
 import net.wvffle.android.pb.schedule.models.Update;
 import net.wvffle.android.pb.schedule.models.Update_;
 
-import java.util.Comparator;
-import java.util.List;
-
-import io.objectbox.Box;
 import io.objectbox.query.QueryBuilder;
 
 public class MainActivity extends AppCompatActivity {

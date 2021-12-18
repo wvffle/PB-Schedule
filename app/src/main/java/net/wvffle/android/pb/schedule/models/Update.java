@@ -2,11 +2,11 @@ package net.wvffle.android.pb.schedule.models;
 
 import com.google.gson.JsonObject;
 
+import net.wvffle.android.pb.schedule.api.converters.UpdateDataConverter;
+import net.wvffle.android.pb.schedule.api.converters.UpdateDiffConverter;
 import net.wvffle.android.pb.schedule.api.model.Model;
 import net.wvffle.android.pb.schedule.api.update.UpdateData;
 import net.wvffle.android.pb.schedule.api.update.UpdateDiff;
-import net.wvffle.android.pb.schedule.api.converters.UpdateDataConverter;
-import net.wvffle.android.pb.schedule.api.converters.UpdateDiffConverter;
 
 import org.joda.time.format.ISODateTimeFormat;
 
