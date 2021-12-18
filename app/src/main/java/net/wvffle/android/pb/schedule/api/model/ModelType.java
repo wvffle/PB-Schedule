@@ -60,6 +60,7 @@ public enum ModelType {
             case "title":
             case "titles":
                 return TITLE;
+
         }
 
         return null;

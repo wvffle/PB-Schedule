@@ -58,6 +58,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.0'
     implementation 'com.google.code.gson:gson:2.8.9'
     implementation 'joda-time:joda-time:2.9.4'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     debugImplementation 'io.objectbox:objectbox-android-objectbrowser:3.0.1'
     releaseImplementation 'io.objectbox:objectbox-android:3.0.1'
