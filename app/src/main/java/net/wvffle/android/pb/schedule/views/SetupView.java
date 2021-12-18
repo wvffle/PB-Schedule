@@ -43,7 +43,7 @@ public class SetupView extends BaseViewWithVM<FragmentSetupViewBinding, SetupVie
             public void onPageSelected(int position) {
                 viewModel.setButtonName(
                         binding.viewPager.getCurrentItem() == fragments.size() - 1
-                                // TODO: Migrate to string ids
+                                // TODO [$61be3991a972d90726d478c8]: Migrate to string ids
                                 ? "Finish"
                                 : "Next"
                 );
@@ -56,7 +56,7 @@ public class SetupView extends BaseViewWithVM<FragmentSetupViewBinding, SetupVie
         SharedPreferences.Editor editor = pref.edit();
         binding.button.setOnClickListener(v -> {
 
-            // TODO: Write step data to editor
+            // TODO [$61be3991a972d90726d478c9]: Write step data to editor
             if (binding.viewPager.getCurrentItem() == fragments.size() - 1) {
                 editor.putBoolean("setup-done", true);
                 editor.apply();
