@@ -22,7 +22,7 @@ public class UpdateListViewModel extends ViewModel {
     public void loadUpdates (Context context) {
         WorkManager.getInstance(context).enqueue(ApiWorker.create(() -> {
             dataLoading.postValue(true);
-            updateEntries.postValue(BackendApi.getUpdates());
+            updateEntries.postValue(BackendApi.getService().getUpdates().execute().body());
             dataLoading.postValue(false);
             return ListenableWorker.Result.success();
         }));
