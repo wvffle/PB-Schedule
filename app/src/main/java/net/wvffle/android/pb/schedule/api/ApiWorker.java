@@ -8,8 +8,11 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import io.sentry.Sentry;
 
 public class ApiWorker extends Worker {
     private static long callId = 0;
@@ -33,7 +36,14 @@ public class ApiWorker extends Worker {
 
         Executor executor = executorMap.get(id);
         assert executor != null;
-        return executor.execute();
+
+        try {
+            return executor.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Sentry.captureException(e);
+            return Result.failure();
+        }
     }
 
     /**
@@ -57,6 +67,6 @@ public class ApiWorker extends Worker {
      * Executor interface
      */
     public interface Executor {
-        Result execute();
+        Result execute() throws IOException;
     }
 }
