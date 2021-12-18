@@ -12,7 +12,7 @@ import net.wvffle.android.pb.schedule.models.Schedule;
 
 import java.lang.reflect.Type;
 
-class ScheduleDeserializer implements JsonDeserializer<Schedule> {
+public class ScheduleDeserializer implements JsonDeserializer<Schedule> {
     @Override
     public Schedule deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         return (Schedule) ModelFactory.createModel(json.getAsJsonObject(), ModelType.SCHEDULE);

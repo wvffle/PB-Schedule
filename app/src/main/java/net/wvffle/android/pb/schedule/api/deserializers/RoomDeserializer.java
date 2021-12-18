@@ -12,7 +12,7 @@ import net.wvffle.android.pb.schedule.models.Room;
 
 import java.lang.reflect.Type;
 
-class RoomDeserializer implements JsonDeserializer<Room> {
+public class RoomDeserializer implements JsonDeserializer<Room> {
     @Override
     public Room deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         return (Room) ModelFactory.createModel(json.getAsJsonObject(), ModelType.ROOM);

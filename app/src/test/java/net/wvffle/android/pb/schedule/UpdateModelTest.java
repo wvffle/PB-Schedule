@@ -1,5 +1,9 @@
 package net.wvffle.android.pb.schedule;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import net.wvffle.android.pb.schedule.api.BackendApi;
 import net.wvffle.android.pb.schedule.api.update.UpdateData;
 import net.wvffle.android.pb.schedule.api.update.UpdateDiff;
@@ -7,22 +11,22 @@ import net.wvffle.android.pb.schedule.api.update.UpdateEntry;
 import net.wvffle.android.pb.schedule.models.Update;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.List;
 
 public class UpdateModelTest {
 
     @Test
-    public void canFetchUpdates () {
-        List<UpdateEntry> updates = BackendApi.getUpdates();
+    public void canFetchUpdates () throws IOException {
+        List<UpdateEntry> updates = BackendApi.getService().getUpdates().execute().body();
         assertTrue(updates.size() > 0);
     }
 
     @Test
-    public void canFetchSingleUpdate () {
-        List<UpdateEntry> updates = BackendApi.getUpdates();
-        Update update = BackendApi.getUpdate(updates.get(0).getHash());
+    public void canFetchSingleUpdate () throws IOException {
+        List<UpdateEntry> updates = BackendApi.getService().getUpdates().execute().body();
+        Update update = BackendApi.getService().getUpdate(updates.get(0).getHash()).execute().body();
 
         assertNotNull(update);
         assertEquals(updates.get(0).getHash(), update.getHash());

@@ -12,7 +12,7 @@ import net.wvffle.android.pb.schedule.models.Speciality;
 
 import java.lang.reflect.Type;
 
-class SpecialityDeserializer implements JsonDeserializer<Speciality> {
+public class SpecialityDeserializer implements JsonDeserializer<Speciality> {
     @Override
     public Speciality deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         return (Speciality) ModelFactory.createModel(json.getAsJsonObject(), ModelType.SPECIALITY);
