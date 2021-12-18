@@ -15,6 +15,6 @@ import java.lang.reflect.Type;
 public class TitleDeserializer implements JsonDeserializer<Title> {
     @Override
     public Title deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        return (Title) ModelFactory.createModel(json.getAsJsonObject(), ModelType.TEACHER);
+        return (Title) ModelFactory.createModel(json.getAsJsonObject(), ModelType.TITLE);
     }
 }

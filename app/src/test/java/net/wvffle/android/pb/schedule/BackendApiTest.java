@@ -1,15 +1,11 @@
 package net.wvffle.android.pb.schedule;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import net.wvffle.android.pb.schedule.api.BackendApi;
 import net.wvffle.android.pb.schedule.api.BackendService;
-import net.wvffle.android.pb.schedule.api.deserializers.TeacherDeserializer;
 import net.wvffle.android.pb.schedule.models.Degree;
 import net.wvffle.android.pb.schedule.models.Room;
 import net.wvffle.android.pb.schedule.models.Schedule;
@@ -18,44 +14,15 @@ import net.wvffle.android.pb.schedule.models.Subject;
 import net.wvffle.android.pb.schedule.models.Teacher;
 import net.wvffle.android.pb.schedule.models.Title;
 
+import org.junit.Test;
+
 import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BackendApiTest {
-    Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Teacher.class, new TeacherDeserializer())
-            .create();
-
-    Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(BackendApi.HOST)
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build();
-
-    BackendService service = retrofit.create(BackendService.class);
-
-    @Test
-    public void testRoom() {
-        String hash = "00d1c9c8a3668121c9fc4d89b848b17e73a61073";
-        Room room = BackendApi.getRoom(hash);
-
-        assertEquals(hash, room.getHash());
-        assertEquals("209", room.getName());
-    }
-
-//    @Test
-//    public void testRoomRetrofit() throws IOException {
-//        String hash = "00d1c9c8a3668121c9fc4d89b848b17e73a61073";
-//        Call<Room> roomCall = service.getRoom(hash);
-//        Room room = roomCall.execute().body();
-//
-//        assertNotNull(room);
-//        assertEquals(hash, room.getHash());
-//        assertEquals("209", room.getName());
-//    }
+    BackendService service = BackendApi.getService();
 
     @Test
     public void testTeachersRetrofit() throws IOException {

@@ -13,7 +13,7 @@ import net.wvffle.android.pb.schedule.models.Degree;
 import java.lang.reflect.Type;
 
 
-class DegreeDeserializer implements JsonDeserializer<Degree> {
+public class DegreeDeserializer implements JsonDeserializer<Degree> {
     @Override
     public Degree deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         return (Degree) ModelFactory.createModel(json.getAsJsonObject(), ModelType.DEGREE);
