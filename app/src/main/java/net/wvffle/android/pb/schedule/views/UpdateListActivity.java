@@ -45,10 +45,12 @@ public class UpdateListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.setAdapter(adapter);
 
-        viewModel.getUpdates().observe(this, adapter::setData);
-        viewModel.isLoading().observe(this, isLoading -> {
-            Log.d("View", "loading: " + isLoading);
+        binding.swipeRefresh.setOnRefreshListener(() -> {
+            viewModel.loadUpdates(this);
         });
+
+        viewModel.getUpdates().observe(this, adapter::setData);
+        viewModel.isLoading().observe(this, binding.swipeRefresh::setRefreshing);
 
         viewModel.loadUpdates(this);
     }
