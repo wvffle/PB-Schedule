@@ -18,10 +18,6 @@
             android:name=".views.UpdateListActivity"
             android:exported="false" />
 
-        <activity
-            android:name=".views.SetupView"
-            android:exported="false" />
-
         <meta-data
             android:name="io.sentry.dsn"
             android:value="https://f63ac2ec8aa944fb87e569c7a7c09fb9@o291959.ingest.sentry.io/6111870" />
