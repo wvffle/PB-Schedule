@@ -1,4 +1,4 @@
-package net.wvffle.android.pb.schedule;
+package net.wvffle.android.pb.schedule.views;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.ListenableWorker;
 import androidx.work.WorkManager;
 
+import net.wvffle.android.pb.schedule.ObjectBox;
+import net.wvffle.android.pb.schedule.R;
 import net.wvffle.android.pb.schedule.api.ApiWorker;
 import net.wvffle.android.pb.schedule.api.BackendApi;
 import net.wvffle.android.pb.schedule.api.update.UpdateData;
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_view);
 
         WorkManager.getInstance(this).enqueue(ApiWorker.create(() -> {
             Update lastUpdate = ObjectBox.getUpdateBox()
