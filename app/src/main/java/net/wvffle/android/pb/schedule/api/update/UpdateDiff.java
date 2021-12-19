@@ -115,7 +115,7 @@ public class UpdateDiff implements Serializable {
         return result;
     }
 
-    // TODO [$61bd0a25820545066013c453]: Make UpdateDiff serialized value not depend on UpdateData
+    // TODO [#33]: Make UpdateDiff serialized value not depend on UpdateData
     //       Currently we're storing the UpdateData twice in the database.
     /**
      * Serialize the update diff into a string for database storage
@@ -128,7 +128,7 @@ public class UpdateDiff implements Serializable {
         return container.toString();
     }
 
-    // TODO [$61bd0a25820545066013c454]: Add tests for serialization/deserialization of UpdateDiff
+    // TODO [#34]: Add tests for serialization/deserialization of UpdateDiff
     /**
      * Deserialize a string into the update diff
      * @return deserialized update diff

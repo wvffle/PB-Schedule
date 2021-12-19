@@ -136,7 +136,7 @@ public class UpdateData implements Serializable {
         return object.toString();
     }
 
-    // TODO [$61bd0a25820545066013c452]: Add tests for serialization/deserialization of UpdateData
+    // TODO [#32]: Add tests for serialization/deserialization of UpdateData
     /**
      * Deserialize a string into the update data
      * @return deserialized update data
