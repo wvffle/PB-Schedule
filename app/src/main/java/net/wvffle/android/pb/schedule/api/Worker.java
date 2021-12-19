@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import java.io.IOException;
@@ -14,11 +13,11 @@ import java.util.Map;
 
 import io.sentry.Sentry;
 
-public class ApiWorker extends Worker {
+public class Worker extends androidx.work.Worker {
     private static long callId = 0;
     private static final Map<Long, Executor> executorMap = new HashMap<>();
 
-    public ApiWorker (@NonNull Context context, @NonNull WorkerParameters params) {
+    public Worker(@NonNull Context context, @NonNull WorkerParameters params) {
         super(context, params);
     }
 
@@ -58,7 +57,7 @@ public class ApiWorker extends Worker {
                 .putLong("callId", callId++)
                 .build();
 
-        return new OneTimeWorkRequest.Builder(ApiWorker.class)
+        return new OneTimeWorkRequest.Builder(Worker.class)
                 .setInputData(data)
                 .build();
     }
