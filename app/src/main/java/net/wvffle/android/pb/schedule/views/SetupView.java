@@ -2,15 +2,9 @@ package net.wvffle.android.pb.schedule.views;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 
 import net.wvffle.android.pb.schedule.R;
@@ -23,11 +17,18 @@ import java.util.ArrayList;
 
 public class SetupView extends BaseViewWithVM<FragmentSetupViewBinding, SetupViewModel> {
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        FragmentSetupViewBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_setup_view, container, false);
-        SetupViewModel viewModel = new ViewModelProvider(this).get(SetupViewModel.class);
-        setup(binding, viewModel);
+    int getLayoutId() {
+        return R.layout.fragment_setup_view;
+    }
 
+    @Override
+    Class<SetupViewModel> getViewModelClass() {
+        return SetupViewModel.class;
+    }
+
+    @Override
+    void setup(FragmentSetupViewBinding binding, SetupViewModel viewModel) {
+        Log.d("Setup", "Setup");
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new FirstSetupScreen());
         fragments.add(new FirstSetupScreen());
@@ -37,16 +38,19 @@ public class SetupView extends BaseViewWithVM<FragmentSetupViewBinding, SetupVie
                 requireActivity().getSupportFragmentManager(),
                 getLifecycle()
         ));
+        Log.d("Setup", binding.viewPager.toString());
 
         binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
+                Log.d("Setup", "position: " + position);
                 viewModel.setButtonName(
                         binding.viewPager.getCurrentItem() == fragments.size() - 1
                                 // TODO [$61be3991a972d90726d478c8]: Migrate to string ids
                                 ? "Finish"
                                 : "Next"
                 );
+                Log.d("Setup", "name: " + viewModel.getButtonName().getValue());
 
                 super.onPageSelected(position);
             }
@@ -66,7 +70,5 @@ public class SetupView extends BaseViewWithVM<FragmentSetupViewBinding, SetupVie
 
             binding.viewPager.setCurrentItem(binding.viewPager.getCurrentItem() + 1);
         });
-
-        return binding.getRoot();
     }
 }
