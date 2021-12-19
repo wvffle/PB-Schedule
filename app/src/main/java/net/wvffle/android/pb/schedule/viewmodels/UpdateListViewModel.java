@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.work.ListenableWorker;
 import androidx.work.WorkManager;
 
-import net.wvffle.android.pb.schedule.api.ApiWorker;
 import net.wvffle.android.pb.schedule.api.BackendApi;
+import net.wvffle.android.pb.schedule.api.Worker;
 import net.wvffle.android.pb.schedule.api.update.UpdateEntry;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class UpdateListViewModel extends ViewModel {
     public final MutableLiveData<Boolean> dataLoading = new MutableLiveData<>(false);
 
     public void loadUpdates (Context context) {
-        WorkManager.getInstance(context).enqueue(ApiWorker.create(() -> {
+        WorkManager.getInstance(context).enqueue(Worker.create(() -> {
             dataLoading.postValue(true);
             updateEntries.postValue(BackendApi.getService().getUpdates().execute().body());
             dataLoading.postValue(false);
