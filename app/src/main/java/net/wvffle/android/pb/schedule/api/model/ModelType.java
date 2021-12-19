@@ -15,9 +15,11 @@ public enum ModelType {
     SPECIALITY(Speciality.class),
     SUBJECT(Subject.class),
     TEACHER(Teacher.class),
-    TITLE(Title.class);
+    TITLE(Title.class),
+    UNKNOWN(null);
 
     private final Class<? extends Model> clazz;
+
     ModelType(Class<? extends Model> clazz) {
         this.clazz = clazz;
     }
@@ -63,6 +65,6 @@ public enum ModelType {
 
         }
 
-        return null;
+        return UNKNOWN;
     }
 }
