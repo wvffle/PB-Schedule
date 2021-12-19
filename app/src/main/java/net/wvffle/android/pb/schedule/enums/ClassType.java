@@ -11,8 +11,8 @@ public enum ClassType {
     L("laboratories"),
     CW("exercises"),
     PS("special"),
-    W("lecture");
-    // TODO [#35]: Add UNKNOWN class type
+    W("lecture"),
+    UNKNOWN("?");
 
     private final String fullName;
     private static final Map<String, ClassType> BY_NAME = new HashMap<>();
@@ -36,6 +36,7 @@ public enum ClassType {
     public static ClassType valueOfName (String name) {
         // NOTE: support for exercises
         name = name.replace('Ć', 'c');
-        return BY_NAME.getOrDefault(name, valueOf(name.toUpperCase()));
+        ClassType classType = BY_NAME.getOrDefault(name, valueOf(name.toUpperCase()));
+        return classType == null ? UNKNOWN : classType;
     }
 }
