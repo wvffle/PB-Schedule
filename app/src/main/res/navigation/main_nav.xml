@@ -24,7 +24,8 @@
     <fragment
         android:id="@+id/setupView"
         android:name="net.wvffle.android.pb.schedule.views.SetupView"
-        android:label="SetupView">
+        android:label="SetupView"
+        tools:layout="@layout/fragment_setup_view">
         <action
             android:id="@+id/action_setupView_to_homeView"
             app:destination="@id/homeView"
@@ -34,5 +35,6 @@
     <fragment
         android:id="@+id/homeView"
         android:name="net.wvffle.android.pb.schedule.views.HomeView"
-        android:label="HomeView" />
+        android:label="HomeView"
+        tools:layout="@layout/fragment_home_view" />
 </navigation>
