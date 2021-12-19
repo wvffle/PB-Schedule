@@ -1,15 +1,32 @@
 package net.wvffle.android.pb.schedule.views;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.databinding.library.baseAdapters.BR;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
-public class BaseViewWithVM<B extends ViewDataBinding, VM> extends BaseView<B> {
+public abstract class BaseViewWithVM<B extends ViewDataBinding, VM extends ViewModel> extends BaseView<B> {
     private VM viewModel;
 
-    protected void setup(B binding, VM viewModel) {
-        setup(binding);
+    abstract Class<VM> getViewModelClass();
 
-        this.viewModel = viewModel;
-        binding.setVariable(BR.viewModel, viewModel);
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        viewModel = new ViewModelProvider(this).get(getViewModelClass());
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
+
+    @Override
+    void setup(B binding) {
+        binding.setVariable(BR.viewModel, viewModel);
+        setup(binding, viewModel);
+    }
+
+    abstract void setup(B binding, VM vm);
 }
