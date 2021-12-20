@@ -15,15 +15,15 @@ import java.util.List;
 
 public class SetupAdapter extends FragmentStateAdapter {
     private final List<Fragment> fragments;
-    private final SetupViewModel viewModel;
+    private Integer maxSteps = 1;
 
     @SuppressLint("NotifyDataSetChanged")
     public SetupAdapter(SetupView setupView, List<Fragment> fragments, SetupViewModel viewModel, @NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
         this.fragments = fragments;
-        this.viewModel = viewModel;
 
         viewModel.getMaxSteps().observe(setupView, integer -> {
+            maxSteps = integer;
             notifyDataSetChanged();
         });
     }
@@ -36,6 +36,6 @@ public class SetupAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return Math.min(viewModel.getMaxSteps().getValue(), fragments.size());
+        return Math.min(maxSteps, fragments.size());
     }
 }

@@ -2,7 +2,6 @@ package net.wvffle.android.pb.schedule.util;
 
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +64,6 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
     public void setData(List<M> data) {
         this.data.clear();
         this.data.addAll(data);
-        Log.d("GenericAdapter", "New data");
-        Log.d("GenericAdapter", "size: " + data.size());
         notifyDataSetChanged();
     }
 

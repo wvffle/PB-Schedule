@@ -9,6 +9,7 @@ import net.wvffle.android.pb.schedule.R;
 import net.wvffle.android.pb.schedule.databinding.FragmentSetupViewBinding;
 import net.wvffle.android.pb.schedule.viewmodels.SetupViewModel;
 import net.wvffle.android.pb.schedule.views.setup.FirstSetupStep;
+import net.wvffle.android.pb.schedule.views.setup.SecondSetupStep;
 import net.wvffle.android.pb.schedule.views.setup.SetupAdapter;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class SetupView extends BaseViewWithVM<FragmentSetupViewBinding, SetupVie
     void setup(FragmentSetupViewBinding binding, SetupViewModel viewModel) {
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new FirstSetupStep(viewModel));
-        fragments.add(new FirstSetupStep(viewModel));
+        fragments.add(new SecondSetupStep(viewModel));
 
         binding.viewPager.setAdapter(new SetupAdapter(
                 this,

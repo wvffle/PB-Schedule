@@ -2,4 +2,6 @@
     <string name="app_name">PB Plan zajec</string>
     <string name="by_author">wvffle.net</string>
     <string name="lorem">Sapiente fuga eveniet placeat vel. Maiores ipsum quia quasi quo incidunt sint impedit. Et rerum dicta sunt totam.</string>
+    <string name="choose_a_semester">Choose a semester</string>
+    <string name="choose_a_degree">Choose a degree</string>
 </resources>
