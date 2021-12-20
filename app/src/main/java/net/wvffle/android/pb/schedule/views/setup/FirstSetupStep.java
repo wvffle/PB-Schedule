@@ -9,7 +9,9 @@ import net.wvffle.android.pb.schedule.util.GenericRecyclerViewAdapter;
 import net.wvffle.android.pb.schedule.viewmodels.SetupViewModel;
 import net.wvffle.android.pb.schedule.views.BaseView;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FirstSetupStep extends BaseView<FragmentFirstSetupStepViewBinding> {
     private final SetupViewModel viewModel;
@@ -32,11 +34,16 @@ public class FirstSetupStep extends BaseView<FragmentFirstSetupStepViewBinding> 
         binding.recyclerView.setAdapter(adapter);
 
         viewModel.getUpdate().observe(this, update -> {
-            List<Degree> degrees = update.getData().getDegrees();
+            List<Degree> degrees = update.getData()
+                    .getDegrees()
+                    .stream()
+                    .sorted(Comparator.comparing(Degree::getName))
+                    .collect(Collectors.toList());
             viewModel.setDegrees(degrees);
             adapter.setData(degrees);
 
             adapter.setOnItemClickListener((view, position) -> {
+                viewModel.setDegree(degrees.get(position));
                 viewModel.setMaxStep(2);
             });
         });
