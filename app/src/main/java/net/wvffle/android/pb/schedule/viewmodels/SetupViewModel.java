@@ -1,11 +1,8 @@
 package net.wvffle.android.pb.schedule.viewmodels;
 
-import androidx.annotation.StringRes;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import net.wvffle.android.pb.schedule.MainActivity;
 import net.wvffle.android.pb.schedule.ObjectBox;
 import net.wvffle.android.pb.schedule.models.Degree;
 import net.wvffle.android.pb.schedule.models.Update;
@@ -16,7 +13,6 @@ import java.util.List;
 import io.objectbox.query.QueryBuilder;
 
 public class SetupViewModel extends ViewModel {
-    private final MutableLiveData<String> buttonName = new MutableLiveData<>("");
     private final MutableLiveData<Update> update = new MutableLiveData<>(
             ObjectBox.getUpdateBox()
                     .query()
@@ -25,18 +21,7 @@ public class SetupViewModel extends ViewModel {
                     .findFirst()
     );
     private final MutableLiveData<List<Degree>> degrees = new MutableLiveData<>();
-
-    public LiveData<String> getButtonName() {
-        return buttonName;
-    }
-
-    public void setButtonName(String name) {
-        buttonName.setValue(name);
-    }
-
-    public void setButtonName(@StringRes int resId) {
-        setButtonName(MainActivity.getInstance().getString(resId));
-    }
+    private final MutableLiveData<Integer> maxSteps = new MutableLiveData<>(1);
 
     public MutableLiveData<Update> getUpdate() {
         return update;
@@ -48,5 +33,13 @@ public class SetupViewModel extends ViewModel {
 
     public void setDegrees(List<Degree> degreeList) {
         degrees.setValue(degreeList);
+    }
+
+    public MutableLiveData<Integer> getMaxSteps() {
+        return maxSteps;
+    }
+
+    public void setMaxStep(int maxStep) {
+        maxSteps.setValue(maxStep);
     }
 }

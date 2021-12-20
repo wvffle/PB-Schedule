@@ -1,7 +1,5 @@
 package net.wvffle.android.pb.schedule.views.setup;
 
-import android.util.Log;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import net.wvffle.android.pb.schedule.R;
@@ -39,7 +37,7 @@ public class FirstSetupStep extends BaseView<FragmentFirstSetupStepViewBinding> 
             adapter.setData(degrees);
 
             adapter.setOnItemClickListener((view, position) -> {
-                Log.d("Adapter", "Click " + degrees.get(position).getName());
+                viewModel.setMaxStep(2);
             });
         });
     }
