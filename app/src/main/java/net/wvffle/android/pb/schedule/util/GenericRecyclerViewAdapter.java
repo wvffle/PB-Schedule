@@ -4,6 +4,7 @@ package net.wvffle.android.pb.schedule.util;
 import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,9 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
     private final int layoutId;
     private final List<M> data = new ArrayList<>();
 
+    private ItemClickListener onItemClickListener = (View view, int position) -> {
+    };
+
     public GenericRecyclerViewAdapter(ViewModel viewModel, int layoutId) {
         this.viewModel = viewModel;
         this.layoutId = layoutId;
@@ -32,12 +36,15 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
     public GenericViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, viewType, parent, false);
+
         return new GenericViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull GenericViewHolder holder, int position) {
-        holder.bind(viewModel, position);
+        holder.bind(viewModel, position, v -> {
+            onItemClickListener.onItemClick(v, position);
+        });
     }
 
     @Override
@@ -50,13 +57,21 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
         return layoutId;
     }
 
+    public void setOnItemClickListener(ItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
     @SuppressLint("NotifyDataSetChanged")
-    public void setData (List<M> data) {
+    public void setData(List<M> data) {
         this.data.clear();
         this.data.addAll(data);
         Log.d("GenericAdapter", "New data");
         Log.d("GenericAdapter", "size: " + data.size());
         notifyDataSetChanged();
+    }
+
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 
     public static class GenericViewHolder extends RecyclerView.ViewHolder {
@@ -67,10 +82,12 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
             this.binding = binding;
         }
 
-        void bind (ViewModel viewModel, int position) {
+        void bind(ViewModel viewModel, int position, View.OnClickListener onClickListener) {
             binding.setVariable(BR.viewModel, viewModel);
             binding.setVariable(BR.position, position);
             binding.executePendingBindings();
+
+            binding.getRoot().setOnClickListener(onClickListener);
         }
     }
 }

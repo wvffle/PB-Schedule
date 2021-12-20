@@ -10,12 +10,12 @@ import net.wvffle.android.pb.schedule.databinding.FragmentSplashViewBinding;
 
 public class SplashView extends BaseView<FragmentSplashViewBinding> {
     @Override
-    int getLayoutId() {
+    protected int getLayoutId() {
         return R.layout.fragment_splash_view;
     }
 
     @Override
-    void setup(FragmentSplashViewBinding binding) {
+    protected void setup(FragmentSplashViewBinding binding) {
         SharedPreferences pref = requireActivity().getSharedPreferences("setup", Context.MODE_PRIVATE);
         long then = System.currentTimeMillis();
         Handler handler = new Handler();

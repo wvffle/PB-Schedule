@@ -23,7 +23,7 @@ import net.wvffle.android.pb.schedule.R;
 
 public abstract class BaseView<B extends ViewDataBinding> extends Fragment {
     @LayoutRes
-    abstract int getLayoutId();
+    protected abstract int getLayoutId();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public abstract class BaseView<B extends ViewDataBinding> extends Fragment {
         setup(binding);
     }
 
-    abstract void setup(B binding);
+    protected abstract void setup(B binding);
 
     protected NavController getNavController() {
         return Navigation.findNavController(MainActivity.getInstance(), R.id.fragmentContainerView);

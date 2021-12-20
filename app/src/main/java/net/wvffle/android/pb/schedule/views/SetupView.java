@@ -10,14 +10,14 @@ import androidx.viewpager2.widget.ViewPager2;
 import net.wvffle.android.pb.schedule.R;
 import net.wvffle.android.pb.schedule.databinding.FragmentSetupViewBinding;
 import net.wvffle.android.pb.schedule.viewmodels.SetupViewModel;
-import net.wvffle.android.pb.schedule.views.setup.FirstSetupScreen;
+import net.wvffle.android.pb.schedule.views.setup.FirstSetupStep;
 import net.wvffle.android.pb.schedule.views.setup.SetupAdapter;
 
 import java.util.ArrayList;
 
 public class SetupView extends BaseViewWithVM<FragmentSetupViewBinding, SetupViewModel> {
     @Override
-    int getLayoutId() {
+    protected int getLayoutId() {
         return R.layout.fragment_setup_view;
     }
 
@@ -30,8 +30,7 @@ public class SetupView extends BaseViewWithVM<FragmentSetupViewBinding, SetupVie
     void setup(FragmentSetupViewBinding binding, SetupViewModel viewModel) {
         Log.d("Setup", "Setup");
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new FirstSetupScreen());
-        fragments.add(new FirstSetupScreen());
+        fragments.add(new FirstSetupStep(viewModel));
 
         binding.viewPager.setAdapter(new SetupAdapter(
                 fragments,

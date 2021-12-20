@@ -11,7 +11,7 @@ public class HomeView extends BaseViewWithVM<FragmentHomeViewBinding, HomeViewMo
     }
 
     @Override
-    int getLayoutId() {
+    protected int getLayoutId() {
         return R.layout.fragment_home_view;
     }
 

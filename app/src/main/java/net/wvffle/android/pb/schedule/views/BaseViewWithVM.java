@@ -23,7 +23,7 @@ public abstract class BaseViewWithVM<B extends ViewDataBinding, VM extends ViewM
     }
 
     @Override
-    void setup(B binding) {
+    protected void setup(B binding) {
         binding.setVariable(BR.viewModel, viewModel);
         setup(binding, viewModel);
     }
