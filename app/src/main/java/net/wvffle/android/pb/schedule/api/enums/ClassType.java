@@ -1,4 +1,4 @@
-package net.wvffle.android.pb.schedule.enums;
+package net.wvffle.android.pb.schedule.api.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ public enum ClassType {
     CW("exercises"),
     PS("special"),
     W("lecture"),
-    UNKNOWN("?");
+    UNKNOWN(null);
 
     private final String fullName;
     private static final Map<String, ClassType> BY_NAME = new HashMap<>();
@@ -30,13 +30,24 @@ public enum ClassType {
 
     /**
      * Return a ClassType for a given name
+     *
      * @param name String name
      * @return ClassType enum value
      */
-    public static ClassType valueOfName (String name) {
+    public static ClassType valueOfName(String name) {
         // NOTE: support for exercises
         name = name.replace('Ć', 'c');
         ClassType classType = BY_NAME.getOrDefault(name, valueOf(name.toUpperCase()));
         return classType == null ? UNKNOWN : classType;
+    }
+
+    /**
+     * Return type name
+     *
+     * @return String name
+     */
+    public String getFullName() {
+        // TODO: Get name from strings.xml
+        return fullName;
     }
 }

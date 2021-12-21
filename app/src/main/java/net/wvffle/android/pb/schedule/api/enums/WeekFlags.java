@@ -1,4 +1,4 @@
-package net.wvffle.android.pb.schedule.enums;
+package net.wvffle.android.pb.schedule.api.enums;
 
 public class WeekFlags {
     /**

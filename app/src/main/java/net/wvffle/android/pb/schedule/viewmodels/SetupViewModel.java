@@ -1,9 +1,13 @@
 package net.wvffle.android.pb.schedule.viewmodels;
 
+import android.os.Handler;
+import android.widget.CompoundButton;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import net.wvffle.android.pb.schedule.ObjectBox;
+import net.wvffle.android.pb.schedule.api.setup.GroupPair;
 import net.wvffle.android.pb.schedule.api.setup.SetupDataBuilder;
 import net.wvffle.android.pb.schedule.models.Degree;
 import net.wvffle.android.pb.schedule.models.Update;
@@ -26,8 +30,10 @@ public class SetupViewModel extends ViewModel {
 
     private final MutableLiveData<Integer> maxSteps = new MutableLiveData<>(1);
     private final MutableLiveData<List<String>> semesters = new MutableLiveData<>();
+    private final MutableLiveData<List<GroupPair>> groups = new MutableLiveData<>();
 
-    private final MutableLiveData<String> semester = new MutableLiveData<>(null);
+    private final MutableLiveData<Integer> checkedGroups = new MutableLiveData<>(0);
+    private final MutableLiveData<Integer> semester = new MutableLiveData<>(-1);
     private final SetupDataBuilder setupDataBuilder = new SetupDataBuilder();
 
     public MutableLiveData<Update> getUpdate() {
@@ -67,8 +73,30 @@ public class SetupViewModel extends ViewModel {
         this.semesters.setValue(semesters);
     }
 
-    public void setSemester(String semester) {
+    public MutableLiveData<List<GroupPair>> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<GroupPair> groups) {
+        this.groups.setValue(groups);
+    }
+
+    public MutableLiveData<Integer> getSemester() {
+        return semester;
+    }
+
+    public void setSemester(int semester) {
         this.semester.setValue(semester);
         setupDataBuilder.setSemester(semester);
+    }
+
+    public void onGroupChecked(CompoundButton button, boolean check) {
+        new Handler().postDelayed(() -> {
+            checkedGroups.postValue((int) groups.getValue().stream().filter(GroupPair::isSelected).count());
+        }, 0);
+    }
+
+    public MutableLiveData<Integer> getCheckedGroups() {
+        return checkedGroups;
     }
 }

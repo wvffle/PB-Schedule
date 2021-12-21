@@ -39,6 +39,7 @@ public class FirstSetupStep extends BaseView<FragmentFirstSetupStepViewBinding> 
                     .stream()
                     .sorted(Comparator.comparing(Degree::getName))
                     .collect(Collectors.toList());
+
             viewModel.setDegrees(degrees);
             adapter.setData(degrees);
 
