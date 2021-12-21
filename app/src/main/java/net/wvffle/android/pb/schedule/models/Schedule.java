@@ -5,9 +5,9 @@ import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 
 import net.wvffle.android.pb.schedule.api.converters.ClassTypeConverter;
+import net.wvffle.android.pb.schedule.api.enums.ClassType;
+import net.wvffle.android.pb.schedule.api.enums.WeekFlags;
 import net.wvffle.android.pb.schedule.api.model.Model;
-import net.wvffle.android.pb.schedule.enums.ClassType;
-import net.wvffle.android.pb.schedule.enums.WeekFlags;
 
 import io.objectbox.annotation.ConflictStrategy;
 import io.objectbox.annotation.Convert;

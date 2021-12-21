@@ -1,6 +1,6 @@
 package net.wvffle.android.pb.schedule.api.converters;
 
-import net.wvffle.android.pb.schedule.enums.ClassType;
+import net.wvffle.android.pb.schedule.api.enums.ClassType;
 
 import io.objectbox.converter.PropertyConverter;
 
