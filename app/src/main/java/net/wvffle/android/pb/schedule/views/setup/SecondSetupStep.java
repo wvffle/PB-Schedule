@@ -48,7 +48,7 @@ public class SecondSetupStep extends BaseView<FragmentSecondSetupStepViewBinding
                     .map(Schedule::getSemester)
                     .distinct()
                     .sorted()
-                    // TODO: Get string from string id
+                    // TODO [$61c1d4cc217ade069c0b63ee]: Get string from string id
                     .map(semester -> "Semester " + semester)
                     .collect(Collectors.toList());
 
