@@ -1,5 +1,7 @@
 package net.wvffle.android.pb.schedule.views.setup;
 
+import static net.wvffle.android.pb.schedule.util.IntegersUtil.getIntFromEnd;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import net.wvffle.android.pb.schedule.ObjectBox;
@@ -53,7 +55,7 @@ public class SecondSetupStep extends BaseView<FragmentSecondSetupStepViewBinding
             viewModel.setSemesters(semesters);
             adapter.setData(semesters);
             adapter.setOnItemClickListener((view, position) -> {
-                viewModel.setSemester(semesters.get(position));
+                viewModel.setSemester(getIntFromEnd(semesters.get(position)));
                 viewModel.setMaxStep(3);
             });
         });

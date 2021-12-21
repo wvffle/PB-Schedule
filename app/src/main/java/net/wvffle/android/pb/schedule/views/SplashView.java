@@ -16,7 +16,7 @@ public class SplashView extends BaseView<FragmentSplashViewBinding> {
 
     @Override
     protected void setup(FragmentSplashViewBinding binding) {
-        SharedPreferences pref = requireActivity().getSharedPreferences("setup", Context.MODE_PRIVATE);
+        SharedPreferences pref = requireActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
         long then = System.currentTimeMillis();
         Handler handler = new Handler();
 

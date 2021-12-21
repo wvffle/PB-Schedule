@@ -21,6 +21,11 @@ public class SetupDataBuilder {
         return this;
     }
 
+    public SetupDataBuilder setSemester(int semester) {
+        data.semester = semester;
+        return this;
+    }
+
     public SetupData build() {
         return data;
     }
