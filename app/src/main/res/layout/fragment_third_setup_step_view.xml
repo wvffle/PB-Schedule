@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- TODO [$61c1d4cc217ade069c0b63f1]: Add MotionLayout -->
+        <!-- TODO [#48]: Add MotionLayout -->
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="match_parent"

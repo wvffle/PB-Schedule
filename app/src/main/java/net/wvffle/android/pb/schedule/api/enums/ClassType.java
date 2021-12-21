@@ -47,7 +47,7 @@ public enum ClassType {
      * @return String name
      */
     public String getFullName() {
-        // TODO [$61c1d4cc217ade069c0b63ed]: Get name from strings.xml
+        // TODO [#44]: Get name from strings.xml
         return fullName;
     }
 }
