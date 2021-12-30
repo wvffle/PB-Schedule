@@ -41,6 +41,7 @@ public class ThirdSetupStep extends BaseView<FragmentThirdSetupStepViewBinding> 
         binding.button.setOnClickListener(v -> {
             SharedPreferences pref = requireActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
             pref.edit()
+                    // TODO: Save SetupData
                     .putBoolean("setup-done", true)
                     .putLong("degreeId", Objects.requireNonNull(viewModel.getDegree().getValue()).id)
                     .putInt("semester", Objects.requireNonNull(viewModel.getSemester().getValue()))
