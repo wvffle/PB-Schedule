@@ -7,4 +7,6 @@
     <string name="choose_your_groups">Choose your groups</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
+    <string name="back"><![CDATA[<-]]></string>
+    <string name="forward"><![CDATA[->]]></string>
 </resources>
