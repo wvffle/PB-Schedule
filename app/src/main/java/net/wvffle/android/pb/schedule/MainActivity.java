@@ -69,16 +69,20 @@ public class MainActivity extends AppCompatActivity {
                 alertDialogBuilder
                         .setMessage("Czy chcesz to zrobić?")
                         .setCancelable(true)
-                        .setPositiveButton( "Yes",new DialogInterface.OnClickListener() {
+                        .setPositiveButton( "Tak",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 try {
-                                    //so some work
+                                    AlertDialog.Builder alertDialogBuilderMessage = new AlertDialog.Builder(
+                                            MainActivity.this);
+                                    // set title
+                                    alertDialogBuilderMessage.setTitle("Co się stało?");
+                                    alertDialogBuilderMessage.setCancelable(true);
                                 } catch (Exception e) {
                                     //Exception
                                 }
                             }
                         })
-                        .setNegativeButton("No",new DialogInterface.OnClickListener() {
+                        .setNegativeButton("Nie",new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 //do something if you need
                                 dialog.cancel();
