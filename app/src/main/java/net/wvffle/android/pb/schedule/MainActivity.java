@@ -58,42 +58,69 @@ public class MainActivity extends AppCompatActivity {
             mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
             float delta = mAccelCurrent - mAccelLast;
             mAccel = mAccel * 0.9f + delta;
-            if (mAccel > 3 ) {
+            boolean alerted = false;
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    MainActivity.this);
+            // set title
+            alertDialogBuilder.setTitle("Potrząsnąłeś telefonem. Ta akcja pozwala ci na zgłoszenie błędu.");
+            alertDialogBuilder.setCancelable(true);
+            // set dialog message
+            alertDialogBuilder
+                    .setMessage("Czy chcesz to zrobić?")
+                    .setCancelable(true)
+                    .setPositiveButton( "Tak",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            try {
+                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                        MainActivity.this);
+                                // set title
+                                alertDialogBuilder.setTitle("Coś się stało ?");
+                                alertDialogBuilder.setCancelable(true);
+                                // set dialog message
+                                alertDialogBuilder
+                                        .setMessage("Opisz swój problem.")
+                                        .setCancelable(true)
+                                        .setPositiveButton( "Zatwierdź",new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,int id) {
+                                                try {
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        MainActivity.this);
-                // set title
-                alertDialogBuilder.setTitle("Potrząsnąłeś telefonem. Ta akcja pozwala ci na zgłoszenie błędu.");
-                alertDialogBuilder.setCancelable(true);
-                // set dialog message
-                alertDialogBuilder
-                        .setMessage("Czy chcesz to zrobić?")
-                        .setCancelable(true)
-                        .setPositiveButton( "Tak",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                try {
-                                    AlertDialog.Builder alertDialogBuilderMessage = new AlertDialog.Builder(
-                                            MainActivity.this);
-                                    // set title
-                                    alertDialogBuilderMessage.setTitle("Co się stało?");
-                                    alertDialogBuilderMessage.setCancelable(true);
-                                } catch (Exception e) {
-                                    //Exception
-                                }
-                            }
-                        })
-                        .setNegativeButton("Nie",new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog,int id) {
-                                //do something if you need
-                                dialog.cancel();
-                            }
-                        });
+                                                } catch (Exception e) {
+                                                    //Exception
+                                                }
+                                            }
+                                        })
+                                        .setNegativeButton("Zamknij",new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,int id) {
+                                                //do something if you need
+                                                dialog.cancel();
+                                            }
+                                        });
 
+                                // create alert dialog
+                                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                                // show it
+                                alertDialog.show();
+
+
+                            } catch (Exception e) {
+                                //Exception
+                            }
+                        }
+                    })
+                    .setNegativeButton("Nie",new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,int id) {
+                            //do something if you need
+                            dialog.cancel();
+                        }
+                    });
+            if (mAccel > 3 && alerted == false) {
                 // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
-
+                alerted = true;
                 // show it
                 alertDialog.show();
+
             }
         }
         @Override
