@@ -1,7 +1,9 @@
 package net.wvffle.android.pb.schedule.views;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import net.wvffle.android.pb.schedule.MainActivity;
 import net.wvffle.android.pb.schedule.R;
 import net.wvffle.android.pb.schedule.databinding.FragmentSetupViewBinding;
 import net.wvffle.android.pb.schedule.viewmodels.SetupViewModel;
@@ -25,6 +27,14 @@ public class SetupView extends BaseViewWithVM<FragmentSetupViewBinding, SetupVie
 
     @Override
     void setup(FragmentSetupViewBinding binding, SetupViewModel viewModel) {
+        MainActivity.getInstance()
+                .getSupportActionBar()
+                .hide();
+
+        MainActivity.getInstance()
+                .getDrawer()
+                .setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
         ArrayList<Fragment> fragments = new ArrayList<>();
         fragments.add(new FirstSetupStep(viewModel));
         fragments.add(new SecondSetupStep(viewModel));

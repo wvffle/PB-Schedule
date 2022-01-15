@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -59,7 +60,10 @@ public class HomeView extends BaseViewWithVM<FragmentHomeViewBinding, HomeViewMo
                 .getSupportActionBar()
                 .show();
 
-//        binding.calendarView.setTopbarVisible(false);
+        MainActivity.getInstance()
+                .getDrawer()
+                .setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
+
         binding.calendarView.setSelectionMode(MaterialCalendarView.SELECTION_MODE_NONE);
 
         CalendarDay today = CalendarDay.today();

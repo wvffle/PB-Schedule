@@ -6,27 +6,45 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavAction;
+import androidx.navigation.NavBackStackEntry;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
+
+import com.google.android.material.navigation.NavigationView;
 
 import net.wvffle.android.pb.schedule.databinding.ActivityMainBinding;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static MainActivity instance;
+    private ActionBarDrawerToggle drawerToggle;
 
     public static MainActivity getInstance() {
         return instance;
     }
 
     private ActivityMainBinding binding;
+
+    private static int or(int resId1, int resId2) {
+        return resId1 == -1 ? resId2 : resId1;
+    }
+
+    Toolbar getToolbar() {
+        return binding.toolbar;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +62,14 @@ public class MainActivity extends AppCompatActivity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             getWindow().setStatusBarColor(Color.WHITE);
         }
-    }
 
-    Toolbar getToolbar() {
-        return binding.toolbar;
+        binding.navView.setNavigationItemSelectedListener(this);
+        drawerToggle = new ActionBarDrawerToggle(this, binding.drawer, R.string.nav_open, R.string.nav_close);
+        binding.drawer.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @NonNull
@@ -62,17 +84,79 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public DrawerLayout getDrawer() {
+        return binding.drawer;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
 
-        switch (id) {
-            case R.id.item1:
-                Toast.makeText(getApplicationContext(), "Item 1 Selected", Toast.LENGTH_LONG).show();
+        int id = item.getItemId();
+        if (id == R.id.settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.home) {
+            navigate(R.id.homeView);
+            return true;
+        }
+
+        if (id == R.id.day_view) {
+            navigate(R.id.dayView);
+            return true;
+        }
+
+        switch (item.getItemId()) {
+            case R.id.week_view:
                 return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
+            case R.id.extra_subjects:
+                return true;
+
+            case R.id.updates:
+                return true;
         }
+
+        return true;
+    }
+
+    public void navigate(int resId) {
+        NavController controller = Navigation.findNavController(this, R.id.fragmentContainerView);
+
+        NavBackStackEntry stackEntry = controller.getCurrentBackStackEntry();
+        NavDestination destination = stackEntry == null
+                ? controller.getCurrentDestination()
+                : stackEntry.getDestination();
+
+        NavAction action = destination.getAction(resId);
+        NavOptions oldOptions = action == null ? null : action.getNavOptions();
+
+        NavOptions options = oldOptions == null
+                ? new NavOptions.Builder()
+                .setEnterAnim(R.anim.nav_default_enter_anim)
+                .setExitAnim(R.anim.nav_default_exit_anim)
+                .setPopEnterAnim(R.anim.nav_default_pop_enter_anim)
+                .setPopExitAnim(R.anim.nav_default_pop_exit_anim)
+                .build()
+                : new NavOptions.Builder()
+                .setLaunchSingleTop(oldOptions.shouldLaunchSingleTop())
+                .setPopUpTo(resId, oldOptions.isPopUpToInclusive())
+                .setEnterAnim(or(oldOptions.getEnterAnim(), R.anim.nav_default_enter_anim))
+                .setExitAnim(or(oldOptions.getExitAnim(), R.anim.nav_default_exit_anim))
+                .setPopEnterAnim(or(oldOptions.getPopEnterAnim(), R.anim.nav_default_pop_enter_anim))
+                .setPopExitAnim(or(oldOptions.getPopExitAnim(), R.anim.nav_default_pop_exit_anim))
+                .build();
+
+        getDrawer().close();
+        controller.navigate(resId, null, options);
     }
 }

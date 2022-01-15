@@ -7,15 +7,18 @@
     <string name="choose_your_groups">Choose your groups</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
-    <string name="mon">mon</string>
-    <string name="tue">tue</string>
-    <string name="wed">wed</string>
-    <string name="sun">sun</string>
-    <string name="sat">sat</string>
-    <string name="fri">fri</string>
-    <string name="thu">thu</string>
     <string name="room_">"Sala "</string>
     <string name="no_upcoming_classes">Brak nadchodzacych zajec w tym tygodniu.</string>
     <string name="extra_subjects">Przedmioty dodatkowe</string>
     <string name="settings">Ustawienia</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+    <string name="home">Najblizsze dni</string>
+    <string name="schedule_week">Widok tygodnia</string>
+    <string name="schedule_updates">Aktualizacje planu</string>
+    <string name="schedule_today">Plan na dzis</string>
+    <string name="schedule">Plan</string>
+    <string name="show_lectures">Pokazuj wyklady</string>
+    <string name="preferences">Preferencje</string>
+    <string name="updates">Aktualizacje</string>
 </resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+
+    <item android:title="@string/schedule">
+        <menu>
+            <item
+                android:id="@+id/home"
+                android:title="@string/home" />
+
+            <item
+                android:id="@+id/day_view"
+                android:title="@string/schedule_today" />
+
+            <item
+                android:id="@+id/week_view"
+                android:title="@string/schedule_week" />
+        </menu>
+    </item>
+
+    <item android:title="@string/preferences">
+        <menu>
+            <item
+                android:id="@+id/extra_subjects"
+                android:title="@string/extra_subjects" />
+
+            <item
+                android:id="@+id/show_lectures"
+                android:title="@string/show_lectures"
+                app:actionLayout="@layout/switch_item"
+                app:showAsAction="never" />
+
+        </menu>
+    </item>
+
+    <item android:title="@string/updates">
+        <menu>
+            <item
+                android:id="@+id/updates"
+                android:title="@string/schedule_updates" />
+        </menu>
+    </item>
+
+</menu>
