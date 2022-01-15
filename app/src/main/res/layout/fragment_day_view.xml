@@ -15,7 +15,7 @@
             android:background="#fff"
             android:clipToPadding="false"
             android:paddingBottom="50dp"
-            app:dividerColor="#55b7ff65"
+            app:dividerColor="#21212121"
             app:dividerTextColor="#666"
             app:eachRowHeight="25dp"
             app:minimumPercentage="0.25"

@@ -1,9 +1,10 @@
 package net.wvffle.android.pb.schedule.api.enums;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum ClassType {
+public enum ClassType implements Serializable {
     WF("pe"),
     S("seminar"),
     J("language"),

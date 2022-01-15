@@ -4,6 +4,8 @@ import com.google.gson.JsonObject;
 
 import net.wvffle.android.pb.schedule.api.model.Model;
 
+import java.io.Serializable;
+
 import io.objectbox.annotation.ConflictStrategy;
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
@@ -11,7 +13,7 @@ import io.objectbox.annotation.Index;
 import io.objectbox.annotation.Unique;
 
 @Entity
-public class Degree implements Model {
+public class Degree implements Model, Serializable {
     @Id(assignable = true)
     public long id;
 
