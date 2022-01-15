@@ -5,10 +5,13 @@ import net.wvffle.android.pb.schedule.util.Serializer;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import io.sentry.Sentry;
 
 public class SetupData implements Serializable {
+    protected List<GroupPair> groups = new ArrayList<>();
     protected Degree degree;
     protected int semester;
 

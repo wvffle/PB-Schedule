@@ -11,12 +11,16 @@ import net.wvffle.android.pb.schedule.api.setup.GroupPair;
 import net.wvffle.android.pb.schedule.databinding.FragmentThirdSetupStepViewBinding;
 import net.wvffle.android.pb.schedule.models.Schedule_;
 import net.wvffle.android.pb.schedule.util.GenericRecyclerViewAdapter;
+import net.wvffle.android.pb.schedule.util.Serializer;
 import net.wvffle.android.pb.schedule.viewmodels.SetupViewModel;
 import net.wvffle.android.pb.schedule.views.BaseView;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import io.sentry.Sentry;
 
 public class ThirdSetupStep extends BaseView<FragmentThirdSetupStepViewBinding> {
     private final SetupViewModel viewModel;
@@ -40,18 +44,15 @@ public class ThirdSetupStep extends BaseView<FragmentThirdSetupStepViewBinding> 
 
         binding.button.setOnClickListener(v -> {
             SharedPreferences pref = requireActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
-            pref.edit()
-                    .putBoolean("setup-done", true)
-                    .putLong("degreeId", Objects.requireNonNull(viewModel.getDegree().getValue()).id)
-                    .putInt("semester", Objects.requireNonNull(viewModel.getSemester().getValue()))
-                    .putStringSet(
-                            "groups",
-                            Objects.requireNonNull(viewModel.getGroups().getValue())
-                                    .stream()
-                                    .map(GroupPair::toString)
-                                    .collect(Collectors.toSet())
-                    )
-                    .apply();
+            try {
+                pref.edit()
+                        .putBoolean("setup-done", true)
+                        .putString("setup-data", Serializer.getInstance().toString(viewModel.buildSetupData()))
+                        .apply();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Sentry.captureException(e);
+            }
 
             navigate(R.id.action_setupView_to_homeView);
         });
@@ -77,9 +78,6 @@ public class ThirdSetupStep extends BaseView<FragmentThirdSetupStepViewBinding> 
 
             viewModel.setGroups(groups);
             adapter.setData(groups);
-
-            viewModel.getGroups().observe(this, groupPairs -> {
-            });
         });
     }
 }

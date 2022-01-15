@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import net.wvffle.android.pb.schedule.ObjectBox;
 import net.wvffle.android.pb.schedule.api.setup.GroupPair;
+import net.wvffle.android.pb.schedule.api.setup.SetupData;
 import net.wvffle.android.pb.schedule.api.setup.SetupDataBuilder;
 import net.wvffle.android.pb.schedule.models.Degree;
 import net.wvffle.android.pb.schedule.models.Update;
@@ -79,6 +80,7 @@ public class SetupViewModel extends ViewModel {
 
     public void setGroups(List<GroupPair> groups) {
         this.groups.setValue(groups);
+        setupDataBuilder.setGroupPairs(groups);
     }
 
     public MutableLiveData<Integer> getSemester() {
@@ -98,5 +100,9 @@ public class SetupViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getCheckedGroups() {
         return checkedGroups;
+    }
+
+    public SetupData buildSetupData() {
+        return setupDataBuilder.build();
     }
 }

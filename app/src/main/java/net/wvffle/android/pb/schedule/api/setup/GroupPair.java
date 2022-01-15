@@ -6,9 +6,10 @@ import net.wvffle.android.pb.schedule.api.enums.ClassType;
 import net.wvffle.android.pb.schedule.util.IntegersUtil;
 import net.wvffle.android.pb.schedule.util.StringsUtil;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class GroupPair implements Comparable<GroupPair> {
+public class GroupPair implements Comparable<GroupPair>, Serializable {
     public int groupNumber;
     public ClassType type;
     private boolean selected = false;

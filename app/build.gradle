@@ -52,6 +52,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
     implementation 'com.balysv:material-ripple:1.0.2'
+    implementation 'com.github.r3za13:android-timeline-schedule-view:0.9'
 
     // Test and debugging
     testImplementation 'junit:junit:4.+'

@@ -7,7 +7,7 @@ import net.wvffle.android.pb.schedule.viewmodels.HomeViewModel;
 public class HomeView extends BaseViewWithVM<FragmentHomeViewBinding, HomeViewModel> {
     @Override
     void setup(FragmentHomeViewBinding binding, HomeViewModel vm) {
-
+        navigate(R.id.action_homeView_to_dayView);
     }
 
     @Override

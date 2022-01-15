@@ -4,6 +4,9 @@ import static net.wvffle.android.pb.schedule.util.IntegersUtil.getIntFromEnd;
 
 import net.wvffle.android.pb.schedule.models.Degree;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class SetupDataBuilder {
     private final SetupData data;
 
@@ -23,6 +26,16 @@ public class SetupDataBuilder {
 
     public SetupDataBuilder setSemester(int semester) {
         data.semester = semester;
+        return this;
+    }
+
+    public SetupDataBuilder addGroupPairs(GroupPair... groups) {
+        data.groups.addAll(Arrays.asList(groups));
+        return this;
+    }
+
+    public SetupDataBuilder setGroupPairs(List<GroupPair> groups) {
+        data.groups = groups;
         return this;
     }
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.DayView">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.roundtableapps.timelinedayviewlibrary.TimeLineLayout
+            android:id="@+id/timeLine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:clipToPadding="false"
+            android:paddingBottom="50dp"
+            app:dividerColor="#55b7ff65"
+            app:dividerTextColor="#666"
+            app:eachRowHeight="25dp"
+            app:minimumPercentage="0.25"
+            app:numberOfRows="13" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

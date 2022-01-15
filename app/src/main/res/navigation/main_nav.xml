@@ -36,5 +36,14 @@
         android:id="@+id/homeView"
         android:name="net.wvffle.android.pb.schedule.views.HomeView"
         android:label="HomeView"
-        tools:layout="@layout/fragment_home_view" />
+        tools:layout="@layout/fragment_home_view">
+        <action
+            android:id="@+id/action_homeView_to_dayView"
+            app:destination="@id/dayView" />
+    </fragment>
+    <fragment
+        android:id="@+id/dayView"
+        android:name="net.wvffle.android.pb.schedule.views.DayView"
+        android:label="fragment_day_view"
+        tools:layout="@layout/fragment_day_view" />
 </navigation>
