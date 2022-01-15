@@ -25,7 +25,7 @@
         android:id="@+id/setupView"
         android:name="net.wvffle.android.pb.schedule.views.SetupView"
         android:label="SetupView"
-        tools:layout="@layout/fragment_setup_view">
+        tools:layout="@layout/fragment_first_setup_step_view">
         <action
             android:id="@+id/action_setupView_to_homeView"
             app:destination="@id/homeView"

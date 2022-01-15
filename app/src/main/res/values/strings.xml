@@ -16,4 +16,6 @@
     <string name="thu">thu</string>
     <string name="room_">"Sala "</string>
     <string name="no_upcoming_classes">Brak nadchodzacych zajec w tym tygodniu.</string>
+    <string name="extra_subjects">Przedmioty dodatkowe</string>
+    <string name="settings">Ustawienia</string>
 </resources>
