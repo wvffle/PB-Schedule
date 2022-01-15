@@ -135,7 +135,8 @@ public class Schedule implements Model {
 
     /**
      * Return teacher of the schedule
-     * @return Teacher of the schedule
+     *
+     * @return {@link Teacher} of the schedule
      */
     public Teacher getTeacher() {
         return teacher.getTarget();
@@ -143,7 +144,7 @@ public class Schedule implements Model {
 
     /**
      * Return room of the schedule
-     * @return Room of the schedule
+     * @return {@link Room} of the schedule
      */
     public Room getRoom() {
         return room.getTarget();
@@ -151,7 +152,7 @@ public class Schedule implements Model {
 
     /**
      * Return subject of the schedule
-     * @return Subject of the schedule
+     * @return {@link Subject} of the schedule
      */
     public Subject getSubject() {
         return subject.getTarget();
@@ -159,7 +160,7 @@ public class Schedule implements Model {
 
     /**
      * Return class type of the schedule
-     * @return ClassType of the schedule
+     * @return {@link ClassType} of the schedule
      */
     public ClassType getType() {
         return type;
@@ -175,7 +176,7 @@ public class Schedule implements Model {
 
     /**
      * Return degree of the schedule
-     * @return Degree of the schedule
+     * @return {@link Degree} of the schedule
      */
     public Degree getDegree() {
         return degree.getTarget();
@@ -191,7 +192,7 @@ public class Schedule implements Model {
 
     /**
      * Return speciality of the schedule
-     * @return Speciality of the schedule
+     * @return {@link Speciality} of the schedule
      */
     public Speciality getSpeciality() {
         return speciality.getTarget();
@@ -209,15 +210,57 @@ public class Schedule implements Model {
      * Check if schedule is available in odd weeks
      * @return Whether or not the schedule is available
      */
-    public boolean isOddWeeks () {
+    public boolean isOddWeeks() {
         return (weekFlags & WeekFlags.ODD) > 0;
     }
 
     /**
      * Check if schedule is available every week
+     *
      * @return Whether or not the schedule is available
      */
-    public boolean isEveryWeek () {
+    public boolean isEveryWeek() {
         return isEvenWeeks() && isOddWeeks();
+    }
+
+    /**
+     * Return time string
+     *
+     * @return A string in HH:MM format
+     */
+    public String getTime() {
+        // TODO: Add hours from the database
+        switch (hour) {
+            case 1:
+                return "08:30";
+            case 2:
+                return "09:15";
+            case 3:
+                return "10:15";
+            case 4:
+                return "11:45";
+            case 5:
+                return "12:00";
+            case 6:
+                return "12:45";
+            case 7:
+                return "14:00";
+            case 8:
+                return "14:45";
+            case 9:
+                return "16:00";
+            case 10:
+                return "16:45";
+            case 11:
+                return "17:40";
+            case 12:
+                return "18:25";
+            case 13:
+                return "19:20";
+            case 14:
+                return "20:05";
+        }
+
+        return "00:00";
     }
 }

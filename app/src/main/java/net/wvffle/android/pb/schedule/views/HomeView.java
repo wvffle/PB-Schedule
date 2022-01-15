@@ -27,6 +27,8 @@ import net.wvffle.android.pb.schedule.viewmodels.HomeViewModel;
 import org.threeten.bp.DayOfWeek;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,7 +77,6 @@ public class HomeView extends BaseViewWithVM<FragmentHomeViewBinding, HomeViewMo
                         Schedule_.semester.equal(setupData.getSemester())
                                 .and(Schedule_.degreeId.equal(setupData.getDegree().id))
                 )
-                .order(Schedule_.day)
                 .build()
                 .find()
                 .stream()
@@ -89,6 +90,8 @@ public class HomeView extends BaseViewWithVM<FragmentHomeViewBinding, HomeViewMo
                     return false;
                 })
                 .collect(Collectors.toList());
+
+        Collections.sort(classes, Comparator.comparing(Schedule::getDay).thenComparing(Schedule::getHour));
 
         vm.setClasses(classes);
         binding.calendarView.addDecorators(

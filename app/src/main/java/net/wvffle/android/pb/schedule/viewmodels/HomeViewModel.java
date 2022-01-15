@@ -72,7 +72,6 @@ public class HomeViewModel extends ViewModel {
                 items.add(GroupedItem.createGroup(day.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM))));
             }
 
-            // TODO: Sort items in groups according to hours
             items.add(GroupedItem.createItem(clazz));
         }
 

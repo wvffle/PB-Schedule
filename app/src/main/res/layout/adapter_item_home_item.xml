@@ -38,13 +38,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-                <!-- TODO: Implement hours -->
                 <TextView
                     android:layout_width="44dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:paddingHorizontal="4dp"
-                    android:text="16:05"
+                    android:text="@{viewModel.upcomingClasses.get(position).item.time}"
                     android:textColor="#717171"
                     tools:text="21:37" />
 
