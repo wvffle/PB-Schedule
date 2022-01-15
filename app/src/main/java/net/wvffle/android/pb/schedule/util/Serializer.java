@@ -9,9 +9,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+// TODO: Utilize toString/fromString and serialize/deserialize methods if available
 public class Serializer {
 
     private final static Serializer instance = new Serializer();
+
     private Serializer() {}
 
     /**

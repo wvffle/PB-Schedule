@@ -67,6 +67,10 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
         notifyDataSetChanged();
     }
 
+    public List<M> getData() {
+        return data;
+    }
+
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

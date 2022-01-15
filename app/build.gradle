@@ -53,6 +53,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.5'
     implementation 'com.balysv:material-ripple:1.0.2'
     implementation 'com.github.r3za13:android-timeline-schedule-view:0.9'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.0'
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
+    implementation 'com.github.abdularis:circularimageview:1.5'
 
     // Test and debugging
     testImplementation 'junit:junit:4.+'

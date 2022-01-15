@@ -40,6 +40,11 @@
         <action
             android:id="@+id/action_homeView_to_dayView"
             app:destination="@id/dayView" />
+        <action
+            android:id="@+id/action_homeView_to_setupView"
+            app:destination="@id/setupView"
+            app:popUpTo="@id/homeView"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/dayView"

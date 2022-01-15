@@ -36,4 +36,16 @@ public class SetupData implements Serializable {
 
         return null;
     }
+
+    public List<GroupPair> getGroups() {
+        return groups;
+    }
+
+    public Degree getDegree() {
+        return degree;
+    }
+
+    public int getSemester() {
+        return semester;
+    }
 }

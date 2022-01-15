@@ -59,4 +59,12 @@ public class GroupPair implements Comparable<GroupPair>, Serializable {
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
+
+    public int getGroupNumber() {
+        return groupNumber;
+    }
+
+    public ClassType getType() {
+        return type;
+    }
 }

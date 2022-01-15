@@ -15,6 +15,8 @@ import net.wvffle.android.pb.schedule.models.Update;
 import net.wvffle.android.pb.schedule.models.Update_;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import io.objectbox.query.QueryBuilder;
 
@@ -80,7 +82,6 @@ public class SetupViewModel extends ViewModel {
 
     public void setGroups(List<GroupPair> groups) {
         this.groups.setValue(groups);
-        setupDataBuilder.setGroupPairs(groups);
     }
 
     public MutableLiveData<Integer> getSemester() {
@@ -94,7 +95,12 @@ public class SetupViewModel extends ViewModel {
 
     public void onGroupChecked(CompoundButton button, boolean check) {
         new Handler().postDelayed(() -> {
-            checkedGroups.postValue((int) groups.getValue().stream().filter(GroupPair::isSelected).count());
+            List<GroupPair> selected = Objects.requireNonNull(groups.getValue()).stream()
+                    .filter(GroupPair::isSelected)
+                    .collect(Collectors.toList());
+
+            checkedGroups.postValue(selected.size());
+            setupDataBuilder.setGroupPairs(selected);
         }, 0);
     }
 
