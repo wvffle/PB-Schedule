@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-// TODO [$61e30fc5c82951067c2775d4]: Utilize toString/fromString and serialize/deserialize methods if available
+// TODO [#53]: Utilize toString/fromString and serialize/deserialize methods if available
 public class Serializer {
 
     private final static Serializer instance = new Serializer();

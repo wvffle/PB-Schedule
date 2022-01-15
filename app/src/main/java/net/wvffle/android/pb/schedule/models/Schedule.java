@@ -229,7 +229,7 @@ public class Schedule implements Model {
      * @return A string in HH:MM format
      */
     public String getTime() {
-        // TODO [$61e30fc5c82951067c2775d3]: Add hours from the database
+        // TODO [#52]: Add hours from the database
         switch (hour) {
             case 1:
                 return "08:30";
