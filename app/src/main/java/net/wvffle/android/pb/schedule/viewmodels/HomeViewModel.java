@@ -45,10 +45,10 @@ public class HomeViewModel extends ViewModel {
                         return true;
                     }
 
-                    // TODO: Check if classes are in even and odd weeks
+                    // TODO [$61e30fc5c82951067c2775d5]: Check if classes are in even and odd weeks
 
                     if (schedule.getDay() == finalDate.getDayOfWeek().getValue()) {
-                        // TODO: Check if current `date` is after the hour of `schedule` class
+                        // TODO [$61e30fc5c82951067c2775d6]: Check if current `date` is after the hour of `schedule` class
                         if (false) {
                             return false;
                         }
