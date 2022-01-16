@@ -2,7 +2,6 @@ package net.wvffle.android.pb.schedule.views;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,20 +14,20 @@ import net.wvffle.android.pb.schedule.MainActivity;
 import net.wvffle.android.pb.schedule.ObjectBox;
 import net.wvffle.android.pb.schedule.R;
 import net.wvffle.android.pb.schedule.api.calendar.EmptyDayDecorator;
+import net.wvffle.android.pb.schedule.api.enums.ClassType;
 import net.wvffle.android.pb.schedule.api.setup.GroupPair;
 import net.wvffle.android.pb.schedule.api.setup.SetupData;
 import net.wvffle.android.pb.schedule.databinding.FragmentHomeViewBinding;
 import net.wvffle.android.pb.schedule.models.Schedule;
 import net.wvffle.android.pb.schedule.models.Schedule_;
 import net.wvffle.android.pb.schedule.util.GenericGroupedRecyclerViewAdapter;
-import net.wvffle.android.pb.schedule.util.GroupedItem;
 import net.wvffle.android.pb.schedule.util.Serializer;
 import net.wvffle.android.pb.schedule.viewmodels.HomeViewModel;
 
 import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.LocalDateTime;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +60,10 @@ public class HomeView extends BaseViewWithVM<FragmentHomeViewBinding, HomeViewMo
                 .show();
 
         MainActivity.getInstance()
+                .getSupportActionBar()
+                .setTitle(R.string.home);
+
+        MainActivity.getInstance()
                 .getDrawer()
                 .setDrawerLockMode(DrawerLayout.LOCK_MODE_UNDEFINED);
 
@@ -85,6 +88,10 @@ public class HomeView extends BaseViewWithVM<FragmentHomeViewBinding, HomeViewMo
                 .find()
                 .stream()
                 .filter(schedule -> {
+                    if (schedule.getType() == ClassType.W) {
+                        return true;
+                    }
+
                     for (GroupPair group : groups) {
                         if (group.getGroupNumber() == schedule.getGroup() && group.getType() == schedule.getType()) {
                             return true;
@@ -93,38 +100,25 @@ public class HomeView extends BaseViewWithVM<FragmentHomeViewBinding, HomeViewMo
 
                     return false;
                 })
+                .sorted(
+                        Comparator.comparing(Schedule::getDay)
+                                .thenComparing(Schedule::getHour)
+                )
                 .collect(Collectors.toList());
-
-        Collections.sort(classes, Comparator.comparing(Schedule::getDay).thenComparing(Schedule::getHour));
 
         vm.setClasses(classes);
         binding.calendarView.addDecorators(
                 new EmptyDayDecorator(classes)
         );
 
-        vm.setDate(CalendarDay.today().getDate());
-        binding.calendarView.setOnMonthChangedListener((view, calendarDay) -> {
-            vm.setDate(calendarDay.getDate());
-        });
+        vm.setDateTime(LocalDateTime.now());
+        binding.calendarView.setOnMonthChangedListener((view, calendarDay) -> vm.setDateTime(calendarDay.getDate().atStartOfDay()));
 
         GenericGroupedRecyclerViewAdapter<Schedule> adapter = new GenericGroupedRecyclerViewAdapter<>(vm, R.layout.adapter_item_home_group, R.layout.adapter_item_home_item);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerView.setAdapter(adapter);
 
-
-        vm.getUpcomingClasses().observe(this, upcomingClasses -> {
-            adapter.setData(upcomingClasses);
-            for (GroupedItem<Schedule> item : upcomingClasses) {
-                if (item.isGroup()) {
-                    Log.d("group:", item.getGroup());
-                } else {
-                    Log.d("upcoming", item.getItem().getSubject().getName());
-                }
-            }
-        });
-
-
-//        navigate(R.id.action_homeView_to_dayView);
+        vm.getUpcomingClasses().observe(this, adapter::setData);
     }
 
     @Override

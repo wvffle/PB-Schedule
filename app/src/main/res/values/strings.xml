@@ -13,7 +13,8 @@
     <string name="settings">Ustawienia</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
-    <string name="home">Najblizsze dni</string>
+    <string name="home">Nadchodzace zajecia</string>
+    <string name="subtitle">Plan zajec Politechniki Bialostockiej</string>
     <string name="schedule_week">Widok tygodnia</string>
     <string name="schedule_updates">Aktualizacje planu</string>
     <string name="schedule_today">Plan na dzis</string>
@@ -21,4 +22,5 @@
     <string name="show_lectures">Pokazuj wyklady</string>
     <string name="preferences">Preferencje</string>
     <string name="updates">Aktualizacje</string>
+    <string name="search_hint">Szukaj przedmiotu</string>
 </resources>

@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().hide();
+        getSupportActionBar().setSubtitle(R.string.subtitle);
 
         // NOTE: Set status bar color
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
