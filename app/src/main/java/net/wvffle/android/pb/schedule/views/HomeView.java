@@ -19,4 +19,5 @@ public class HomeView extends BaseViewWithVM<FragmentHomeViewBinding, HomeViewMo
     Class<HomeViewModel> getViewModelClass() {
         return HomeViewModel.class;
     }
+
 }

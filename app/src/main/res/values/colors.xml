@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dayViewDefaultBackgroundColor">#1D2D79</color>
+    <color name="dayViewDefaultDividerLinesColor">#FF397F</color>
+    <color name="dayViewDefaultTimeBlockColor">#0C174F</color>
+    <color name="dayViewDefaultTimeBlockTextColor">#1ECBA3</color>
+    <color name="dayViewDefaultEventsColor">#0C174F</color>
+    <color name="dayViewDefaultEventsTextColor">#F6F7F9</color>
+
 </resources>
