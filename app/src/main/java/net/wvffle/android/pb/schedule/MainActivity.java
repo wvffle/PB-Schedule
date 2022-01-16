@@ -8,6 +8,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    private void sendDialogDataToActivity(String data)
+    {
+        Toast.makeText(this,
+                data,
+                Toast.LENGTH_SHORT)
+                .show();
+    }
+
+
 
     private final SensorEventListener mSensorListener = new SensorEventListener() {
         @Override
@@ -71,37 +83,55 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton( "Tak",new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,int id) {
                             try {
-                                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                                        MainActivity.this);
-                                // set title
-                                alertDialogBuilder.setTitle("Coś się stało ?");
-                                alertDialogBuilder.setCancelable(true);
-                                // set dialog message
-                                alertDialogBuilder
-                                        .setMessage("Opisz swój problem.")
-                                        .setCancelable(true)
-                                        .setPositiveButton( "Zatwierdź",new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,int id) {
-                                                try {
+                                AlertDialog.Builder builder
+                                        = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Opisz swój problem.");
 
-                                                } catch (Exception e) {
-                                                    //Exception
-                                                }
-                                            }
-                                        })
-                                        .setNegativeButton("Zamknij",new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog,int id) {
-                                                //do something if you need
-                                                dialog.cancel();
-                                            }
-                                        });
+                                // set the custom layout
+                                final View customLayout
+                                        = getLayoutInflater()
+                                        .inflate(
+                                                R.layout.custom_layout,
+                                                null);
+                                builder.setView(customLayout);
 
-                                // create alert dialog
-                                AlertDialog alertDialog = alertDialogBuilder.create();
+                                // add a button
+                                builder
+                                        .setPositiveButton(
+                                                "Zatwierdź",
+                                                new DialogInterface.OnClickListener() {
 
-                                // show it
-                                alertDialog.show();
+                                                    @Override
+                                                    public void onClick(
+                                                            DialogInterface dialog,
+                                                            int which)
+                                                    {
 
+                                                        // send data from the
+                                                        // AlertDialog to the Activity
+                                                        EditText editText
+                                                                = customLayout
+                                                                .findViewById(
+                                                                        R.id.editText);
+                                                        sendDialogDataToActivity(
+                                                                editText
+                                                                        .getText()
+                                                                        .toString());
+                                                    }
+                                                })
+                                        .setNegativeButton("Anuluj",new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        //do something if you need
+                                                        dialog.cancel();
+                                                    }
+                                                });
+
+
+                                // create and show
+                                // the alert dialog
+                                AlertDialog alertDialog
+                                        = builder.create();
+                                alertDialog .show();
 
                             } catch (Exception e) {
                                 //Exception
@@ -117,9 +147,11 @@ public class MainActivity extends AppCompatActivity {
             if (mAccel > 3 && alerted == false) {
                 // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
+
                 alerted = true;
                 // show it
                 alertDialog.show();
+                return;
 
             }
         }
