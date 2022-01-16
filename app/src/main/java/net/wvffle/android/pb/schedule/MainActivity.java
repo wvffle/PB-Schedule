@@ -109,14 +109,14 @@ public class MainActivity extends AppCompatActivity {
 
                                                         // send data from the
                                                         // AlertDialog to the Activity
-                                                        EditText editText
-                                                                = customLayout
-                                                                .findViewById(
+                                                        EditText editText = customLayout.findViewById(
                                                                         R.id.editText);
+                                                        if (editText.length() > 0 && editText.length() <= 666) {
                                                         sendDialogDataToActivity(
                                                                 editText
                                                                         .getText()
                                                                         .toString());
+                                                    }
                                                     }
                                                 })
                                         .setNegativeButton("Anuluj",new DialogInterface.OnClickListener() {
