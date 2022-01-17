@@ -32,16 +32,21 @@ public class HomeViewModel extends ViewModel {
             dateTime = today;
         }
 
+        boolean isOddWeek = dateTime.getDayOfYear() / 7 % 2 == 0;
+
         this.dateTime.setValue(dateTime);
         LocalDateTime finalDateTime = dateTime;
         List<Schedule> upcoming = Objects.requireNonNull(classes.getValue())
                 .stream()
                 .filter(schedule -> {
+
+                    if (isOddWeek && !schedule.isOddWeeks() || !isOddWeek && !schedule.isEvenWeeks()) {
+                        return false;
+                    }
+
                     if (schedule.getDay() > finalDateTime.getDayOfWeek().getValue()) {
                         return true;
                     }
-
-                    // TODO [#54]: Check if classes are in even and odd weeks
 
                     if (schedule.getDay() == finalDateTime.getDayOfWeek().getValue()) {
                         // TODO [#55]: Check if current `date` is after the hour of `schedule` class

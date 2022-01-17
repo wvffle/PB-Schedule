@@ -45,10 +45,18 @@
             app:destination="@id/setupView"
             app:popUpTo="@id/homeView"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_homeView_to_extraSubjectsView"
+            app:destination="@id/extraSubjectsView" />
     </fragment>
     <fragment
         android:id="@+id/dayView"
         android:name="net.wvffle.android.pb.schedule.views.DayView"
         android:label="fragment_day_view"
         tools:layout="@layout/fragment_day_view" />
+    <fragment
+        android:id="@+id/extraSubjectsView"
+        android:name="net.wvffle.android.pb.schedule.views.ExtraSubjectsView"
+        android:label="fragment_extra_subjects_view"
+        tools:layout="@layout/fragment_extra_subjects_view" />
 </navigation>

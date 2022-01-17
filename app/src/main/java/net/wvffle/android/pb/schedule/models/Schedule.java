@@ -9,6 +9,9 @@ import net.wvffle.android.pb.schedule.api.enums.ClassType;
 import net.wvffle.android.pb.schedule.api.enums.WeekFlags;
 import net.wvffle.android.pb.schedule.api.model.Model;
 
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
+
 import io.objectbox.annotation.ConflictStrategy;
 import io.objectbox.annotation.Convert;
 import io.objectbox.annotation.Entity;
@@ -221,6 +224,18 @@ public class Schedule implements Model {
      */
     public boolean isEveryWeek() {
         return isEvenWeeks() && isOddWeeks();
+    }
+
+    /**
+     * Return day name string
+     *
+     * @return A string containing shortened day name
+     */
+    public String getDayName() {
+        LocalDate date = LocalDate.of(2022, 1, 2)
+                .plusDays(getDay());
+
+        return DateTimeFormatter.ofPattern("E").format(date);
     }
 
     /**

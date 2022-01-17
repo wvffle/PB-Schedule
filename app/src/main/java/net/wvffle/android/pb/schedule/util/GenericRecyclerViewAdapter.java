@@ -84,11 +84,16 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
         }
 
         void bind(ViewModel viewModel, int position, View.OnClickListener onClickListener) {
+            // TODO: add the item from position of `getData()`
             binding.setVariable(BR.viewModel, viewModel);
             binding.setVariable(BR.position, position);
             binding.executePendingBindings();
 
             binding.getRoot().setOnClickListener(onClickListener);
+        }
+
+        public ViewDataBinding getBinding() {
+            return binding;
         }
     }
 }

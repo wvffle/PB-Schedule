@@ -1,5 +1,7 @@
 package net.wvffle.android.pb.schedule;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,9 +25,14 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
 
+import net.wvffle.android.pb.schedule.api.setup.SetupData;
 import net.wvffle.android.pb.schedule.databinding.ActivityMainBinding;
+import net.wvffle.android.pb.schedule.util.Serializer;
 
+import java.io.IOException;
 import java.util.Objects;
+
+import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -116,11 +123,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
 
+        if (id == R.id.extra_subjects) {
+            navigate(R.id.extraSubjectsView);
+            return true;
+        }
+
         switch (item.getItemId()) {
             case R.id.week_view:
-                return true;
-
-            case R.id.extra_subjects:
                 return true;
 
             case R.id.updates:
@@ -159,5 +168,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         getDrawer().close();
         controller.navigate(resId, null, options);
+    }
+
+    public SetupData getSetupData() {
+        SetupData setupData = null;
+
+        try {
+            SharedPreferences pref = getSharedPreferences("data", Context.MODE_PRIVATE);
+            String savedData = pref.getString("setup-data", "");
+            setupData = (SetupData) Serializer.getInstance().fromString(savedData);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            Sentry.captureException(e);
+        } catch (IncompatibleClassChangeError e) {
+            e.printStackTrace();
+        }
+
+        return setupData;
     }
 }
