@@ -14,41 +14,35 @@
         android:layout_height="match_parent">
 
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginHorizontal="16dp"
+                android:paddingBottom="8dp"
+                app:mcv_selectionColor="#76A9FF"
+                app:mcv_showOtherDates="all" />
 
-                <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                    android:id="@+id/calendarView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    app:mcv_selectionColor="#76A9FF"
-                    app:mcv_showOtherDates="all">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="16dp" />
 
-                </com.prolificinteractive.materialcalendarview.MaterialCalendarView>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="16dp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingVertical="64dp"
-                    android:text="@string/no_upcoming_classes"
-                    android:visibility="@{viewModel.upcomingClasses.size() == 0 ? View.VISIBLE : View.GONE, default=visible}" />
-            </LinearLayout>
-        </ScrollView>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="64dp"
+                android:text="@string/no_upcoming_classes"
+                android:visibility="@{viewModel.upcomingClasses.size() == 0 ? View.VISIBLE : View.GONE, default=visible}" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
