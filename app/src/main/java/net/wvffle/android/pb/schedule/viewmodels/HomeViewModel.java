@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import net.wvffle.android.pb.schedule.models.Schedule;
 import net.wvffle.android.pb.schedule.util.GroupedItem;
+import net.wvffle.android.pb.schedule.util.Hours;
 
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.LocalDateTime;
@@ -48,12 +49,10 @@ public class HomeViewModel extends ViewModel {
                         return true;
                     }
 
+
                     if (schedule.getDay() == finalDateTime.getDayOfWeek().getValue()) {
-                        // TODO [#55]: Check if current `date` is after the hour of `schedule` class
-                        //             Also make use of `schedule.getIntervals()` and return false if only 15 minutes are left
-                        if (false) {
-                            return false;
-                        }
+                        // TODO [#55]: Make use of `schedule.getIntervals()` and return false if only 15 minutes are left
+                        return today.isBefore(Hours.idToTodaysLocalDateTame(schedule.getHour()));
                     }
 
                     return false;
