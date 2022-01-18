@@ -117,7 +117,7 @@ public class ExtraSubjectsView extends BaseViewWithVM<FragmentExtraSubjectsViewB
             }
         };
 
-        // TODO [$61e6da68500d31062a77961d]: Add clickable suggestions
+        // TODO [#59]: Add clickable suggestions
 //        searchBar.setCustomSuggestionAdapter(adapter);
         adapter.setSuggestions(classes);
 
