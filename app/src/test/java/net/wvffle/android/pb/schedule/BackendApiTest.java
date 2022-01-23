@@ -18,6 +18,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 
@@ -212,7 +214,10 @@ public class BackendApiTest {
     @Test
     public void testSchedulesRetrofit() throws IOException {
         Call<List<Schedule>> schedulesCall = service.getSchedules();
-        List<Schedule> schedules = schedulesCall.execute().body();
+        List<Schedule> schedules = Objects.requireNonNull(schedulesCall.execute().body())
+                .stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
         assertNotNull(schedules);
         assertTrue(schedules.size() > 0);
@@ -224,8 +229,7 @@ public class BackendApiTest {
 
     @Test
     public void testScheduleRetrofit() throws IOException {
-        Call<List<Schedule>> roomsCall = service.getSchedules();
-        List<Schedule> schedules = roomsCall.execute().body();
+        List<Schedule> schedules = service.getSchedules().execute().body();
         assertNotNull(schedules);
         assertTrue(schedules.size() > 0);
 

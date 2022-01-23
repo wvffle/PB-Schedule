@@ -58,6 +58,12 @@ public enum ClassType implements Serializable {
      */
     public String getFullName() {
         Context context = MainActivity.getInstance();
+
+        // NOTE: Support for tests
+        if (context == null) {
+            return fullName;
+        }
+
         return context.getString(context.getResources().getIdentifier("class_type__" + fullName, "string", context.getPackageName()));
     }
 
