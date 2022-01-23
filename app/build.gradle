@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -39,6 +40,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
+    implementation 'androidx.preference:preference:1.1.1'
 
     // Components
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:1.1.5"
@@ -56,6 +58,7 @@ dependencies {
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.0'
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
     implementation 'com.github.abdularis:circularimageview:1.5'
+    implementation 'com.github.mancj:MaterialSearchBar:0.8.5'
 
     // Test and debugging
     testImplementation 'junit:junit:4.+'
@@ -69,6 +72,9 @@ dependencies {
     implementation 'joda-time:joda-time:2.9.4'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation platform('com.google.firebase:firebase-bom:29.0.4')
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.android.gms:play-services-base:18.0.1'
 
     // Database
     debugImplementation 'io.objectbox:objectbox-android-objectbrowser:3.0.1'

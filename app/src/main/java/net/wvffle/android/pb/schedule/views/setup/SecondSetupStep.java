@@ -2,6 +2,8 @@ package net.wvffle.android.pb.schedule.views.setup;
 
 import static net.wvffle.android.pb.schedule.util.IntegersUtil.getIntFromEnd;
 
+import android.annotation.SuppressLint;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import net.wvffle.android.pb.schedule.ObjectBox;
@@ -39,6 +41,7 @@ public class SecondSetupStep extends BaseView<FragmentSecondSetupStepViewBinding
         viewModel.getDegree().observe(this, degree -> {
             if (degree == null) return;
 
+            @SuppressLint("DefaultLocale")
             List<String> semesters = ObjectBox.getScheduleBox()
                     .query()
                     .equal(Schedule_.degreeId, degree.id)
@@ -48,8 +51,7 @@ public class SecondSetupStep extends BaseView<FragmentSecondSetupStepViewBinding
                     .map(Schedule::getSemester)
                     .distinct()
                     .sorted()
-                    // TODO [#45]: Get string from string id
-                    .map(semester -> "Semester " + semester)
+                    .map(semester -> String.format(getString(R.string.semester_n), semester))
                     .collect(Collectors.toList());
 
             viewModel.setSemesters(semesters);

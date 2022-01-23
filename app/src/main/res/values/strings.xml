@@ -13,7 +13,8 @@
     <string name="settings">Ustawienia</string>
     <string name="nav_open">Open</string>
     <string name="nav_close">Close</string>
-    <string name="home">Najblizsze dni</string>
+    <string name="home">Nadchodzace zajecia</string>
+    <string name="subtitle">Plan zajec Politechniki Bialostockiej</string>
     <string name="schedule_week">Widok tygodnia</string>
     <string name="schedule_updates">Aktualizacje planu</string>
     <string name="schedule_today">Plan na dzis</string>
@@ -21,4 +22,20 @@
     <string name="show_lectures">Pokazuj wyklady</string>
     <string name="preferences">Preferencje</string>
     <string name="updates">Aktualizacje</string>
+    <string name="search_hint">Szukaj przedmiotu</string>
+    <string name="channel_name">PB Notifications</string>
+    <string name="channel_desc">Notifications for the PB schedule</string>
+    <string name="notification_update_title">Your schedule has been updated!</string>
+    <string name="notification_update_text">Tap the notification to see the changes.</string>
+
+    <string name="class_type__pe">PE</string>
+    <string name="class_type__seminar">Seminar</string>
+    <string name="class_type__language">Language</string>
+    <string name="class_type__project">Extra / Group project</string>
+    <string name="class_type__laboratories">Laboratories</string>
+    <string name="class_type__exercises">Exercises</string>
+    <string name="class_type__special">Special</string>
+    <string name="class_type__lecture">Lecture</string>
+    <string name="class_type__unknown">Other</string>
+    <string name="semester_n">Semester %d</string>
 </resources>

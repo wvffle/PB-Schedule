@@ -60,9 +60,20 @@ public class Subject  implements Model {
 
     /**
      * Return short name of the subject
+     *
      * @return String short name of the subject
      */
     public String getShortName() {
         return shortName;
+    }
+
+    /**
+     * Return id of the subject
+     *
+     * @return Long id of the subject
+     */
+    @Override
+    public Long getId() {
+        return id;
     }
 }

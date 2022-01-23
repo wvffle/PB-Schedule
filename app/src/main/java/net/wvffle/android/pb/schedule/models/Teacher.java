@@ -85,9 +85,20 @@ public class Teacher implements Model {
 
     /**
      * Return title of the teacher
+     *
      * @return Title of the teacher
      */
     public Title getTitle() {
         return title.getTarget();
+    }
+
+    /**
+     * Return id of the teacher
+     *
+     * @return Long id of the teacher
+     */
+    @Override
+    public Long getId() {
+        return id;
     }
 }

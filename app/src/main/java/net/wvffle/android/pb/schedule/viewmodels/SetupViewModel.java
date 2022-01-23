@@ -111,4 +111,8 @@ public class SetupViewModel extends ViewModel {
     public SetupData buildSetupData() {
         return setupDataBuilder.build();
     }
+
+    public void setSelectedIds(List<Long> selectedIds) {
+        setupDataBuilder.setSelectedSchedules(selectedIds);
+    }
 }
