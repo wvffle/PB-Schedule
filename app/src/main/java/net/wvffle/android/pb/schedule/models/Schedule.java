@@ -248,4 +248,14 @@ public class Schedule implements Model {
         // TODO [#52]: Add hours from the database
         return Hours.idToHour(hour);
     }
+
+    /**
+     * Return id of the schedule
+     *
+     * @return Long id of the schedule
+     */
+    @Override
+    public Long getId() {
+        return id;
+    }
 }

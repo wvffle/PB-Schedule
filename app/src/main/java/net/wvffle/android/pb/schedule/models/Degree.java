@@ -43,6 +43,7 @@ public class Degree implements Model, Serializable {
 
     /**
      * Return hash of the degree
+     *
      * @return String hash of the degree
      */
     public String getHash() {
@@ -50,7 +51,18 @@ public class Degree implements Model, Serializable {
     }
 
     /**
+     * Return id of the degree
+     *
+     * @return Long id of the degree
+     */
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    /**
      * Return name of the degree
+     *
      * @return String name of the degree
      */
     public String getName() {

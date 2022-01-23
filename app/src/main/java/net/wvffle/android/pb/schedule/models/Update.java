@@ -89,9 +89,20 @@ public class Update implements Model {
 
     /**
      * Return diff of the update
+     *
      * @return UpdateDiff of the update
      */
-    public UpdateDiff getDiff () {
+    public UpdateDiff getDiff() {
         return diff;
+    }
+
+    /**
+     * Return id of the update
+     *
+     * @return Long id of the update
+     */
+    @Override
+    public Long getId() {
+        return id;
     }
 }

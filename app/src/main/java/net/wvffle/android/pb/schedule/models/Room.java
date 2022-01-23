@@ -42,6 +42,7 @@ public class Room implements Model {
 
     /**
      * Return hash of the room
+     *
      * @return String hash of the room
      */
     public String getHash() {
@@ -49,7 +50,18 @@ public class Room implements Model {
     }
 
     /**
+     * Return id of the room
+     *
+     * @return Long id of the room
+     */
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    /**
      * Return name of the room
+     *
      * @return String name of the room
      */
     public String getName() {

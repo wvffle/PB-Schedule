@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -71,6 +72,9 @@ dependencies {
     implementation 'joda-time:joda-time:2.9.4'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation platform('com.google.firebase:firebase-bom:29.0.4')
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation 'com.google.android.gms:play-services-base:18.0.1'
 
     // Database
     debugImplementation 'io.objectbox:objectbox-android-objectbrowser:3.0.1'

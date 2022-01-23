@@ -24,7 +24,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BackendApi {
-    private static final String HOST = "https://but-schedule-server.herokuapp.com";
+    private static final String HOST = "https://schedule.wvffle.net";
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(Teacher.class, new TeacherDeserializer())
             .registerTypeAdapter(Degree.class, new DegreeDeserializer())

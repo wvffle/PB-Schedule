@@ -18,13 +18,28 @@ import io.objectbox.query.QueryBuilder;
 public class DatabaseSyncService {
     private static final String TAG = "DatabaseSyncService";
 
+    /**
+     * Returns last {@link Update} from the local database
+     *
+     * @return last {@link Update}
+     */
+    public static Update getLastUpdate() {
+        return ObjectBox.getUpdateBox()
+                .query()
+                .order(Update_.id, QueryBuilder.DESCENDING)
+                .build()
+                .findFirst();
+    }
+
+    /**
+     * Synchronizes database
+     *
+     * @param then {@link SyncResult} called after synchronization is done
+     */
     public static void sync(SyncResult then) {
+        // TODO: Handle update failure
         WorkManager.getInstance(MainActivity.getInstance()).enqueue(Worker.create(() -> {
-            Update lastUpdate = ObjectBox.getUpdateBox()
-                    .query()
-                    .order(Update_.id, QueryBuilder.DESCENDING)
-                    .build()
-                    .findFirst();
+            Update lastUpdate = getLastUpdate();
 
             String newHash = Objects.requireNonNull(BackendApi.getService().getUpdates().execute().body())
                     .get(0).getHash();

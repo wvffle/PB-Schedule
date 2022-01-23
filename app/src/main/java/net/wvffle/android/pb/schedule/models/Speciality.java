@@ -49,9 +49,20 @@ public class Speciality implements Model {
 
     /**
      * Return name of the speciality
+     *
      * @return String name of the speciality
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Return id of the speciality
+     *
+     * @return Long id of the speciality
+     */
+    @Override
+    public Long getId() {
+        return id;
     }
 }

@@ -23,4 +23,8 @@
     <string name="preferences">Preferencje</string>
     <string name="updates">Aktualizacje</string>
     <string name="search_hint">Szukaj przedmiotu</string>
+    <string name="channel_name">PB Notifications</string>
+    <string name="channel_desc">Notifications for the PB schedule</string>
+    <string name="notification_update_title">Your schedule has been updated!</string>
+    <string name="notification_update_text">Tap the notification to see the changes.</string>
 </resources>

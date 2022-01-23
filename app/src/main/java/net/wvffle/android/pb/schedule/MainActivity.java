@@ -1,10 +1,13 @@
 package net.wvffle.android.pb.schedule;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +27,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import net.wvffle.android.pb.schedule.api.setup.SetupData;
 import net.wvffle.android.pb.schedule.databinding.ActivityMainBinding;
@@ -53,31 +57,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return binding.toolbar;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public static SetupData getSetupData(Context context) {
+        SetupData setupData = null;
 
-        instance = this;
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        setSupportActionBar(binding.toolbar);
-        getSupportActionBar().hide();
-        getSupportActionBar().setSubtitle(R.string.subtitle);
+        try {
+            SharedPreferences pref = context.getSharedPreferences("data", Context.MODE_PRIVATE);
+            String savedData = pref.getString("setup-data", "");
+            if (savedData.equals("")) {
+                return null;
+            }
 
-        // NOTE: Set status bar color
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(Color.WHITE);
+            setupData = (SetupData) Serializer.getInstance().fromString(savedData);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            Sentry.captureException(e);
+        } catch (IncompatibleClassChangeError e) {
+            e.printStackTrace();
         }
 
-        binding.navView.setNavigationItemSelectedListener(this);
-        drawerToggle = new ActionBarDrawerToggle(this, binding.drawer, R.string.nav_open, R.string.nav_close);
-        binding.drawer.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
-
-        binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        return setupData;
     }
 
     @NonNull
@@ -171,20 +169,62 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         controller.navigate(resId, null, options);
     }
 
-    public SetupData getSetupData() {
-        SetupData setupData = null;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        try {
-            SharedPreferences pref = getSharedPreferences("data", Context.MODE_PRIVATE);
-            String savedData = pref.getString("setup-data", "");
-            setupData = (SetupData) Serializer.getInstance().fromString(savedData);
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-            Sentry.captureException(e);
-        } catch (IncompatibleClassChangeError e) {
-            e.printStackTrace();
+        createNotificationChannel();
+
+        instance = this;
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().hide();
+        getSupportActionBar().setSubtitle(R.string.subtitle);
+
+        // NOTE: Set status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(Color.WHITE);
         }
 
-        return setupData;
+        binding.navView.setNavigationItemSelectedListener(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawerToggle = new ActionBarDrawerToggle(this, binding.drawer, R.string.nav_open, R.string.nav_close);
+        binding.drawer.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        FirebaseMessaging.getInstance().subscribeToTopic("updates");
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.w("TOKEN", "Fetching FCM registration token failed", task.getException());
+                return;
+            }
+
+            Log.d("TOKEN", task.getResult());
+        });
+    }
+
+    public SetupData getSetupData() {
+        return getSetupData(this);
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_desc);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("waff-pb", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

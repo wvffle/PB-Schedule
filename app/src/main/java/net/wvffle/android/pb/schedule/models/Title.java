@@ -49,9 +49,20 @@ public class Title implements Model {
 
     /**
      * Return name of the title
+     *
      * @return String name of the title
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Return id of the title
+     *
+     * @return Long id of the title
+     */
+    @Override
+    public Long getId() {
+        return id;
     }
 }
