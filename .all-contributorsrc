@@ -28,6 +28,7 @@
     }
   ],
   "contributorsPerLine": 7,
+  "badgeTemplate": "[badge-all-contributors]: https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=flat-square",
   "projectName": "PB-Schedule",
   "projectOwner": "wvffle",
   "repoType": "github",

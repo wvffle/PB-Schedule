@@ -1,12 +1,15 @@
 # Android schedule app for Bialystok University of Technology
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-<a href="http://weblate.wvffle.net/engage/but-schedule-android/">
-  <img src="http://weblate.wvffle.net/widgets/but-schedule-android/-/localization/svg-badge.svg" alt="Translation status" />
-</a>
 
-## Figma 🎨 
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
+[contributors]: https://img.shields.io/badge/all_contributors-2-orange.svg 'Number of contributors on All-Contributors'
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
+[![All Contributors][contributors]](#contributors-)
+[![Weblate](http://weblate.wvffle.net/widgets/but-schedule-android/-/localization/svg-badge.svg)](http://weblate.wvffle.net/engage/but-schedule-android/)
+
+## Figma 🎨
+
 https://www.figma.com/file/wanafbuIAt4AC64sWabO9p/Plan-zajec?node-id=3%3A0
 
 ## Contributors ✨
