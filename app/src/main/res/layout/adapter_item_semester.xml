@@ -11,6 +11,10 @@
         <variable
             name="position"
             type="java.lang.Integer" />
+
+        <variable
+            name="item"
+            type="java.lang.String" />
     </data>
 
     <com.balysv.materialripple.MaterialRippleLayout
@@ -27,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="@{viewModel.semesters.get(position)}"
+                android:text="@{item}"
                 tools:text="TextView" />
 
             <include layout="@layout/divider" />

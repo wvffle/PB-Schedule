@@ -12,6 +12,10 @@
         <variable
             name="position"
             type="java.lang.Integer" />
+
+        <variable
+            name="item"
+            type="net.wvffle.android.pb.schedule.models.Schedule" />
     </data>
 
     <com.balysv.materialripple.MaterialRippleLayout
@@ -29,7 +33,7 @@
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="@{viewModel.selected.get(viewModel.filteredClasses.get(position).id)}"
+                android:checked="@{viewModel.selected.get(item.id)}"
                 android:onCheckedChanged="@{(button, checked) -> viewModel.select(position, checked)}"
                 android:text=""
                 tools:text="" />
@@ -39,8 +43,8 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="8dp"
-                app:avatarBackgroundColor="@{viewModel.filteredClasses.get(position).type.color}"
-                app:text="@{viewModel.filteredClasses.get(position).type.name()}"
+                app:avatarBackgroundColor="@{item.type.color}"
+                app:text="@{item.type.name()}"
                 app:textColor="#FFF"
                 app:textSize="22sp" />
 
@@ -59,7 +63,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:paddingHorizontal="4dp"
-                        android:text="@{viewModel.filteredClasses.get(position).time}"
+                        android:text="@{item.time}"
                         android:textColor="#717171"
                         tools:text="21:37" />
 
@@ -67,7 +71,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="4dp"
-                        android:text="@{viewModel.filteredClasses.get(position).subject.name}"
+                        android:text="@{item.subject.name}"
                         tools:text="TextView" />
                 </LinearLayout>
 
@@ -81,7 +85,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:paddingHorizontal="4dp"
-                        android:text="@{viewModel.filteredClasses.get(position).dayName.toUpperCase()}"
+                        android:text="@{item.dayName.toUpperCase()}"
                         android:textColor="#717171"
                         tools:text="PON" />
 
@@ -97,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="4dp"
-                        android:text="@{viewModel.filteredClasses.get(position).room.name}"
+                        android:text="@{item.room.name}"
                         android:textColor="#878787"
                         android:textSize="12dp"
                         tools:text="666" />
@@ -106,7 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingRight="4dp"
-                        android:text="@{viewModel.filteredClasses.get(position).type.fullName + ` ` + viewModel.filteredClasses.get(position).group}"
+                        android:text="@{item.type.fullName + ` ` + item.group}"
                         android:textColor="#464646"
                         android:textSize="12dp"
                         tools:text="666" />
