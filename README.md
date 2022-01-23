@@ -2,6 +2,9 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
+<a href="http://weblate.wvffle.net/engage/but-schedule-android/">
+  <img src="http://weblate.wvffle.net/widgets/but-schedule-android/-/localization/svg-badge.svg" alt="Translation status" />
+</a>
 
 ## Figma 🎨 
 https://www.figma.com/file/wanafbuIAt4AC64sWabO9p/Plan-zajec?node-id=3%3A0
