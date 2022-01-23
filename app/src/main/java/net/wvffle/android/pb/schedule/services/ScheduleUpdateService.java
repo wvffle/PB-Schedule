@@ -69,7 +69,7 @@ public class ScheduleUpdateService extends FirebaseMessagingService {
                         .setSmallIcon(R.drawable.ic_schedule_logo)
                         .setContentTitle(getString(R.string.notification_update_title))
                         .setContentText(getString(R.string.notification_update_text))
-                        // TODO [$61ed68affeab4e067ff05efd]: Go to diff on notification tap
+                        // TODO [#61]: Go to diff on notification tap
                         // .setContentIntent()
                         .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT)
