@@ -17,12 +17,12 @@ import net.wvffle.android.pb.schedule.BR;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericRecyclerViewAdapter.GenericViewHolder> {
+public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericRecyclerViewAdapter.GenericViewHolder<M>> {
     private final ViewModel viewModel;
     private final int layoutId;
     private final List<M> data = new ArrayList<>();
 
-    private ItemClickListener onItemClickListener = (View view, int position) -> {
+    private ItemClickListener<M> onItemClickListener = (View view, M item, int position) -> {
     };
 
     public GenericRecyclerViewAdapter(ViewModel viewModel, int layoutId) {
@@ -32,17 +32,17 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
 
     @NonNull
     @Override
-    public GenericViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GenericViewHolder<M> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         ViewDataBinding binding = DataBindingUtil.inflate(layoutInflater, viewType, parent, false);
 
-        return new GenericViewHolder(binding);
+        return new GenericViewHolder<M>(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GenericViewHolder holder, int position) {
-        holder.bind(viewModel, position, v -> {
-            onItemClickListener.onItemClick(v, position);
+    public void onBindViewHolder(@NonNull GenericViewHolder<M> holder, int position) {
+        holder.bind(viewModel, data.get(position), position, v -> {
+            onItemClickListener.onItemClick(v, data.get(position), position);
         });
     }
 
@@ -56,7 +56,7 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
         return layoutId;
     }
 
-    public void setOnItemClickListener(ItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(ItemClickListener<M> onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
@@ -71,11 +71,11 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
         return data;
     }
 
-    public interface ItemClickListener {
-        void onItemClick(View view, int position);
+    public interface ItemClickListener<M> {
+        void onItemClick(View view, M item, int position);
     }
 
-    public static class GenericViewHolder extends RecyclerView.ViewHolder {
+    public static class GenericViewHolder<M> extends RecyclerView.ViewHolder {
         private final ViewDataBinding binding;
 
         public GenericViewHolder(ViewDataBinding binding) {
@@ -83,10 +83,10 @@ public class GenericRecyclerViewAdapter<M> extends RecyclerView.Adapter<GenericR
             this.binding = binding;
         }
 
-        void bind(ViewModel viewModel, int position, View.OnClickListener onClickListener) {
-            // TODO [#58]: add the item from position of `getData()`
+        void bind(ViewModel viewModel, M item, int position, View.OnClickListener onClickListener) {
             binding.setVariable(BR.viewModel, viewModel);
             binding.setVariable(BR.position, position);
+            binding.setVariable(BR.item, item);
             binding.executePendingBindings();
 
             binding.getRoot().setOnClickListener(onClickListener);

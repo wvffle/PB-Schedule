@@ -56,8 +56,8 @@ public class SecondSetupStep extends BaseView<FragmentSecondSetupStepViewBinding
 
             viewModel.setSemesters(semesters);
             adapter.setData(semesters);
-            adapter.setOnItemClickListener((view, position) -> {
-                viewModel.setSemester(getIntFromEnd(semesters.get(position)));
+            adapter.setOnItemClickListener((view, item, position) -> {
+                viewModel.setSemester(getIntFromEnd(item));
                 viewModel.setMaxStep(3);
             });
         });

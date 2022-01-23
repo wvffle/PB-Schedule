@@ -40,9 +40,15 @@ output.json
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
+play_config.json
+play_config.json.b64
+keystore.properties
 
 # Android Profiling
 *.hprof
 
 # ObjectBox
 app/objectbox-models/default.json.bak
+
+# Fastlane
+fastlane/report.xml

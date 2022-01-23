@@ -11,6 +11,10 @@
         <variable
             name="position"
             type="java.lang.Integer" />
+
+        <variable
+            name="item"
+            type="net.wvffle.android.pb.schedule.util.GroupedItem" />
     </data>
 
     <TextView
@@ -19,7 +23,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="4dp"
         android:paddingVertical="8dp"
-        android:text="@{viewModel.upcomingClasses.get(position).group}"
+        android:text="@{item.group}"
         android:textAllCaps="true"
         android:textColor="#A5A5A5"
         android:textStyle="bold"

@@ -5,6 +5,9 @@
     <data>
         <variable name="position" type="java.lang.Integer" />
         <variable name="viewModel" type="net.wvffle.android.pb.schedule.viewmodels.UpdateListViewModel" />
+        <variable
+            name="item"
+            type="net.wvffle.android.pb.schedule.api.update.UpdateEntry" />
     </data>
 
     <LinearLayout
@@ -24,7 +27,7 @@
             android:orientation="vertical"
             android:paddingStart="32dp"
             android:paddingEnd="32dp"
-            android:text="@{viewModel.updates.get(position).hash}"
+            android:text="@{item.hash}"
             android:textSize="16dp"
             tools:text="Test" />
     </LinearLayout>

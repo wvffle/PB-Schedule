@@ -43,8 +43,8 @@ public class FirstSetupStep extends BaseView<FragmentFirstSetupStepViewBinding> 
             viewModel.setDegrees(degrees);
             adapter.setData(degrees);
 
-            adapter.setOnItemClickListener((view, position) -> {
-                viewModel.setDegree(degrees.get(position));
+            adapter.setOnItemClickListener((view, item, position) -> {
+                viewModel.setDegree(item);
                 viewModel.setMaxStep(2);
             });
         });
