@@ -26,10 +26,13 @@ public class UpdateModelTest {
     @Test
     public void canFetchSingleUpdate () throws IOException {
         List<UpdateEntry> updates = BackendApi.getService().getUpdates().execute().body();
-        Update update = BackendApi.getService().getUpdate(updates.get(0).getHash()).execute().body();
+        assertNotNull(updates);
+
+        String hash = updates.get(0).getHash();
+        Update update = BackendApi.getService().getUpdate(hash).execute().body();
 
         assertNotNull(update);
-        assertEquals(updates.get(0).getHash(), update.getHash());
+        assertEquals(hash, update.getHash());
         assertEquals(updates.get(0).id, update.id);
 
         UpdateData data = update.getData();
