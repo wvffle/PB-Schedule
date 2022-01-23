@@ -1,6 +1,10 @@
 package net.wvffle.android.pb.schedule.api.enums;
 
+import android.content.Context;
+
 import androidx.annotation.ColorInt;
+
+import net.wvffle.android.pb.schedule.MainActivity;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -15,7 +19,7 @@ public enum ClassType implements Serializable {
     CW("exercises", 0xffffee00),
     PS("special", 0xff00aaff),
     W("lecture", 0xff0077ff),
-    UNKNOWN(null, 0xff000000);
+    UNKNOWN("unknown", 0xff000000);
 
     private final String fullName;
     private final int color;
@@ -24,6 +28,7 @@ public enum ClassType implements Serializable {
     static {
         for (ClassType type : values()) {
             BY_NAME.put(type.fullName, type);
+            BY_NAME.put(type.getFullName(), type);
             BY_NAME.put(type.name(), type);
         }
     }
@@ -52,8 +57,8 @@ public enum ClassType implements Serializable {
      * @return String name
      */
     public String getFullName() {
-        // TODO [#44]: Get name from strings.xml
-        return fullName;
+        Context context = MainActivity.getInstance();
+        return context.getString(context.getResources().getIdentifier("class_type__" + fullName, "string", context.getPackageName()));
     }
 
     /**
