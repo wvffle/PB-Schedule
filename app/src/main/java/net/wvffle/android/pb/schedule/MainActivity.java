@@ -1,16 +1,24 @@
 package net.wvffle.android.pb.schedule;
 
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -39,7 +47,11 @@ import java.util.Objects;
 import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    boolean alerted = false;
+    private SensorManager mSensorManager;
+    private float mAccel;
+    private float mAccelCurrent;
+    private float mAccelLast;
     private static MainActivity instance;
     private ActionBarDrawerToggle drawerToggle;
 
@@ -56,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     Toolbar getToolbar() {
         return binding.toolbar;
     }
+
 
     public static SetupData getSetupData(Context context) {
         SetupData setupData = null;
@@ -177,6 +190,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         instance = this;
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        mAccel = 10f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().hide();
         getSupportActionBar().setSubtitle(R.string.subtitle);
@@ -206,6 +225,96 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             Log.d("TOKEN", task.getResult());
         });
+    }
+    private void sendDialogDataToActivity(String data)
+    {
+        Toast.makeText(this,
+                data,
+                Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    private final SensorEventListener mSensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            mAccelLast = mAccelCurrent;
+            mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
+            float delta = mAccelCurrent - mAccelLast;
+            mAccel = mAccel * 0.9f + delta;
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+            alertDialogBuilder.setTitle("Potrząsnąłeś telefonem. Ta akcja pozwala ci na zgłoszenie błędu.");
+            alertDialogBuilder.setCancelable(true);
+            alertDialogBuilder
+                    .setMessage("Czy chcesz to zrobić?")
+                    .setCancelable(true)
+                    .setPositiveButton( "Tak", (dialog, id) -> {
+                        try {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                            builder.setTitle("Opisz swój problem.");
+
+                            final View customLayout
+                                    = getLayoutInflater()
+                                    .inflate(R.layout.alert_debug_layout, null);
+                            builder.setView(customLayout);
+
+                            builder.setPositiveButton("Zatwierdź", (dialog1, which) -> {
+                                EditText editText = customLayout.findViewById(R.id.editText);
+                                if (editText.length() > 0 && editText.length() <= 666) {
+                                    sendDialogDataToActivity(
+                                            editText.getText()
+                                                    .toString()
+                                    );
+                                }
+                            })
+                                    .setNegativeButton("Anuluj", (dialog12, id1) -> {
+                                        dialog12.cancel();
+                                        alerted = false;
+                                    });
+
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog .show();
+                            Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                            Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                            positiveButton.setTextColor(Color.parseColor("#FF000000"));
+                            negativeButton.setTextColor(Color.parseColor("#FF000000"));
+                            alerted = false;
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Sentry.captureException(e);
+                        }
+                    })
+                    .setNegativeButton("Nie", (dialog, id) -> {
+                        dialog.cancel();
+                        alerted = false;
+                    });
+            if (mAccel > 3 && alerted == false) {
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                positiveButton.setTextColor(Color.parseColor("#FF000000"));
+                negativeButton.setTextColor(Color.parseColor("#FF000000"));
+                alerted = true;
+            }
+        }
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+    };
+    @Override
+    protected void onResume() {
+        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        super.onResume();
+    }
+    @Override
+    protected void onPause() {
+        mSensorManager.unregisterListener(mSensorListener);
+        super.onPause();
     }
 
     public SetupData getSetupData() {
