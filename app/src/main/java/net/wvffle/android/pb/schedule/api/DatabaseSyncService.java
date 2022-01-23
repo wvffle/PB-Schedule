@@ -37,7 +37,7 @@ public class DatabaseSyncService {
      * @param then {@link SyncResult} called after synchronization is done
      */
     public static void sync(SyncResult then) {
-        // TODO: Handle update failure
+        // TODO [$61ed68affeab4e067ff05efc]: Handle update failure
         WorkManager.getInstance(MainActivity.getInstance()).enqueue(Worker.create(() -> {
             Update lastUpdate = getLastUpdate();
 
