@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -133,15 +134,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         if (editText.length() > 0 && editText.length() <= 666) {
                                             sendDialogDataToActivity(
                                                     editText.getText()
-                                                            .toString());
+                                                            .toString()
+                                            );
                                         }
                                     })
                                     .setNegativeButton("Anuluj", (dialog12, id1) -> {
                                         dialog12.cancel();
+                                        alerted = false;
                                     });
 
                             AlertDialog alertDialog = builder.create();
                             alertDialog .show();
+                            Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                            Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                            positiveButton.setTextColor(Color.parseColor("#FF000000"));
+                            negativeButton.setTextColor(Color.parseColor("#FF000000"));
+                            alerted = false;
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -150,11 +158,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     })
                     .setNegativeButton("Nie", (dialog, id) -> {
                         dialog.cancel();
+                        alerted = false;
                     });
             if (mAccel > 3 && alerted == false) {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-//                alerted = true;
+                Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+                positiveButton.setTextColor(Color.parseColor("#FF000000"));
+                negativeButton.setTextColor(Color.parseColor("#FF000000"));
+                alerted = true;
             }
         }
         @Override
