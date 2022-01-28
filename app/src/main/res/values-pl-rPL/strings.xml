@@ -38,4 +38,13 @@
     <string name="class_type__lecture">Wykład</string>
     <string name="class_type__unknown">Inne</string>
     <string name="semester_n">Semestr %d</string>
+    <string name="cant_fetch_update">Nie można połączyć się z serwerem.</string>
+    <string name="report_a_bug">Zgłoś błąd</string>
+    <string name="do_you_want_to_report_a_bug">Potrząsnąłeś telefonem. Czy chcesz zgłosić błąd\?</string>
+    <string name="yes">Tak</string>
+    <string name="what_happened">Co się stało\?</string>
+    <string name="report">Zgłoś</string>
+    <string name="cancel">Anuluj</string>
+    <string name="no">Nie</string>
+    <string name="fcm_token_registeration_failed">Fetching FCM registration token failed</string>
 </resources>
