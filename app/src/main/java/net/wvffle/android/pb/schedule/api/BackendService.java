@@ -1,5 +1,7 @@
 package net.wvffle.android.pb.schedule.api;
 
+import com.google.gson.JsonObject;
+
 import net.wvffle.android.pb.schedule.api.update.UpdateEntry;
 import net.wvffle.android.pb.schedule.models.Degree;
 import net.wvffle.android.pb.schedule.models.Room;
@@ -69,4 +71,6 @@ public interface BackendService {
     Call<Schedule> getSchedule(@Path("hash") String hash);
 
 
+    @GET("/")
+    Call<JsonObject> checkConnection();
 }

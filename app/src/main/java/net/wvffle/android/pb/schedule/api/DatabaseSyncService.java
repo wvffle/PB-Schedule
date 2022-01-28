@@ -1,12 +1,20 @@
 package net.wvffle.android.pb.schedule.api;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.work.ListenableWorker;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
+
+import com.google.gson.JsonObject;
 
 import net.wvffle.android.pb.schedule.MainActivity;
 import net.wvffle.android.pb.schedule.ObjectBox;
+import net.wvffle.android.pb.schedule.R;
 import net.wvffle.android.pb.schedule.api.update.UpdateData;
 import net.wvffle.android.pb.schedule.models.Update;
 import net.wvffle.android.pb.schedule.models.Update_;
@@ -14,6 +22,7 @@ import net.wvffle.android.pb.schedule.models.Update_;
 import java.util.Objects;
 
 import io.objectbox.query.QueryBuilder;
+import retrofit2.Response;
 
 public class DatabaseSyncService {
     private static final String TAG = "DatabaseSyncService";
@@ -37,8 +46,15 @@ public class DatabaseSyncService {
      * @param then {@link SyncResult} called after synchronization is done
      */
     public static void sync(SyncResult then) {
-        // TODO [#60]: Handle update failure
-        WorkManager.getInstance(MainActivity.getInstance()).enqueue(Worker.create(() -> {
+        OneTimeWorkRequest worker = Worker.create(() -> {
+            Response<JsonObject> connectionResult = BackendApi.getService()
+                    .checkConnection()
+                    .execute();
+
+            if (!connectionResult.isSuccessful()) {
+                return ListenableWorker.Result.failure();
+            }
+
             Update lastUpdate = getLastUpdate();
 
             String newHash = Objects.requireNonNull(BackendApi.getService().getUpdates().execute().body())
@@ -63,7 +79,24 @@ public class DatabaseSyncService {
             }
 
             return ListenableWorker.Result.success();
-        }));
+        });
+
+        WorkManager workManager = WorkManager.getInstance(MainActivity.getInstance());
+        workManager.enqueue(worker);
+
+        LiveData<WorkInfo> workInfoLiveData = workManager.getWorkInfoByIdLiveData(worker.getId());
+        workInfoLiveData.observeForever(new Observer<WorkInfo>() {
+            @Override
+            public void onChanged(WorkInfo workInfo) {
+                if (workInfo.getState().isFinished()) {
+                    if (workInfo.getState() == WorkInfo.State.FAILED) {
+                        workInfoLiveData.removeObserver(this);
+                        Toast.makeText(MainActivity.getInstance(), R.string.cant_fetch_update, Toast.LENGTH_LONG).show();
+                        then.execute(null, false);
+                    }
+                }
+            }
+        });
     }
 
     public interface SyncResult {

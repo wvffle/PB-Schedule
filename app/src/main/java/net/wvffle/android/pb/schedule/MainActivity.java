@@ -16,9 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -47,12 +45,82 @@ import java.util.Objects;
 import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    boolean alerted = false;
-    private SensorManager mSensorManager;
-    private float mAccel;
-    private float mAccelCurrent;
-    private float mAccelLast;
+    private SensorManager sensorManager;
+    private boolean alerted = false;
+    private float accel = 10;
+
+    private float accelCurrent = SensorManager.GRAVITY_EARTH;
+
     private static MainActivity instance;
+    private final SensorEventListener sensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            float accelLast = accelCurrent;
+            accelCurrent = (float) Math.sqrt(x * x + y * y + z * z);
+
+            float delta = accelCurrent - accelLast;
+            accel = accel * 0.9f + delta;
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this)
+                    .setTitle(R.string.report_a_bug)
+                    .setMessage(R.string.do_you_want_to_report_a_bug)
+                    .setCancelable(true)
+                    .setPositiveButton(R.string.yes, (confirmDialog, id) -> {
+                        try {
+                            View customLayout = getLayoutInflater().inflate(R.layout.alert_debug_layout, null);
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle(R.string.what_happened)
+                                    .setView(customLayout)
+                                    .setPositiveButton(R.string.report, (reportDialog, which) -> {
+                                        EditText description = customLayout.findViewById(R.id.editText);
+
+                                        if (description.length() > 0 && description.length() <= 666) {
+                                            // TODO: Send report to the server
+                                            reportDialog.cancel();
+                                            return;
+                                        }
+
+                                        // TODO: Set error on description
+                                    })
+                                    .setNegativeButton(R.string.cancel, (reportDialog, id1) -> reportDialog.cancel());
+
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+
+                            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+
+                            alerted = false;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Sentry.captureException(e);
+                        }
+                    })
+                    .setNegativeButton(R.string.no, (confirmDialog, id) -> {
+                        confirmDialog.cancel();
+                        alerted = false;
+                    });
+
+            if (accel > 12 && !alerted) {
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+
+                alerted = true;
+            }
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+    };
+
     private ActionBarDrawerToggle drawerToggle;
 
     public static MainActivity getInstance() {
@@ -60,6 +128,63 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private ActivityMainBinding binding;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        createNotificationChannel();
+
+        instance = this;
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        // NOTE: Status bar
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().hide();
+        getSupportActionBar().setSubtitle(R.string.subtitle);
+
+        // NOTE: Status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        } else {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            getWindow().setStatusBarColor(Color.WHITE);
+        }
+
+        // NOTE: Navigation drawer
+        binding.navView.setNavigationItemSelectedListener(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawerToggle = new ActionBarDrawerToggle(this, binding.drawer, R.string.nav_open, R.string.nav_close);
+        binding.drawer.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+
+        binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
+        // NOTE: Firebase Cloud Messaging
+        FirebaseMessaging.getInstance().subscribeToTopic("updates");
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
+            if (!task.isSuccessful()) {
+                Log.w("TOKEN", getString(R.string.fcm_token_registeration_failed), task.getException());
+                return;
+            }
+
+            Log.d("TOKEN", task.getResult());
+        });
+
+        // NOTE: Shake to report a bug
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+    }
+
+    @Override
+    protected void onResume() {
+        sensorManager.registerListener(
+                sensorListener,
+                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL
+        );
+
+        super.onResume();
+    }
 
     private static int or(int resId1, int resId2) {
         return resId1 == -1 ? resId2 : resId1;
@@ -183,137 +308,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        createNotificationChannel();
-
-        instance = this;
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
-        mAccel = 10f;
-        mAccelCurrent = SensorManager.GRAVITY_EARTH;
-        mAccelLast = SensorManager.GRAVITY_EARTH;
-        setSupportActionBar(binding.toolbar);
-        getSupportActionBar().hide();
-        getSupportActionBar().setSubtitle(R.string.subtitle);
-
-        // NOTE: Set status bar color
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        } else {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            getWindow().setStatusBarColor(Color.WHITE);
-        }
-
-        binding.navView.setNavigationItemSelectedListener(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        drawerToggle = new ActionBarDrawerToggle(this, binding.drawer, R.string.nav_open, R.string.nav_close);
-        binding.drawer.addDrawerListener(drawerToggle);
-        drawerToggle.syncState();
-
-        binding.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
-        FirebaseMessaging.getInstance().subscribeToTopic("updates");
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(task -> {
-            if (!task.isSuccessful()) {
-                Log.w("TOKEN", "Fetching FCM registration token failed", task.getException());
-                return;
-            }
-
-            Log.d("TOKEN", task.getResult());
-        });
-    }
-    private void sendDialogDataToActivity(String data)
-    {
-        Toast.makeText(this,
-                data,
-                Toast.LENGTH_SHORT)
-                .show();
-    }
-
-    private final SensorEventListener mSensorListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-            mAccelLast = mAccelCurrent;
-            mAccelCurrent = (float) Math.sqrt((double) (x * x + y * y + z * z));
-            float delta = mAccelCurrent - mAccelLast;
-            mAccel = mAccel * 0.9f + delta;
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-            alertDialogBuilder.setTitle("Potrząsnąłeś telefonem. Ta akcja pozwala ci na zgłoszenie błędu.");
-            alertDialogBuilder.setCancelable(true);
-            alertDialogBuilder
-                    .setMessage("Czy chcesz to zrobić?")
-                    .setCancelable(true)
-                    .setPositiveButton( "Tak", (dialog, id) -> {
-                        try {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                            builder.setTitle("Opisz swój problem.");
-
-                            final View customLayout
-                                    = getLayoutInflater()
-                                    .inflate(R.layout.alert_debug_layout, null);
-                            builder.setView(customLayout);
-
-                            builder.setPositiveButton("Zatwierdź", (dialog1, which) -> {
-                                EditText editText = customLayout.findViewById(R.id.editText);
-                                if (editText.length() > 0 && editText.length() <= 666) {
-                                    sendDialogDataToActivity(
-                                            editText.getText()
-                                                    .toString()
-                                    );
-                                }
-                            })
-                                    .setNegativeButton("Anuluj", (dialog12, id1) -> {
-                                        dialog12.cancel();
-                                        alerted = false;
-                                    });
-
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog .show();
-                            Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                            Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-                            positiveButton.setTextColor(Color.parseColor("#FF000000"));
-                            negativeButton.setTextColor(Color.parseColor("#FF000000"));
-                            alerted = false;
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Sentry.captureException(e);
-                        }
-                    })
-                    .setNegativeButton("Nie", (dialog, id) -> {
-                        dialog.cancel();
-                        alerted = false;
-                    });
-            if (mAccel > 3 && alerted == false) {
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-                Button positiveButton = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                Button negativeButton = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
-                positiveButton.setTextColor(Color.parseColor("#FF000000"));
-                negativeButton.setTextColor(Color.parseColor("#FF000000"));
-                alerted = true;
-            }
-        }
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    };
-    @Override
-    protected void onResume() {
-        mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
-        super.onResume();
-    }
-    @Override
     protected void onPause() {
-        mSensorManager.unregisterListener(mSensorListener);
+        sensorManager.unregisterListener(sensorListener);
         super.onPause();
     }
 

@@ -20,6 +20,9 @@ import net.wvffle.android.pb.schedule.models.Teacher;
 import net.wvffle.android.pb.schedule.models.Title;
 import net.wvffle.android.pb.schedule.models.Update;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -39,6 +42,14 @@ public class BackendApi {
     private static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BackendApi.HOST)
             .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(
+                    new OkHttpClient.Builder()
+                            // TODO: Fix too long timeout when no internet
+                            .connectTimeout(5, TimeUnit.SECONDS)
+                            .readTimeout(5, TimeUnit.SECONDS)
+                            .callTimeout(5, TimeUnit.SECONDS)
+                            .build()
+            )
             .build();
 
     private static final BackendService service = retrofit.create(BackendService.class);

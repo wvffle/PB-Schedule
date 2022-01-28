@@ -38,4 +38,13 @@
     <string name="class_type__lecture">Lecture</string>
     <string name="class_type__unknown">Other</string>
     <string name="semester_n">Semester %d</string>
+    <string name="cant_fetch_update">Cannot fetch new update. Check your connection.</string>
+    <string name="report_a_bug">Report a bug</string>
+    <string name="do_you_want_to_report_a_bug">You have just shaken your phone. Do you want to report a bug?</string>
+    <string name="yes">Yes</string>
+    <string name="what_happened">What happened?</string>
+    <string name="report">Report</string>
+    <string name="cancel">Cancel</string>
+    <string name="no">No</string>
+    <string name="fcm_token_registeration_failed">Fetching FCM registration token failed</string>
 </resources>
