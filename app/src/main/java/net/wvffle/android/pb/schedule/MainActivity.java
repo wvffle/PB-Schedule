@@ -80,12 +80,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                         EditText description = customLayout.findViewById(R.id.editText);
 
                                         if (description.length() > 0 && description.length() <= 666) {
-                                            // TODO: Send report to the server
+                                            // TODO [$61f3660e6e8cf40670efb1aa]: Send report to the server
                                             reportDialog.cancel();
                                             return;
                                         }
 
-                                        // TODO: Set error on description
+                                        // TODO [$61f3660e6e8cf40670efb1ab]: Set error on description
                                     })
                                     .setNegativeButton(R.string.cancel, (reportDialog, id1) -> reportDialog.cancel());
 
