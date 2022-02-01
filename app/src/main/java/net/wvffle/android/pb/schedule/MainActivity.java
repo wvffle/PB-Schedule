@@ -7,9 +7,6 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -37,6 +35,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.seismic.ShakeDetector;
 
 import net.wvffle.android.pb.schedule.api.setup.SetupData;
 import net.wvffle.android.pb.schedule.databinding.ActivityMainBinding;
@@ -48,86 +47,15 @@ import java.util.Objects;
 
 import io.sentry.Sentry;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    private SensorManager sensorManager;
-    private boolean alerted = false;
-    private float accel = 10;
-
-    private float accelCurrent = SensorManager.GRAVITY_EARTH;
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ShakeDetector.Listener {
     private static MainActivity instance;
-    private final SensorEventListener sensorListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-
-            float accelLast = accelCurrent;
-            accelCurrent = (float) Math.sqrt(x * x + y * y + z * z);
-
-            float delta = accelCurrent - accelLast;
-            accel = accel * 0.9f + delta;
-
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this)
-                    .setTitle(R.string.report_a_bug)
-                    .setMessage(R.string.do_you_want_to_report_a_bug)
-                    .setCancelable(true)
-                    .setPositiveButton(R.string.yes, (confirmDialog, id) -> {
-                        try {
-                            View customLayout = getLayoutInflater().inflate(R.layout.alert_debug_layout, null);
-
-                            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
-                                    .setTitle(R.string.what_happened)
-                                    .setView(customLayout)
-                                    .setPositiveButton(R.string.report, (reportDialog, which) -> {
-                                        EditText description = customLayout.findViewById(R.id.editText);
-
-                                        if (description.length() > 0 && description.length() <= 666) {
-                                            // TODO [#63]: Send report to the server
-                                            reportDialog.cancel();
-                                            return;
-                                        }
-
-                                        // TODO [#64]: Set error on description
-                                    })
-                                    .setNegativeButton(R.string.cancel, (reportDialog, id1) -> reportDialog.cancel());
-
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
-
-                            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
-                            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
-
-                            alerted = false;
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Sentry.captureException(e);
-                        }
-                    })
-                    .setNegativeButton(R.string.no, (confirmDialog, id) -> {
-                        confirmDialog.cancel();
-                        alerted = false;
-                    });
-
-            if (accel > 12 && !alerted) {
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
-                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
-
-                alerted = true;
-            }
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    };
 
     private ActionBarDrawerToggle drawerToggle;
     private NetworkChangeReceiver networkChangeReceiver;
-    private Snackbar noInternetSnackbar;
+    boolean alerted = false;
+    private Snackbar noInternetSnackBar;
+    private ShakeDetector shakeDetector;
+    private SensorManager sensorManager;
 
     public static MainActivity getInstance() {
         return instance;
@@ -178,28 +106,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         // NOTE: Shake to report a bug
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        shakeDetector = new ShakeDetector(this);
 
         // NOTE: Connection listener
         networkChangeReceiver = new NetworkChangeReceiver(isConnected -> {
-            if (noInternetSnackbar != null) {
-                noInternetSnackbar.dismiss();
+            if (noInternetSnackBar != null) {
+                noInternetSnackBar.dismiss();
             }
 
             if (!isConnected) {
-                noInternetSnackbar = Snackbar.make(binding.getRoot(), R.string.no_internet_connection, BaseTransientBottomBar.LENGTH_INDEFINITE);
-                noInternetSnackbar.show();
+                noInternetSnackBar = Snackbar.make(binding.getRoot(), R.string.no_internet_connection, BaseTransientBottomBar.LENGTH_INDEFINITE);
+                noInternetSnackBar.show();
             }
         });
     }
 
     @Override
     protected void onResume() {
-        sensorManager.registerListener(
-                sensorListener,
-                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL
-        );
+        shakeDetector.start(sensorManager, SensorManager.SENSOR_DELAY_GAME);
 
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
@@ -331,7 +256,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onPause() {
-        sensorManager.unregisterListener(sensorListener);
+        shakeDetector.stop();
 
         if (networkChangeReceiver != null) {
             unregisterReceiver(networkChangeReceiver);
@@ -345,18 +270,79 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
+        // NOTE: Create the NotificationChannel, but only on API 26+ because
+        //       the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_desc);
+
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("waff-pb", name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
+
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
+    }
+
+    @Override
+    public void hearShake() {
+        if (alerted) {
+            return;
+        }
+
+        alerted = true;
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this)
+                .setTitle(R.string.report_a_bug)
+                .setMessage(R.string.do_you_want_to_report_a_bug)
+                .setCancelable(true)
+                .setPositiveButton(R.string.yes, (confirmDialog, id) -> {
+                    try {
+                        View customLayout = getLayoutInflater().inflate(R.layout.alert_debug_layout, null);
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                                .setTitle(R.string.what_happened)
+                                .setView(customLayout)
+                                .setPositiveButton(R.string.report, (reportDialog, which) -> {
+                                    EditText description = customLayout.findViewById(R.id.editText);
+
+                                    if (description.length() > 0 && description.length() <= 666) {
+                                        Sentry.captureMessage(description.getText().toString());
+                                        Toast.makeText(this, R.string.thanks_for_reporting, Toast.LENGTH_LONG).show();
+                                        reportDialog.cancel();
+                                        return;
+                                    }
+
+                                    // TODO [#64]: Set error on description
+                                })
+                                .setNegativeButton(R.string.cancel, (reportDialog, id1) -> reportDialog.cancel());
+
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+
+                        confirmDialog.dismiss();
+                        confirmDialog.cancel();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Sentry.captureException(e);
+                    }
+
+                    alerted = false;
+                })
+                .setNegativeButton(R.string.no, (confirmDialog, id) -> {
+                    alerted = false;
+                    confirmDialog.cancel();
+                    confirmDialog.dismiss();
+                });
+
+        AlertDialog reportDialog = alertDialogBuilder.create();
+        reportDialog.show();
+
+        reportDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
+        reportDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
     }
 }

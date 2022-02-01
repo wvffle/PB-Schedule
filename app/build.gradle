@@ -90,6 +90,7 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:29.0.4')
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.android.gms:play-services-base:18.0.1'
+    implementation 'com.squareup:seismic:1.0.3'
 
     // Database
     debugImplementation 'io.objectbox:objectbox-android-objectbrowser:3.0.1'
