@@ -76,7 +76,7 @@ public class ScheduleUpdateService extends FirebaseMessagingService {
                         .build();
 
                 NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
-                manager.notify(Math.toIntExact(syncedUpdate.getId()), notification);
+                manager.notify(syncedUpdate != null ? Math.toIntExact(syncedUpdate.getId()) : 0, notification);
             });
 
             return;
