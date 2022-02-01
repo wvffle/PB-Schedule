@@ -31,7 +31,7 @@ public class SplashView extends BaseView<FragmentSplashViewBinding> {
 
             boolean setupDone = pref.getBoolean("setup-done", false);
             if (update == null && !setupDone) {
-                // TODO [$61f900b87a23e60664e43a70]: Add 'Try again later view'
+                // TODO [#66]: Add 'Try again later view'
                 //       Maybe register an FCM channel listener and push a message when the server is available
                 return;
             }
