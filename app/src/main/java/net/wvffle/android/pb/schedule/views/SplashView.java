@@ -29,10 +29,16 @@ public class SplashView extends BaseView<FragmentSplashViewBinding> {
         DatabaseSyncService.sync((update, isNew) -> {
             long delta = System.currentTimeMillis() - then;
 
-            handler.postDelayed(() -> navigate(
-                    pref.getBoolean("setup-done", false)
-                            ? R.id.action_splashView_to_homeView
-                            : R.id.action_splashView_to_setupView
+            boolean setupDone = pref.getBoolean("setup-done", false);
+            if (update == null && !setupDone) {
+                // TODO: Add 'Try again later view'
+                //       Maybe register an FCM channel listener and push a message when the server is available
+                return;
+            }
+
+            handler.postDelayed(() -> navigate(setupDone
+                    ? R.id.action_splashView_to_homeView
+                    : R.id.action_splashView_to_setupView
             ), Math.max(1, 3000 - delta));
         });
     }
