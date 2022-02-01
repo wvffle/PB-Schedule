@@ -47,4 +47,5 @@
     <string name="cancel">Cancel</string>
     <string name="no">No</string>
     <string name="fcm_token_registeration_failed">Fetching FCM registration token failed</string>
+    <string name="no_internet_connection">No internet connection</string>
 </resources>

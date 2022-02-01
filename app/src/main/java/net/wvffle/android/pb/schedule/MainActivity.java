@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -33,10 +34,13 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import net.wvffle.android.pb.schedule.api.setup.SetupData;
 import net.wvffle.android.pb.schedule.databinding.ActivityMainBinding;
+import net.wvffle.android.pb.schedule.receivers.NetworkChangeReceiver;
 import net.wvffle.android.pb.schedule.util.Serializer;
 
 import java.io.IOException;
@@ -122,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     };
 
     private ActionBarDrawerToggle drawerToggle;
+    private NetworkChangeReceiver networkChangeReceiver;
+    private Snackbar noInternetSnackbar;
 
     public static MainActivity getInstance() {
         return instance;
@@ -173,6 +179,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // NOTE: Shake to report a bug
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        // NOTE: Connection listener
+        networkChangeReceiver = new NetworkChangeReceiver(isConnected -> {
+            if (noInternetSnackbar != null) {
+                noInternetSnackbar.dismiss();
+            }
+
+            if (!isConnected) {
+                noInternetSnackbar = Snackbar.make(binding.getRoot(), R.string.no_internet_connection, BaseTransientBottomBar.LENGTH_INDEFINITE);
+                noInternetSnackbar.show();
+            }
+        });
     }
 
     @Override
@@ -182,6 +200,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL
         );
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(networkChangeReceiver, filter);
 
         super.onResume();
     }
@@ -310,6 +332,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onPause() {
         sensorManager.unregisterListener(sensorListener);
+
+        if (networkChangeReceiver != null) {
+            unregisterReceiver(networkChangeReceiver);
+        }
+
         super.onPause();
     }
 
